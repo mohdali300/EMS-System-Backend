@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "EMS_SYSTEM.APPLICATION/1.0.0": {
+        "dependencies": {
+          "EMS_SYSTEM.DOMAIN": "1.0.0"
+        },
+        "runtime": {
+          "EMS_SYSTEM.APPLICATION.dll": {}
+        }
+      },
+      "EMS_SYSTEM.DOMAIN/1.0.0": {
+        "runtime": {
+          "EMS_SYSTEM.DOMAIN.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EMS_SYSTEM.APPLICATION/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EMS_SYSTEM.DOMAIN/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
