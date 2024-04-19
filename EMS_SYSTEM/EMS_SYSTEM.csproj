@@ -11,4 +11,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Templets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EMS_SYSTEM.ENTITIES\EMS_SYSTEM.DOMAIN.csproj" />
+    <ProjectReference Include="..\EMS_SYSTEM.SERVICES\EMS_SYSTEM.APPLICATION.csproj" />
+  </ItemGroup>
+
 </Project>

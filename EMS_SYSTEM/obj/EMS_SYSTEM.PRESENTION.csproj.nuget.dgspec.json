@@ -1,0 +1,220 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\EMS_SYSTEM.PRESENTION.csproj": {}
+  },
+  "projects": {
+    "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.ENTITIES.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.ENTITIES.csproj",
+        "projectName": "EMS_SYSTEM.ENTITIES",
+        "projectPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.ENTITIES.csproj",
+        "packagesPath": "C:\\Users\\Windows 10\\.nuget\\packages\\",
+        "outputPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "F:\\Dev Express Setup\\Components\\Offline Packages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Windows 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "F:\\Dev Express Setup\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.SERVICES.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.SERVICES.csproj",
+        "projectName": "EMS_SYSTEM.SERVICES",
+        "projectPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.SERVICES.csproj",
+        "packagesPath": "C:\\Users\\Windows 10\\.nuget\\packages\\",
+        "outputPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "F:\\Dev Express Setup\\Components\\Offline Packages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Windows 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "F:\\Dev Express Setup\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.ENTITIES.csproj": {
+                "projectPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.ENTITIES.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\EMS_SYSTEM.PRESENTION.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\EMS_SYSTEM.PRESENTION.csproj",
+        "projectName": "EMS_SYSTEM.PRESENTION",
+        "projectPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\EMS_SYSTEM.PRESENTION.csproj",
+        "packagesPath": "C:\\Users\\Windows 10\\.nuget\\packages\\",
+        "outputPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "F:\\Dev Express Setup\\Components\\Offline Packages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Windows 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "F:\\Dev Express Setup\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.SERVICES.csproj": {
+                "projectPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.SERVICES.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
