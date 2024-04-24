@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|D:\\C# Projects\\EMS_UNV SYSTEM\\ems_system.entities\\ems_system.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|solutionrelative:ems_system.entities\\ems_system.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|D:\\C# Projects\\EMS_UNV SYSTEM\\ems_system.services\\repositories\\services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|solutionrelative:ems_system.services\\repositories\\services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|d:\\c# projects\\ems_unv system\\ems_system.services\\ems_system.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|solutionrelative:ems_system.services\\ems_system.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|d:\\c# projects\\ems_unv system\\ems_system.entities\\dto\\authmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|solutionrelative:ems_system.entities\\dto\\authmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{766422F7-C82E-4B65-AD11-C5BB1237F87D}|EMS_SYSTEM\\EMS_SYSTEM.csproj|D:\\C# Projects\\EMS_UNV SYSTEM\\ems_system\\ems_system.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{766422F7-C82E-4B65-AD11-C5BB1237F87D}|EMS_SYSTEM\\EMS_SYSTEM.csproj|solutionrelative:ems_system\\ems_system.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|d:\\c# projects\\ems_unv system\\ems_system.entities\\dto\\login\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|solutionrelative:ems_system.entities\\dto\\login\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|D:\\C# Projects\\EMS_UNV SYSTEM\\ems_system.services\\data\\context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|solutionrelative:ems_system.services\\data\\context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{766422F7-C82E-4B65-AD11-C5BB1237F87D}|EMS_SYSTEM\\EMS_SYSTEM.csproj|d:\\c# projects\\ems_unv system\\ems_system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{766422F7-C82E-4B65-AD11-C5BB1237F87D}|EMS_SYSTEM\\EMS_SYSTEM.csproj|solutionrelative:ems_system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,53 +66,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Context.cs",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\Data\\Context.cs",
-              "RelativeDocumentMoniker": "EMS_SYSTEM.SERVICES\\Data\\Context.cs",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\Data\\Context.cs",
-              "RelativeToolTip": "EMS_SYSTEM.SERVICES\\Data\\Context.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAJAAAA",
+              "DocumentIndex": 1,
+              "Title": "AuthModel.cs",
+              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\DTO\\AuthModel.cs",
+              "RelativeDocumentMoniker": "EMS_SYSTEM.ENTITIES\\DTO\\AuthModel.cs",
+              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\DTO\\AuthModel.cs",
+              "RelativeToolTip": "EMS_SYSTEM.ENTITIES\\DTO\\AuthModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-19T00:12:04.691Z"
+              "WhenOpened": "2024-04-24T00:42:07.809Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EMS_SYSTEM.DOMAIN.csproj",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
-              "RelativeDocumentMoniker": "EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
-              "RelativeToolTip": "EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAOAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-04-19T00:02:45.595Z",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\Program.cs",
+              "RelativeDocumentMoniker": "EMS_SYSTEM\\Program.cs",
+              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\Program.cs",
+              "RelativeToolTip": "EMS_SYSTEM\\Program.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-24T00:07:09Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "EMS_SYSTEM.csproj",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\EMS_SYSTEM.csproj",
-              "RelativeDocumentMoniker": "EMS_SYSTEM\\EMS_SYSTEM.csproj",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\EMS_SYSTEM.csproj",
-              "RelativeToolTip": "EMS_SYSTEM\\EMS_SYSTEM.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-04-19T00:02:30.419Z",
+              "Title": "LogInDTO.cs",
+              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\DTO\\LogIn\\LogInDTO.cs",
+              "RelativeDocumentMoniker": "EMS_SYSTEM.ENTITIES\\DTO\\LogIn\\LogInDTO.cs",
+              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\DTO\\LogIn\\LogInDTO.cs",
+              "RelativeToolTip": "EMS_SYSTEM.ENTITIES\\DTO\\LogIn\\LogInDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-24T00:04:33.138Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "EMS_SYSTEM.APPLICATION.csproj",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj",
-              "RelativeDocumentMoniker": "EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj",
-              "RelativeToolTip": "EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-04-19T00:02:03.065Z",
+              "DocumentIndex": 0,
+              "Title": "AccountService.cs",
+              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
+              "RelativeDocumentMoniker": "EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
+              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
+              "RelativeToolTip": "EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAAABQAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-23T21:25:17.335Z",
               "EditorCaption": ""
             }
           ]

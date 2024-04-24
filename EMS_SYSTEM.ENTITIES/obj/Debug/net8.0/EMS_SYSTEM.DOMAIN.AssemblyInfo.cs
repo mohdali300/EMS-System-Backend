@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EMS_SYSTEM.DOMAIN")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac2019488cee17b4d313812a0746140b588831ac")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a11a2ea159989e9b7b8f443c8a0616e8c4933d32")]
 [assembly: System.Reflection.AssemblyProductAttribute("EMS_SYSTEM.DOMAIN")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EMS_SYSTEM.DOMAIN")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
