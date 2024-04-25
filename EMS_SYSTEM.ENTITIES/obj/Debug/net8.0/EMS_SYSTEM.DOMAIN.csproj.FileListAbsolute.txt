@@ -13,3 +13,18 @@ D:\C# Projects\EMS_UNV SYSTEM\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\ref\EMS_SYSTE
 D:\C# Projects\EMS_UNV SYSTEM\EMS_SYSTEM.ENTITIES\bin\Debug\net8.0\EMS_SYSTEM.DOMAIN.runtimeconfig.json
 D:\C# Projects\EMS_UNV SYSTEM\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\EMS_SYSTEM.DOMAIN.csproj.AssemblyReference.cache
 D:\C# Projects\EMS_UNV SYSTEM\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\EMS_SYSTEM.DOMAIN.genruntimeconfig.cache
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\bin\Debug\net8.0\EMS_SYSTEM.DOMAIN.deps.json
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\bin\Debug\net8.0\EMS_SYSTEM.DOMAIN.runtimeconfig.json
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\bin\Debug\net8.0\EMS_SYSTEM.DOMAIN.dll
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\bin\Debug\net8.0\EMS_SYSTEM.DOMAIN.pdb
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\EMS_SYSTEM.DOMAIN.csproj.AssemblyReference.cache
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\EMS_SYSTEM.DOMAIN.GeneratedMSBuildEditorConfig.editorconfig
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\EMS_SYSTEM.DOMAIN.AssemblyInfoInputs.cache
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\EMS_SYSTEM.DOMAIN.AssemblyInfo.cs
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\EMS_SYSTEM.DOMAIN.csproj.CoreCompileInputs.cache
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\EMS_SYSTEM.DOMAIN.sourcelink.json
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\EMS_SYSTEM.DOMAIN.dll
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\refint\EMS_SYSTEM.DOMAIN.dll
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\EMS_SYSTEM.DOMAIN.pdb
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\EMS_SYSTEM.DOMAIN.genruntimeconfig.cache
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.ENTITIES\obj\Debug\net8.0\ref\EMS_SYSTEM.DOMAIN.dll

@@ -16,3 +16,21 @@ D:\C# Projects\EMS_UNV SYSTEM\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.AP
 D:\C# Projects\EMS_UNV SYSTEM\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\ref\EMS_SYSTEM.APPLICATION.dll
 D:\C# Projects\EMS_UNV SYSTEM\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.runtimeconfig.json
 D:\C# Projects\EMS_UNV SYSTEM\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.genruntimeconfig.cache
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.deps.json
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.runtimeconfig.json
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.dll
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.pdb
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.DOMAIN.dll
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.DOMAIN.pdb
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.csproj.AssemblyReference.cache
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.GeneratedMSBuildEditorConfig.editorconfig
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.AssemblyInfoInputs.cache
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.AssemblyInfo.cs
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.csproj.CoreCompileInputs.cache
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.sourcelink.json
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.csproj.CopyComplete
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.dll
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\refint\EMS_SYSTEM.APPLICATION.dll
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.pdb
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.genruntimeconfig.cache
+D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\ref\EMS_SYSTEM.APPLICATION.dll

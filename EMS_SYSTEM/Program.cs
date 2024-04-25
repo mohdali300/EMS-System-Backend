@@ -90,6 +90,7 @@ builder.Services.AddAuthentication(option =>
 
 // Inject Services 
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 
 var app = builder.Build();

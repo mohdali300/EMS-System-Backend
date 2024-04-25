@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {}
+    "D:\\EMS\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {}
   },
   "projects": {
-    "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {
+    "D:\\EMS\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
+        "projectUniqueName": "D:\\EMS\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
         "projectName": "EMS_SYSTEM.DOMAIN",
-        "projectPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
-        "packagesPath": "C:\\Users\\Windows 10\\.nuget\\packages\\",
-        "outputPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\obj\\",
+        "projectPath": "D:\\EMS\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
+        "packagesPath": "C:\\Users\\Abdelatty\\.nuget\\packages\\",
+        "outputPath": "D:\\EMS\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Windows 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
+          "C:\\Users\\Abdelatty\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\DevExpress 23.2\\Components\\System\\Components\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,11 +38,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -99,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
