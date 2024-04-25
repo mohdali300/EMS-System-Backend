@@ -15,5 +15,7 @@ namespace EMS_SYSTEM.DOMAIN.DTO
 
         public bool IsAuthenticated { get; set; } = false;
         public List<string> Roles { get; set; }
+        public string Token { get; set; }
+
     }
 }

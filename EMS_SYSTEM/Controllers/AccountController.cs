@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
+using EMS_SYSTEM.DOMAIN.DTO.LogIn;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EMS_SYSTEM.Controllers
@@ -7,10 +9,24 @@ namespace EMS_SYSTEM.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        [HttpGet("LogIn")]
-        public async Task<IActionResult> LogIn()
+        private readonly IAccountService _accountService;
+        public AccountController(IAccountService _accountService)
         {
-            return Ok();
+            this._accountService=_accountService;
+        }
+        [HttpPost("LogIn")]
+        public async Task<IActionResult> LogIn([FromBody]LogInDTO model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response= await _accountService.LogIn(model);
+                if (Response.IsAuthenticated==true)
+                {
+                    return Ok(new {Response.Message,Response.Token});
+                }
+                return BadRequest(new {Response.Message});
+            }
+            return BadRequest(ModelState);
         }
     }
 }
