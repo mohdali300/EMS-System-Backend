@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\EMS\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj": {}
+    "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj": {}
   },
   "projects": {
-    "E:\\EMS\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {
+    "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\EMS\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
+        "projectUniqueName": "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
         "projectName": "EMS_SYSTEM.DOMAIN",
-        "projectPath": "E:\\EMS\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
-        "packagesPath": "C:\\Users\\Elnour Tech\\.nuget\\packages\\",
-        "outputPath": "E:\\EMS\\EMS_SYSTEM.ENTITIES\\obj\\",
+        "projectPath": "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
+        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LENOVO\\Source\\Repos\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Elnour Tech\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -98,17 +98,17 @@
         }
       }
     },
-    "E:\\EMS\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj": {
+    "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\EMS\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj",
+        "projectUniqueName": "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj",
         "projectName": "EMS_SYSTEM.APPLICATION",
-        "projectPath": "E:\\EMS\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj",
-        "packagesPath": "C:\\Users\\Elnour Tech\\.nuget\\packages\\",
-        "outputPath": "E:\\EMS\\EMS_SYSTEM.SERVICES\\obj\\",
+        "projectPath": "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj",
+        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.SERVICES\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Elnour Tech\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -122,8 +122,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "E:\\EMS\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {
-                "projectPath": "E:\\EMS\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj"
+              "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {
+                "projectPath": "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj"
               }
             }
           }
