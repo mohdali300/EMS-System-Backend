@@ -6,17 +6,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EMS_SYSTEM;
 
-[Table("FACULTY_TYPE")]
-public partial class FacultyType
+[Table("PALCES")]
+public partial class Palce
 {
     [Key]
     [Column("ID")]
     public int Id { get; set; }
 
+    [Column("ADDRESS")]
+    [StringLength(50)]
+    public string? Address { get; set; }
+
     [Column("NAME")]
     [StringLength(50)]
     public string? Name { get; set; }
 
-    [InverseProperty("FacultyType")]
-    public virtual ICollection<Faculty> Faculties { get; set; } = new List<Faculty>();
+    [Column("CAPACITY")]
+    public int? Capacity { get; set; }
 }
