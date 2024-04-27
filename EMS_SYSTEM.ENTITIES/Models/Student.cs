@@ -28,6 +28,10 @@ public partial class Student
     [StringLength(50)]
     public string? Nationalid { get; set; }
 
+    [Column("FACULTYCODE")]
+    [StringLength(50)]
+    public string? FacultyCode { get; set; } // STUDENT FACULTY CODE الكود الجامعي
+
     [Column("GENDER")]
     public int? Gender { get; set; }
 

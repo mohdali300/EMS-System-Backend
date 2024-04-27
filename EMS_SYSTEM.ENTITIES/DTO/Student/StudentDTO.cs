@@ -9,7 +9,7 @@ namespace EMS_SYSTEM.DOMAIN.DTO.Student
     public class StudentDTO
     {
         public string? Name { get; set; }
-        public int? Facultyid { get; set; }
+        public string? FacultyCode { get; set; }
 
         public string? FacultyName { get; set; }
 

@@ -1,37 +1,24 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\",
+  "WorkspaceRootPath": "D:\\Projects\\EMS_SystemFiles\\EMS-System-Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{766422F7-C82E-4B65-AD11-C5BB1237F87D}|EMS_SYSTEM\\EMS_SYSTEM.csproj|d:\\c# projects\\ems_unv system\\ems_system\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{766422F7-C82E-4B65-AD11-C5BB1237F87D}|EMS_SYSTEM\\EMS_SYSTEM.csproj|solutionrelative:ems_system\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|d:\\c# projects\\ems_unv system\\ems_system.services\\repositories\\services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|d:\\projects\\ems_systemfiles\\ems-system-backend\\ems_system.services\\repositories\\interfaces\\istudentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|solutionrelative:ems_system.services\\repositories\\interfaces\\istudentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|d:\\projects\\ems_systemfiles\\ems-system-backend\\ems_system.services\\repositories\\services\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|solutionrelative:ems_system.services\\repositories\\services\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|d:\\projects\\ems_systemfiles\\ems-system-backend\\ems_system.services\\repositories\\services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|solutionrelative:ems_system.services\\repositories\\services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{766422F7-C82E-4B65-AD11-C5BB1237F87D}|EMS_SYSTEM\\EMS_SYSTEM.csproj|d:\\c# projects\\ems_unv system\\ems_system\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{766422F7-C82E-4B65-AD11-C5BB1237F87D}|EMS_SYSTEM\\EMS_SYSTEM.csproj|solutionrelative:ems_system\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|D:\\C# Projects\\EMS_UNV SYSTEM\\ems_system.entities\\dto\\authmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|solutionrelative:ems_system.entities\\dto\\authmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{766422F7-C82E-4B65-AD11-C5BB1237F87D}|EMS_SYSTEM\\EMS_SYSTEM.csproj|D:\\C# Projects\\EMS_UNV SYSTEM\\ems_system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{766422F7-C82E-4B65-AD11-C5BB1237F87D}|EMS_SYSTEM\\EMS_SYSTEM.csproj|solutionrelative:ems_system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|D:\\C# Projects\\EMS_UNV SYSTEM\\ems_system.entities\\dto\\login\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|solutionrelative:ems_system.entities\\dto\\login\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|d:\\c# projects\\ems_unv system\\ems_system.services\\repositories\\interfaces\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E1667E1-8265-460E-9C84-B1B7BF070455}|EMS_SYSTEM.SERVICES\\EMS_SYSTEM.APPLICATION.csproj|solutionrelative:ems_system.services\\repositories\\interfaces\\iaccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|d:\\c# projects\\ems_unv system\\ems_system.entities\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|d:\\projects\\ems_systemfiles\\ems-system-backend\\ems_system.entities\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{38E33F25-6410-4C38-BE0B-E64512CCCE61}|EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj|solutionrelative:ems_system.entities\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -42,7 +29,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 22,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,15 +37,11 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:136:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:134:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Bookmark",
@@ -70,119 +53,130 @@
             },
             {
               "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:138:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:139:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:142:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:143:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
               "Name": "ST:133:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+              "Name": "ST:136:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:140:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:144:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Student.cs",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\Models\\Student.cs",
-              "RelativeDocumentMoniker": "EMS_SYSTEM.ENTITIES\\Models\\Student.cs",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\Models\\Student.cs",
-              "RelativeToolTip": "EMS_SYSTEM.ENTITIES\\Models\\Student.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAA5wAkAAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T11:49:55.24Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IAccountService.cs",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\Repositories\\Interfaces\\IAccountService.cs",
-              "RelativeDocumentMoniker": "EMS_SYSTEM.SERVICES\\Repositories\\Interfaces\\IAccountService.cs",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\Repositories\\Interfaces\\IAccountService.cs",
-              "RelativeToolTip": "EMS_SYSTEM.SERVICES\\Repositories\\Interfaces\\IAccountService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T11:38:31.868Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "EMS_SYSTEM\\Controllers\\AccountController.cs",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "EMS_SYSTEM\\Controllers\\AccountController.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAIwBgAAABFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T11:36:11.562Z",
+              "Title": "Microsoft.Common.CurrentVersion.targets",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ViewState": "AQIAAI8VAAAAAAAAAAAAwJsVAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2024-04-27T18:22:21.775Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\appsettings.json",
-              "RelativeDocumentMoniker": "EMS_SYSTEM\\appsettings.json",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\appsettings.json",
-              "RelativeToolTip": "EMS_SYSTEM\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-04-25T11:09:32.645Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AuthModel.cs",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\DTO\\AuthModel.cs",
-              "RelativeDocumentMoniker": "EMS_SYSTEM.ENTITIES\\DTO\\AuthModel.cs",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\DTO\\AuthModel.cs",
-              "RelativeToolTip": "EMS_SYSTEM.ENTITIES\\DTO\\AuthModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "Title": "StudentService.cs",
+              "DocumentMoniker": "D:\\Projects\\EMS_SystemFiles\\EMS-System-Backend\\EMS_SYSTEM.SERVICES\\Repositories\\Services\\StudentService.cs",
+              "RelativeDocumentMoniker": "EMS_SYSTEM.SERVICES\\Repositories\\Services\\StudentService.cs",
+              "ToolTip": "D:\\Projects\\EMS_SystemFiles\\EMS-System-Backend\\EMS_SYSTEM.SERVICES\\Repositories\\Services\\StudentService.cs",
+              "RelativeToolTip": "EMS_SYSTEM.SERVICES\\Repositories\\Services\\StudentService.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAACgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-24T00:42:07.809Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\Program.cs",
-              "RelativeDocumentMoniker": "EMS_SYSTEM\\Program.cs",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM\\Program.cs",
-              "RelativeToolTip": "EMS_SYSTEM\\Program.cs",
-              "ViewState": "AQIAAEsAAAAAAAAAAAAiwFkAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-24T00:07:09Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "LogInDTO.cs",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\DTO\\LogIn\\LogInDTO.cs",
-              "RelativeDocumentMoniker": "EMS_SYSTEM.ENTITIES\\DTO\\LogIn\\LogInDTO.cs",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\DTO\\LogIn\\LogInDTO.cs",
-              "RelativeToolTip": "EMS_SYSTEM.ENTITIES\\DTO\\LogIn\\LogInDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-24T00:04:33.138Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-26T19:33:03.255Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AccountService.cs",
-              "DocumentMoniker": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
-              "RelativeDocumentMoniker": "EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
-              "ToolTip": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
-              "RelativeToolTip": "EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
-              "ViewState": "AQIAACIAAAAAAAAAAAAYwDEAAAAQAAAA",
+              "Title": "IStudentService.cs",
+              "DocumentMoniker": "D:\\Projects\\EMS_SystemFiles\\EMS-System-Backend\\EMS_SYSTEM.SERVICES\\Repositories\\Interfaces\\IStudentService.cs",
+              "RelativeDocumentMoniker": "EMS_SYSTEM.SERVICES\\Repositories\\Interfaces\\IStudentService.cs",
+              "ToolTip": "D:\\Projects\\EMS_SystemFiles\\EMS-System-Backend\\EMS_SYSTEM.SERVICES\\Repositories\\Interfaces\\IStudentService.cs",
+              "RelativeToolTip": "EMS_SYSTEM.SERVICES\\Repositories\\Interfaces\\IStudentService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-23T21:25:17.335Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-26T19:32:49.495Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Student.cs",
+              "DocumentMoniker": "D:\\Projects\\EMS_SystemFiles\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\Models\\Student.cs",
+              "RelativeDocumentMoniker": "EMS_SYSTEM.ENTITIES\\Models\\Student.cs",
+              "ToolTip": "D:\\Projects\\EMS_SystemFiles\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\Models\\Student.cs",
+              "RelativeToolTip": "EMS_SYSTEM.ENTITIES\\Models\\Student.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAACYAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T11:49:55.24Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AccountService.cs",
+              "DocumentMoniker": "D:\\Projects\\EMS_SystemFiles\\EMS-System-Backend\\EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
+              "RelativeDocumentMoniker": "EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
+              "ToolTip": "D:\\Projects\\EMS_SystemFiles\\EMS-System-Backend\\EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
+              "RelativeToolTip": "EMS_SYSTEM.SERVICES\\Repositories\\Services\\AccountService.cs",
+              "ViewState": "AQIAAEUAAAAAAAAAAAAAAB4AAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-23T21:25:17.335Z"
             }
           ]
         }

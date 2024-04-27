@@ -13,11 +13,12 @@ namespace EMS_SYSTEM.Controllers
         {
             this._studentService = _studentService;
         }
-        [HttpGet("GetData/(:id)")]
-        public async Task<IActionResult> GetData(string Id)
-        {
 
-            return Ok();
+        [HttpGet("GetStudent/{Id}")]
+        public async Task<IActionResult> GetStudentById(string Id)
+        {
+            return Ok(await _studentService.GetStudentByNID(Id));
+            
         }
     }
 }

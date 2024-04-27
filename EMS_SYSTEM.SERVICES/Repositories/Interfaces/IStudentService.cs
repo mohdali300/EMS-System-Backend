@@ -9,6 +9,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
 {
     public interface IStudentService
     {
-        public StudentDTO GetData(string Id);
+        Task<StudentDTO> GetStudentByNID(string Id);
     }
 }

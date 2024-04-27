@@ -34,6 +34,26 @@ D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\refint\EMS_SYSTEM
 D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.pdb
 D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.genruntimeconfig.cache
 D:\EMS\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\ref\EMS_SYSTEM.APPLICATION.dll
+<<<<<<< HEAD
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.deps.json
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.runtimeconfig.json
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.dll
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.pdb
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.DOMAIN.dll
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.DOMAIN.pdb
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.csproj.AssemblyReference.cache
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.AssemblyInfoInputs.cache
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.AssemblyInfo.cs
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.csproj.CoreCompileInputs.cache
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.sourcelink.json
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYST.5C999B22.Up2Date
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.dll
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\refint\EMS_SYSTEM.APPLICATION.dll
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.pdb
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.genruntimeconfig.cache
+D:\Projects\EMS_SystemFiles\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\ref\EMS_SYSTEM.APPLICATION.dll
+=======
 E:\EMS\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.deps.json
 E:\EMS\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.runtimeconfig.json
 E:\EMS\EMS_SYSTEM.SERVICES\bin\Debug\net8.0\EMS_SYSTEM.APPLICATION.dll
@@ -70,3 +90,4 @@ C:\Users\LENOVO\Source\Repos\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\ne
 C:\Users\LENOVO\Source\Repos\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.pdb
 C:\Users\LENOVO\Source\Repos\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\EMS_SYSTEM.APPLICATION.genruntimeconfig.cache
 C:\Users\LENOVO\Source\Repos\EMS-System-Backend\EMS_SYSTEM.SERVICES\obj\Debug\net8.0\ref\EMS_SYSTEM.APPLICATION.dll
+>>>>>>> a6017dd74136df9e721482cd333de6b211da96e1
