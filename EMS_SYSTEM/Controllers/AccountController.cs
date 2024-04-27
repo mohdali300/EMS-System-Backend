@@ -5,6 +5,7 @@ using EMS_SYSTEM.DOMAIN.DTO.LogIn;
 using EMS_SYSTEM.DOMAIN.DTO.PasswordSettings;
 using EMS_SYSTEM.DOMAIN.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,33 +39,21 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
+
+
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO ChangePassword)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return BadRequest(ModelState);
-
-            }
-            // Get Current User
-            ClaimsPrincipal userIdClaim = httpContextAccessor.HttpContext.User;
-            var user = await userManager.GetUserAsync(userIdClaim);
-            //User Not Found
-            if (user == null)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, new ResponseDTO { Status = "Error", Message = "User doesn't Exists" });
-            }
-            var result = await userManager.ChangePasswordAsync(user, ChangePassword.CurrentPassword!, ChangePassword.NewPassword!);
-
-            if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
+                var Response = await _accountService.ChangePasswordAsync(ChangePassword);
+                if (Response.IsDone == true)
                 {
-                    ModelState.AddModelError(error.Code, error.Description);
+                    return StatusCode(Response.StatusCode, Response.Message);
                 }
-                return BadRequest(ModelState);
-            }
-            return StatusCode(StatusCodes.Status200OK, new ResponseDTO { Status = "Success", Message = "Password Changed Successfully" });
+                return StatusCode(Response.StatusCode, Response.Message);
+            }        
+            return BadRequest(ModelState);
 
         }
     }

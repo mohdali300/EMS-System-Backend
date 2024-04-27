@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {}
+    "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {
+    "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
+        "projectUniqueName": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
         "projectName": "EMS_SYSTEM.DOMAIN",
-        "projectPath": "C:\\Users\\LENOVO\\source\\repos\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LENOVO\\Source\\Repos\\EMS-System-Backend\\EMS_SYSTEM.ENTITIES\\obj\\",
+        "projectPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\EMS_SYSTEM.DOMAIN.csproj",
+        "packagesPath": "C:\\Users\\Windows 10\\.nuget\\packages\\",
+        "outputPath": "D:\\C# Projects\\EMS_UNV SYSTEM\\EMS_SYSTEM.ENTITIES\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Windows 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 23.2\\Components\\System\\Components\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

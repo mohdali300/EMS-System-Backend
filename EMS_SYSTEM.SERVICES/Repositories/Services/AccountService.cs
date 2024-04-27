@@ -1,7 +1,9 @@
 ﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.LogIn;
+using EMS_SYSTEM.DOMAIN.DTO.PasswordSettings;
 using EMS_SYSTEM.DOMAIN.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -21,10 +23,14 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
-        public AccountService(UserManager<ApplicationUser> _userManager, IConfiguration _configuration)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public AccountService(UserManager<ApplicationUser> _userManager, IConfiguration _configuration
+            , IHttpContextAccessor _httpContextAccessor)
         {
             this._userManager = _userManager;
             this._configuration = _configuration;
+            this._httpContextAccessor=  _httpContextAccessor;
 
         }
 
@@ -90,10 +96,44 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 issuer: _configuration["JWT:issuer"],
                 audience: _configuration["JWT:audience"],
                 claims: claims,
-                signingCredentials: signingCred
+                signingCredentials: signingCred,
+                expires:DateTime.Now.AddHours(5)
                 );
             return Token;
         }
-        
+
+        public async Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            ClaimsPrincipal userIdClaim = _httpContextAccessor.HttpContext.User;
+
+            return await _userManager.GetUserAsync(userIdClaim);
+        }
+        public async Task<ResponseDTO> ChangePasswordAsync(ChangePasswordDTO model)
+        {
+            var Response = new ResponseDTO();
+            var user = await GetCurrentUserAsync();
+            if (user is null)
+            {
+                return new ResponseDTO { Message = "User Not Found" , IsDone = false ,StatusCode=400};
+            }
+            if (!await _userManager.CheckPasswordAsync(user, model.CurrentPassword))
+            {
+                return new ResponseDTO { Message = "Invalid Password" ,IsDone=false,StatusCode=400};
+            }
+            IdentityResult result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                Response.Message = "Password Changed Successfully";
+                Response.IsDone = true;
+                Response.StatusCode = 200;
+            }
+            else
+            {
+                Response.Message = "Failed To Change Password";
+                Response.IsDone = false;
+                Response.StatusCode = 400;
+            }
+            return Response;
+        }
     }
 }
