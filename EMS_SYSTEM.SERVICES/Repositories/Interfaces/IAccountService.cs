@@ -7,16 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using EMS_SYSTEM.DOMAIN.Models;
 using EMS_SYSTEM.DOMAIN.DTO.PasswordSettings;
+using EMS_SYSTEM.DOMAIN.DTO.Register;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
 {
     public interface IAccountService
     {
-       public Task<AuthModel> LogIn(LogInDTO model);
-       public Task<ApplicationUser> GetCurrentUserAsync();
-       public Task<ResponseDTO> ChangePasswordAsync(ChangePasswordDTO model);
+        public Task<AuthModel> LogIn(LogInDTO model);
+        public Task<ApplicationUser> GetCurrentUserAsync();
+        public Task<ResponseDTO> ChangePasswordAsync(ChangePasswordDTO model);
 
-       public Task<AuthModel> NewRefreshToken(string token); 
+        public Task<AuthModel> NewRefreshToken(string token); 
 
     }
 }
