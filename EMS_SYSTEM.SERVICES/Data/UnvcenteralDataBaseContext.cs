@@ -18,6 +18,7 @@ public partial class UnvcenteralDataBaseContext : IdentityDbContext<ApplicationU
     }
 
     public virtual DbSet<AcadYead> AcadYeads { get; set; }
+    public virtual DbSet<ApplicationUser> Users { get; set; }
 
     public virtual DbSet<Assess> Assesses { get; set; }
 
