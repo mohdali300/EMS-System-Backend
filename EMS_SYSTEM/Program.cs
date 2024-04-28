@@ -94,6 +94,17 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IObserversAndInvigilatorsService, ObserversAndInvigilatorsService>();
 
+// add cores
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+        });
+});
 
 
 var app = builder.Build();
@@ -104,8 +115,10 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+app.UseCors();
 
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
@@ -113,4 +126,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-// Test

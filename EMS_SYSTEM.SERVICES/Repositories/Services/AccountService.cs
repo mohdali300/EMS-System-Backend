@@ -39,11 +39,10 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
         public async Task<AuthModel> LogIn(LogInDTO model)
         {
-            var User = await _userManager.FindByIdAsync(model.UserName);
+            var User = await _userManager.FindByNameAsync(model.UserName);
             if(User is not null)
             {
-                // var isFound = await _userManager.CheckPasswordAsync(User, model.Password);
-                var isFound = true;
+                var isFound = await _userManager.CheckPasswordAsync(User, model.Password);
                 if (isFound)
                 {
                     var Token = await CreateToken(User);
