@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace EMS_SYSTEM.DOMAIN.Enums
 {
-    public enum UserRoles
+    public enum UserRole
 
     {
+        GlobelAdmin=1,
+        FacultyAdmin,
+        Student,
+        Observers,
+        Invigilators
+      
     }
 }
