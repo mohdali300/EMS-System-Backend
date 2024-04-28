@@ -78,31 +78,17 @@ namespace EMS_SYSTEM.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody]RegisterDto dto)
         {
-            if(!ModelState.IsValid)
-                return BadRequest(ModelState);  
-            var user = new ApplicationUser
+            if (ModelState.IsValid)
             {
-                NID = dto.NID, 
-            };
-            var result = await userManager.CreateAsync(user, dto.Password);
-            if (result.Succeeded)
-            {
-                return Ok(new UserDto
+                var Response = await _accountService.RegisterAsync(dto);
+                if (Response.IsDone == true)
                 {
-                    NID = dto.NID,
-                    Password = dto.Password,
+                    return Ok(Response);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
 
-                });
-              
-            }
-            else
-            {
-                //return BadRequest("Failed to register user.");
-                
-                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                return BadRequest(errors);
-            }
-            
         }
     }
 }

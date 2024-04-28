@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using Azure;
+using EMS_SYSTEM.DOMAIN.DTO.Register;
 
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
@@ -25,15 +26,17 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
     public class AccountService:IAccountService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AccountService(UserManager<ApplicationUser> _userManager, IConfiguration _configuration
-            , IHttpContextAccessor _httpContextAccessor)
+            , IHttpContextAccessor _httpContextAccessor , RoleManager<IdentityRole> _roleManager)
         {
             this._userManager = _userManager;
             this._configuration = _configuration;
             this._httpContextAccessor=  _httpContextAccessor;
+            this._roleManager = _roleManager;
 
         }
 
@@ -229,6 +232,30 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             }
             return Response;
         }
-        
+
+
+        public async Task<ResponseDTO> RegisterAsync(RegisterDto dto)
+        {
+            var user = new ApplicationUser
+            {
+                NID = dto.NID,
+                UserName = dto.NID
+            };
+            var result = await _userManager.CreateAsync(user, dto.Password);
+            string role = "FacultyAdmin";
+            if (result.Succeeded)
+            {
+                if(await _roleManager.RoleExistsAsync(role)) 
+                {
+                    var res = await _userManager.AddToRoleAsync(user,role);
+                }
+                return new ResponseDTO { Message = "Account Created Successfully", IsDone = true, StatusCode = 200 };
+            }
+            else
+            {
+                return new ResponseDTO { Message = "Faild Register", IsDone = false, StatusCode = 400 };
+            }
+        }
+
     }
 }
