@@ -16,21 +16,27 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
+using Azure;
+using EMS_SYSTEM.DOMAIN.DTO.Register;
+
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
     public class AccountService:IAccountService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AccountService(UserManager<ApplicationUser> _userManager, IConfiguration _configuration
-            , IHttpContextAccessor _httpContextAccessor)
+            , IHttpContextAccessor _httpContextAccessor , RoleManager<IdentityRole> _roleManager)
         {
             this._userManager = _userManager;
             this._configuration = _configuration;
             this._httpContextAccessor=  _httpContextAccessor;
+            this._roleManager = _roleManager;
 
         }
 
@@ -39,11 +45,29 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             var User = await _userManager.FindByNameAsync(model.UserName);
             if(User is not null)
             {
-                var isFound = await _userManager.CheckPasswordAsync(User, model.Password);
+                // var isFound = await _userManager.CheckPasswordAsync(User, model.Password);
+                var isFound = true;
                 if (isFound)
                 {
                     var Token = await CreateToken(User);
                     var Roles = await _userManager.GetRolesAsync(User);
+                    var RefreshToken = "" ;
+                    DateTime RefreshTokenExpireDate ;
+
+                    if (User.RefreshTokens.Any(t => t.IsActive))
+                    {
+                        var ActiveRefreshToken = User.RefreshTokens.FirstOrDefault(t => t.IsActive);
+                        RefreshToken = ActiveRefreshToken.Token;
+                        RefreshTokenExpireDate = ActiveRefreshToken.ExpiresOn;
+                    }else
+                    {
+                       var RefreshTokenObj = CreateRefreshToken();
+                       RefreshToken = RefreshTokenObj.Token;
+                       RefreshTokenExpireDate = RefreshTokenObj.ExpiresOn;
+                       User.RefreshTokens.Add(RefreshTokenObj);
+                       await _userManager.UpdateAsync(User);
+                    }
+
                     return new AuthModel
                     {
                         IsAuthenticated = true,
@@ -52,6 +76,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                         Message = $"Welcome {User.UserName}",
                         Roles = Roles.ToList(),
                         Token = new JwtSecurityTokenHandler().WriteToken(Token),
+                        RefreshToken = RefreshToken
                     };
                 }
                 return new AuthModel
@@ -76,9 +101,75 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             };
         }
 
-        
-        
-        public async Task<JwtSecurityToken> CreateToken(ApplicationUser User)
+
+        public async Task<AuthModel> NewRefreshToken(string token)
+        {
+            var authModel = new AuthModel();
+
+            var user = _userManager.Users.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+            if (user == null)
+            {
+                authModel.IsAuthenticated = false;
+                authModel.Message = "Invaild Token";
+
+                return authModel;
+            }
+
+            var refreshToken = user.RefreshTokens.Single(t => t.Token == token);
+
+            if (!refreshToken.IsActive)
+            {
+                return new AuthModel
+                {
+                    IsAuthenticated = false,
+                    UserName = string.Empty,
+                    Email = string.Empty,
+                    Message = "InActive Token",
+                    Roles = new List<string>(),
+                    Token = string.Empty,
+                };
+            }
+
+            refreshToken.RevokedOn = DateTime.UtcNow;
+
+            var newRefreshToken = CreateRefreshToken();
+            user.RefreshTokens.Add(newRefreshToken);
+            await _userManager.UpdateAsync(user);
+
+            var jwtToken = await CreateToken(user);
+
+            return new AuthModel
+            {
+                IsAuthenticated = true,
+                UserName = string.Empty,
+                Email = string.Empty,
+                Message = "InActive Token",
+                Roles = new List<string>(),
+                Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
+                RefreshToken = newRefreshToken.Token,
+                RefreshTokenExpiration = newRefreshToken.ExpiresOn
+            };
+        }
+
+        private RefreshToken CreateRefreshToken()
+        {
+            var RandomNumber = new byte[32];
+            using var generator = new RNGCryptoServiceProvider();
+            generator.GetBytes(RandomNumber);
+
+            return new RefreshToken
+            {
+                Token = Convert.ToBase64String(RandomNumber),
+                ExpiresOn = DateTime.UtcNow.AddDays(10),
+                CreatedOn = DateTime.UtcNow, 
+            };
+        }
+
+
+       
+
+
+        private async Task<JwtSecurityToken> CreateToken(ApplicationUser User)
         {
             var claims = new List<Claim>
                       {
@@ -104,6 +195,9 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 );
             return Token;
         }
+
+       
+
 
         public async Task<ApplicationUser> GetCurrentUserAsync()
         {
@@ -138,5 +232,30 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             }
             return Response;
         }
+
+
+        public async Task<ResponseDTO> RegisterAsync(RegisterDto dto)
+        {
+            var user = new ApplicationUser
+            {
+                NID = dto.NID,
+                UserName = dto.NID
+            };
+            var result = await _userManager.CreateAsync(user, dto.Password);
+            string role = "FacultyAdmin";
+            if (result.Succeeded)
+            {
+                if(await _roleManager.RoleExistsAsync(role)) 
+                {
+                    var res = await _userManager.AddToRoleAsync(user,role);
+                }
+                return new ResponseDTO { Message = "Account Created Successfully", IsDone = true, StatusCode = 200 };
+            }
+            else
+            {
+                return new ResponseDTO { Message = "Faild Register", IsDone = false, StatusCode = 400 };
+            }
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 using EMS_SYSTEM.APPLICATION;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
+using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.GenericRepository;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.APPLICATION.Repositories.Services;
 using EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork;
@@ -86,13 +87,27 @@ builder.Services.AddAuthentication(option =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
         ValidIssuer = builder.Configuration["JWT:issuer"],
         ValidAudience = builder.Configuration["JWT:audience"],
+        ClockSkew = TimeSpan.Zero
     };
 
 });
 
 // Inject Services 
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ObserversAndInvigilatorsService>();
+
+// add cores
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+        });
+});
 
 
 
@@ -104,8 +119,10 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+app.UseCors();
 
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
@@ -113,4 +130,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-// Test

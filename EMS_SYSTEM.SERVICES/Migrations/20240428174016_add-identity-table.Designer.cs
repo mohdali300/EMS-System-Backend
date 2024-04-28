@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     [DbContext(typeof(UnvcenteralDataBaseContext))]
-    [Migration("20240428085538_add-identity-table")]
+    [Migration("20240428174016_add-identity-table")]
     partial class addidentitytable
     {
         /// <inheritdoc />
@@ -109,6 +109,10 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -789,6 +793,43 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("CodeStudyMethod");
 
                     b.Navigation("Faculty");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.ApplicationUser", b =>
+                {
+                    b.OwnsMany("EMS_SYSTEM.DOMAIN.Models.RefreshToken", "RefreshTokens", b1 =>
+                        {
+                            b1.Property<string>("ApplicationUserId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<DateTime>("CreatedOn")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<DateTime>("ExpiresOn")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<DateTime?>("RevokedOn")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Token")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ApplicationUserId", "Id");
+
+                            b1.ToTable("RefreshToken");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ApplicationUserId");
+                        });
+
+                    b.Navigation("RefreshTokens");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.Faculty", b =>

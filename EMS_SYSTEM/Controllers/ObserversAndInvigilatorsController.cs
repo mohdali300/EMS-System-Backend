@@ -1,5 +1,7 @@
 ﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
+using EMS_SYSTEM.APPLICATION.Repositories.Services;
+using EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.ObserversAndInvigilators;
 using Microsoft.AspNetCore.Http;
@@ -11,16 +13,27 @@ namespace EMS_SYSTEM.Controllers
     [ApiController]
     public class ObserversAndInvigilatorsController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public ObserversAndInvigilatorsController(IUnitOfWork unitOfWork)
+        private readonly ObserversAndInvigilatorsService _observers;
+        public ObserversAndInvigilatorsController(ObserversAndInvigilatorsService observers)
         {
-            _unitOfWork = unitOfWork;
+            _observers = observers;
         }
-        [HttpGet("{id:int}",Name ="GetById")]
 
+        [HttpGet("{id:int}",Name ="GetById")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok();
+            if(ModelState.IsValid)
+            {
+                ResponseDTO response = new();
+                response = await _observers.GetByID(id);
+
+                if(response != null)
+                {
+                    return StatusCode(response.StatusCode, response.Model);
+                }
+                return StatusCode(response.StatusCode, response.Message);
+            }
+            return BadRequest(ModelState);
         }
 
     }

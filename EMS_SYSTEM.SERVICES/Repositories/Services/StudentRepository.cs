@@ -1,4 +1,5 @@
 ﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
+using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Student;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -13,6 +14,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
     public class StudentRepository : GenericRepository<Student>,IStudentRepository
     {
+        private readonly IUnitOfWork _unitOfWork;
         public StudentRepository(UnvcenteralDataBaseContext Db):base(Db)
         {
         }

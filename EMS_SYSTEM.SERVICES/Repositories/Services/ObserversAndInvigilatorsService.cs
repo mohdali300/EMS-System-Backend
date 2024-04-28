@@ -10,16 +10,17 @@ using System.Threading.Tasks;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
-    public class ObserversAndInvigilatorsService:GenericRepository<Staff>, IObserversAndInvigilatorsService
+    public class ObserversAndInvigilatorsService:GenericRepository<Staff>
     {
-
-        public ObserversAndInvigilatorsService(UnvcenteralDataBaseContext Db):base(Db)
+        private readonly IUnitOfWork _unitOfWork;
+        public ObserversAndInvigilatorsService(UnvcenteralDataBaseContext Db, IUnitOfWork unitOfWork) : base(Db)
         {
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<ResponseDTO> GetByID(int id)
         {
-            var staff = await _context.Staff.FindAsync(id);
+            var staff=await _unitOfWork.Staff.GetByIDAsync(id);
 
             if (staff != null)
             {

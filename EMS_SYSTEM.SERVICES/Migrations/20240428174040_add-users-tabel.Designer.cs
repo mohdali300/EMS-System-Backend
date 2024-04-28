@@ -4,6 +4,7 @@ using EMS_SYSTEM.APPLICATION;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     [DbContext(typeof(UnvcenteralDataBaseContext))]
-    partial class UnvcenteralDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240428174040_add-users-tabel")]
+    partial class adduserstabel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -373,13 +376,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
             modelBuilder.Entity("EMS_SYSTEM.Staff", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("ID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Address")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
@@ -394,12 +390,14 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .HasColumnType("int")
                         .HasColumnName("FACULTY_ID");
 
+                    b.Property<int?>("Id")
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("NAME");
-
-                    b.HasKey("Id");
 
                     b.HasIndex("FacultyId");
 

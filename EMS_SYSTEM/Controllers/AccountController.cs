@@ -1,13 +1,17 @@
-﻿using System.Security.Claims;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Azure;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.LogIn;
 using EMS_SYSTEM.DOMAIN.DTO.PasswordSettings;
+using EMS_SYSTEM.DOMAIN.DTO.Register;
 using EMS_SYSTEM.DOMAIN.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
 
 namespace EMS_SYSTEM.Controllers
 {
@@ -33,9 +37,24 @@ namespace EMS_SYSTEM.Controllers
                 var Response= await _accountService.LogIn(model);
                 if (Response.IsAuthenticated==true)
                 {
-                    return Ok(new {Response.Message,Response.Token});
+                    return Ok(Response);
                 }
-                return BadRequest(new {Response.Message});
+                return BadRequest(Response);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet("RefreshToken")]
+        public async Task<IActionResult> RefreshTokenAsync(string token)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _accountService.NewRefreshToken(token);
+                if (Response.IsAuthenticated == true)
+                {
+                    return Ok(new { Response.Message, Response.Token });
+                }
+                return BadRequest(new { Response.Message });
             }
             return BadRequest(ModelState);
         }
@@ -53,6 +72,21 @@ namespace EMS_SYSTEM.Controllers
                 }
                 return StatusCode(Response.StatusCode, Response.Message);
             }        
+            return BadRequest(ModelState);
+
+        }
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register([FromBody]RegisterDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _accountService.RegisterAsync(dto);
+                if (Response.IsDone == true)
+                {
+                    return Ok(Response);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
             return BadRequest(ModelState);
 
         }

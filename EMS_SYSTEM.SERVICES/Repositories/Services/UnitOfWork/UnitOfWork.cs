@@ -13,12 +13,12 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork
     {
         private readonly UnvcenteralDataBaseContext _context;
         public IStudentRepository Students { get; private set; }
-        public IObserversAndInvigilatorsService Staff {  get; private set; }
+        public IGenericRepository<Staff> Staff {  get; private set; }
         public UnitOfWork(UnvcenteralDataBaseContext _context)
         {
             this._context = _context;
             Students = new StudentRepository(_context);
-            Staff = new ObserversAndInvigilatorsService(_context);
+            Staff = new GenericRepository<Staff>(_context);
         }
         public int Save()
         {

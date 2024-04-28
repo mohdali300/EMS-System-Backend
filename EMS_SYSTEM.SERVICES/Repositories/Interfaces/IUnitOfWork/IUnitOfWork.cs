@@ -10,7 +10,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         public IStudentRepository Students { get; }
-        public IObserversAndInvigilatorsService Staff {  get; }
+        public IGenericRepository<Staff> Staff {  get; }
         public int Save();
         public Task<int> SaveAsync();
     }
