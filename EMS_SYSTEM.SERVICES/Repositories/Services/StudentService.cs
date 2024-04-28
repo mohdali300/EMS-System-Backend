@@ -19,11 +19,10 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         }
 
 
-        public async Task<StudentDTO> GetStudentByNID(string Id)
+        public async Task<StudentDTO> GetStudentByID(int Id)
         {
-
             var studentDTO = await _Db.Students
-            .Where(s => s.Nationalid == Id)
+            .Where(s => s.Id == Id)
             .SelectMany(student => student.StudentSemesters
             .Select(semester => new StudentDTO
             {

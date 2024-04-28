@@ -47,11 +47,11 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     return new AuthModel
                     {
                         IsAuthenticated = true,
-                        UserName=User.UserName,
-                        Email=User.Email,
-                        Message=$"Welcome {User.UserName}",
-                        Roles=Roles.ToList(),
-                        Token=new JwtSecurityTokenHandler().WriteToken(Token),  
+                        UserName = User.UserName,
+                        Email = User.Email,
+                        Message = $"Welcome {User.UserName}",
+                        Roles = Roles.ToList(),
+                        Token = new JwtSecurityTokenHandler().WriteToken(Token),
                     };
                 }
                 return new AuthModel
@@ -75,6 +75,9 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 Token = string.Empty,
             };
         }
+
+        
+        
         public async Task<JwtSecurityToken> CreateToken(ApplicationUser User)
         {
             var claims = new List<Claim>

@@ -15,10 +15,9 @@ namespace EMS_SYSTEM.Controllers
         }
 
         [HttpGet("GetStudent/{Id}")]
-        public async Task<IActionResult> GetStudentById(string Id)
+        public async Task<IActionResult> GetStudentById(int Id)
         {
-            return Ok(await _studentService.GetStudentByNID(Id));
-            
+              return Ok(await _studentService.GetStudentByID(Id));            
         }
     }
 }

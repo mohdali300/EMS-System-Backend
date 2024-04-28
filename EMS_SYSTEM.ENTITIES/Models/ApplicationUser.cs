@@ -9,6 +9,5 @@ namespace EMS_SYSTEM.DOMAIN.Models
 {
     public class ApplicationUser:IdentityUser
     {
-        
     }
 }

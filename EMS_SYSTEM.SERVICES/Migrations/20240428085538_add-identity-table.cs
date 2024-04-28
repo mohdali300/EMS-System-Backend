@@ -6,13 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     /// <inheritdoc />
-    public partial class addIdentityClasses : Migration
+    public partial class addidentitytable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-           
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -51,7 +49,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
-
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
@@ -159,7 +156,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -198,8 +194,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-
         }
 
         /// <inheritdoc />
@@ -220,13 +214,11 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
 
-
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-         
         }
     }
 }

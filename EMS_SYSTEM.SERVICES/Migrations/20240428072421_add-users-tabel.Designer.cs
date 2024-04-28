@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     [DbContext(typeof(UnvcenteralDataBaseContext))]
-    [Migration("20240423235334_addIdentityClasses")]
-    partial class addIdentityClasses
+    [Migration("20240428072421_add-users-tabel")]
+    partial class adduserstabel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.AcadYead", b =>
+            modelBuilder.Entity("EMS_SYSTEM.AcadYead", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -38,77 +38,12 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ACAD_YEAD", (string)null);
+                    b.ToTable("ACAD_YEAD");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.ApplicationUser", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Assess", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Assess", b =>
-                {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .HasColumnType("int")
                         .HasColumnName("ID");
 
@@ -117,10 +52,12 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("NAME");
 
-                    b.ToTable("ASSESS", (string)null);
+                    b.HasKey("Id");
+
+                    b.ToTable("ASSESS");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Bylaw", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Bylaw", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -145,10 +82,10 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasIndex("FacultyId");
 
-                    b.ToTable("BYLAW", (string)null);
+                    b.ToTable("BYLAW");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Faculty", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Faculty", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -177,10 +114,10 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasIndex("FacultyTypeId");
 
-                    b.ToTable("FACULTY", (string)null);
+                    b.ToTable("FACULTY");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultyHieryical", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultyHieryical", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -215,14 +152,16 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasIndex("BylawId");
 
+                    b.HasIndex("ParentId");
+
                     b.HasIndex("PhaseId");
 
                     b.HasIndex("SemeterId");
 
-                    b.ToTable("FACULTY_HIERYICAL", (string)null);
+                    b.ToTable("FACULTY_HIERYICAL");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultyNode", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultyNode", b =>
                 {
                     b.Property<int>("FacultyNodeId")
                         .HasColumnType("int")
@@ -260,10 +199,10 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("FACULTY__NODES", (string)null);
+                    b.ToTable("FACULTY__NODES");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultyPhase", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultyPhase", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -291,10 +230,10 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasIndex("FacultyId");
 
-                    b.ToTable("FACULTY_PHASES", (string)null);
+                    b.ToTable("FACULTY_PHASES");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultySemester", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultySemester", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -322,10 +261,10 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasIndex("FacultyId");
 
-                    b.ToTable("FACULTY_SEMESTER", (string)null);
+                    b.ToTable("FACULTY_SEMESTER");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultyType", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultyType", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -338,10 +277,65 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FACULTY_TYPE", (string)null);
+                    b.ToTable("FACULTY_TYPE");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Student", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Palce", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("ADDRESS");
+
+                    b.Property<int?>("Capacity")
+                        .HasColumnType("int")
+                        .HasColumnName("CAPACITY");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("NAME");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PALCES");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.Staff", b =>
+                {
+                    b.Property<string>("Address")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("ADDRESS");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("EMAIL");
+
+                    b.Property<int?>("FacultyId")
+                        .HasColumnType("int")
+                        .HasColumnName("FACULTY_ID");
+
+                    b.Property<int?>("Id")
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("NAME");
+
+                    b.HasIndex("FacultyId");
+
+                    b.ToTable("STAFF");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.Student", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -364,6 +358,11 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("EMAIL");
+
+                    b.Property<string>("FacultyCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("FACULTYCODE");
 
                     b.Property<int?>("Facultyid")
                         .HasColumnType("int")
@@ -392,10 +391,10 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasIndex("Facultyid");
 
-                    b.ToTable("STUDENTS", (string)null);
+                    b.ToTable("STUDENTS");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.StudentSemester", b =>
+            modelBuilder.Entity("EMS_SYSTEM.StudentSemester", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -447,10 +446,42 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasIndex("StuentId");
 
-                    b.ToTable("STUDENT_SEMESTERS", (string)null);
+                    b.HasIndex("StuentSatutsId");
+
+                    b.ToTable("STUDENT_SEMESTERS");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.StudeyMethod", b =>
+            modelBuilder.Entity("EMS_SYSTEM.StudentSemesterSubject", b =>
+                {
+                    b.Property<int>("StudentSubjectSemterId")
+                        .HasColumnType("int")
+                        .HasColumnName("Student_Subject_Semter_Id");
+
+                    b.Property<decimal?>("Degree")
+                        .HasColumnType("decimal(8, 3)");
+
+                    b.Property<int?>("IsPassed")
+                        .HasColumnType("int")
+                        .HasColumnName("Is_Passed");
+
+                    b.Property<int?>("StudentSemestersId")
+                        .HasColumnType("int")
+                        .HasColumnName("STUDENT_SEMESTERS_Id");
+
+                    b.Property<int?>("SubjectId")
+                        .HasColumnType("int")
+                        .HasColumnName("Subject_id");
+
+                    b.HasKey("StudentSubjectSemterId");
+
+                    b.HasIndex("StudentSemestersId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("STUDENT_SEMESTER_SUBJECT");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.StudeyMethod", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -463,12 +494,12 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("STUDEY_METHOD", (string)null);
+                    b.ToTable("STUDEY_METHOD");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.StuentSatut", b =>
+            modelBuilder.Entity("EMS_SYSTEM.StuentSatut", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .HasColumnType("int")
                         .HasColumnName("ID");
 
@@ -477,10 +508,12 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("STUENT_SATUTS");
 
-                    b.ToTable("STUENT_SATUTS", (string)null);
+                    b.HasKey("Id");
+
+                    b.ToTable("STUENT_SATUTS");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Subject", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Subject", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
@@ -493,14 +526,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Property<int?>("FacultyHieryicalId")
                         .HasColumnType("int")
                         .HasColumnName("FACULTY_HIERYICAL_ID");
-
-                    b.Property<int?>("FacultyPhasesId")
-                        .HasColumnType("int")
-                        .HasColumnName("FACULTY_PHASES_ID");
-
-                    b.Property<int?>("FacultySemesterId")
-                        .HasColumnType("int")
-                        .HasColumnName("FACULTY_SEMESTER_ID");
 
                     b.Property<int?>("MaxDegree")
                         .HasColumnType("int")
@@ -517,16 +542,18 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FacultyPhasesId");
-
-                    b.ToTable("SUBJECTS", (string)null);
+                    b.ToTable("SUBJECTS");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.SubjectAssess", b =>
+            modelBuilder.Entity("EMS_SYSTEM.SubjectAssess", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int")
                         .HasColumnName("ID");
+
+                    b.Property<int?>("AssessId")
+                        .HasColumnType("int")
+                        .HasColumnName("ASSESS_ID");
 
                     b.Property<int?>("MaxDegree")
                         .HasColumnType("int")
@@ -542,152 +569,21 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AssessId");
+
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("SUBJECT_ASSESS", (string)null);
+                    b.ToTable("SUBJECT_ASSESS");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Bylaw", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Bylaw", b =>
-                {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.StudeyMethod", "CodeStudyMethod")
+                    b.HasOne("EMS_SYSTEM.StudeyMethod", "CodeStudyMethod")
                         .WithMany("Bylaws")
                         .HasForeignKey("CodeStudyMethodId")
                         .HasConstraintName("FK_BYLAW_STUDEY_METHOD");
 
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Faculty", "Faculty")
+                    b.HasOne("EMS_SYSTEM.Faculty", "Faculty")
                         .WithMany("Bylaws")
                         .HasForeignKey("FacultyId")
                         .HasConstraintName("FK_BYLAW_FACULTY");
@@ -697,9 +593,9 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("Faculty");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Faculty", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Faculty", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.FacultyType", "FacultyType")
+                    b.HasOne("EMS_SYSTEM.FacultyType", "FacultyType")
                         .WithMany("Faculties")
                         .HasForeignKey("FacultyTypeId")
                         .HasConstraintName("FK_FACULTY_FACULTY_TYPE");
@@ -707,38 +603,45 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("FacultyType");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultyHieryical", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultyHieryical", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Bylaw", "Bylaw")
+                    b.HasOne("EMS_SYSTEM.Bylaw", "Bylaw")
                         .WithMany("FacultyHieryicals")
                         .HasForeignKey("BylawId")
                         .HasConstraintName("FK_FACULTY_HIERYICAL_BYLAW");
 
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.FacultyPhase", "Phase")
+                    b.HasOne("EMS_SYSTEM.FacultyHieryical", "Parent")
+                        .WithMany("InverseParent")
+                        .HasForeignKey("ParentId")
+                        .HasConstraintName("FK_FACULTY_HIERYICAL_FACULTY_HIERYICAL");
+
+                    b.HasOne("EMS_SYSTEM.FacultyPhase", "Phase")
                         .WithMany("FacultyHieryicals")
                         .HasForeignKey("PhaseId")
                         .HasConstraintName("FK_FACULTY_HIERYICAL_FACULTY_PHASES");
 
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.FacultySemester", "Semeter")
+                    b.HasOne("EMS_SYSTEM.FacultySemester", "Semeter")
                         .WithMany("FacultyHieryicals")
                         .HasForeignKey("SemeterId")
                         .HasConstraintName("FK_FACULTY_HIERYICAL_FACULTY_SEMESTER");
 
                     b.Navigation("Bylaw");
 
+                    b.Navigation("Parent");
+
                     b.Navigation("Phase");
 
                     b.Navigation("Semeter");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultyNode", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultyNode", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Faculty", "Faculty")
+                    b.HasOne("EMS_SYSTEM.Faculty", "Faculty")
                         .WithMany("FacultyNodes")
                         .HasForeignKey("FacultyId")
                         .HasConstraintName("FK_FACULTY__NODES_FACULTY");
 
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.FacultyNode", "Parent")
+                    b.HasOne("EMS_SYSTEM.FacultyNode", "Parent")
                         .WithMany("InverseParent")
                         .HasForeignKey("ParentId")
                         .HasConstraintName("FK_FACULTY__NODES_FACULTY__NODES");
@@ -748,9 +651,9 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultyPhase", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultyPhase", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Faculty", "Faculty")
+                    b.HasOne("EMS_SYSTEM.Faculty", "Faculty")
                         .WithMany("FacultyPhases")
                         .HasForeignKey("FacultyId")
                         .HasConstraintName("FK_FACULTY_PHASES_FACULTY");
@@ -758,9 +661,9 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("Faculty");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultySemester", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultySemester", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Faculty", "Faculty")
+                    b.HasOne("EMS_SYSTEM.Faculty", "Faculty")
                         .WithMany("FacultySemesters")
                         .HasForeignKey("FacultyId")
                         .HasConstraintName("FK_FACULTY_SEMESTER_FACULTY");
@@ -768,9 +671,19 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("Faculty");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Student", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Staff", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Faculty", "Faculty")
+                    b.HasOne("EMS_SYSTEM.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyId")
+                        .HasConstraintName("FK_STAFF_FACULTY");
+
+                    b.Navigation("Faculty");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.Student", b =>
+                {
+                    b.HasOne("EMS_SYSTEM.Faculty", "Faculty")
                         .WithMany("Students")
                         .HasForeignKey("Facultyid")
                         .HasConstraintName("FK_STUDENTS_FACULTY");
@@ -778,27 +691,32 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("Faculty");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.StudentSemester", b =>
+            modelBuilder.Entity("EMS_SYSTEM.StudentSemester", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.AcadYead", "AcadYear")
+                    b.HasOne("EMS_SYSTEM.AcadYead", "AcadYear")
                         .WithMany("StudentSemesters")
                         .HasForeignKey("AcadYearId")
                         .HasConstraintName("FK_STUDENT_SEMESTERS_ACAD_YEAD");
 
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.FacultyHieryical", "FacultyHieryical")
+                    b.HasOne("EMS_SYSTEM.FacultyHieryical", "FacultyHieryical")
                         .WithMany("StudentSemesters")
                         .HasForeignKey("FacultyHieryicalId")
                         .HasConstraintName("FK_STUDENT_SEMESTERS_STUDENT_SEMESTERS");
 
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.FacultyNode", "FacultyNode")
+                    b.HasOne("EMS_SYSTEM.FacultyNode", "FacultyNode")
                         .WithMany("StudentSemesters")
                         .HasForeignKey("FacultyNodeId")
                         .HasConstraintName("FK_STUDENT_SEMESTERS_FACULTY__NODES");
 
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Student", "Stuent")
+                    b.HasOne("EMS_SYSTEM.Student", "Stuent")
                         .WithMany("StudentSemesters")
                         .HasForeignKey("StuentId")
                         .HasConstraintName("FK_STUDENT_SEMESTERS_STUDENTS");
+
+                    b.HasOne("EMS_SYSTEM.StuentSatut", "StuentSatuts")
+                        .WithMany("StudentSemesters")
+                        .HasForeignKey("StuentSatutsId")
+                        .HasConstraintName("FK_STUDENT_SEMESTERS_STUENT_SATUTS");
 
                     b.Navigation("AcadYear");
 
@@ -807,98 +725,71 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("FacultyNode");
 
                     b.Navigation("Stuent");
+
+                    b.Navigation("StuentSatuts");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Subject", b =>
+            modelBuilder.Entity("EMS_SYSTEM.StudentSemesterSubject", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.FacultyPhase", "FacultyPhases")
-                        .WithMany("Subjects")
-                        .HasForeignKey("FacultyPhasesId")
-                        .HasConstraintName("FK_SUBJECTS_FACULTY_PHASES");
+                    b.HasOne("EMS_SYSTEM.StudentSemester", "StudentSemesters")
+                        .WithMany("StudentSemesterSubjects")
+                        .HasForeignKey("StudentSemestersId")
+                        .HasConstraintName("FK_STUDENT_SEMESTER_SUBJECT_STUDENT_SEMESTERS");
 
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.FacultySemester", "IdNavigation")
-                        .WithOne("Subject")
-                        .HasForeignKey("EMS_SYSTEM.DOMAIN.Models.Subject", "Id")
-                        .IsRequired()
-                        .HasConstraintName("FK_SUBJECTS_FACULTY_SEMESTER");
-
-                    b.Navigation("FacultyPhases");
-
-                    b.Navigation("IdNavigation");
-                });
-
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.SubjectAssess", b =>
-                {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Subject", "Subject")
-                        .WithMany("SubjectAssesses")
+                    b.HasOne("EMS_SYSTEM.Subject", "Subject")
+                        .WithMany("StudentSemesterSubjects")
                         .HasForeignKey("SubjectId")
-                        .HasConstraintName("FK_SUBJECT_ASSESS_SUBJECTS");
+                        .HasConstraintName("FK_STUDENT_SEMESTER_SUBJECT_SUBJECTS");
+
+                    b.Navigation("StudentSemesters");
 
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Subject", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("EMS_SYSTEM.FacultySemester", "IdNavigation")
+                        .WithOne("Subject")
+                        .HasForeignKey("EMS_SYSTEM.Subject", "Id")
+                        .IsRequired()
+                        .HasConstraintName("FK_SUBJECTS_FACULTY_SEMESTER");
+
+                    b.Navigation("IdNavigation");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("EMS_SYSTEM.SubjectAssess", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("EMS_SYSTEM.Assess", "Assess")
+                        .WithMany("SubjectAssesses")
+                        .HasForeignKey("AssessId")
+                        .HasConstraintName("FK_SUBJECT_ASSESS_ASSESS");
+
+                    b.HasOne("EMS_SYSTEM.Subject", "Subject")
+                        .WithMany("SubjectAssesses")
+                        .HasForeignKey("SubjectId")
+                        .HasConstraintName("FK_SUBJECT_ASSESS_SUBJECTS");
+
+                    b.Navigation("Assess");
+
+                    b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.AcadYead", b =>
+            modelBuilder.Entity("EMS_SYSTEM.AcadYead", b =>
                 {
                     b.Navigation("StudentSemesters");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Bylaw", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Assess", b =>
+                {
+                    b.Navigation("SubjectAssesses");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.Bylaw", b =>
                 {
                     b.Navigation("FacultyHieryicals");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Faculty", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Faculty", b =>
                 {
                     b.Navigation("Bylaws");
 
@@ -911,49 +802,61 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultyHieryical", b =>
-                {
-                    b.Navigation("StudentSemesters");
-                });
-
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultyNode", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultyHieryical", b =>
                 {
                     b.Navigation("InverseParent");
 
                     b.Navigation("StudentSemesters");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultyPhase", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultyNode", b =>
                 {
-                    b.Navigation("FacultyHieryicals");
+                    b.Navigation("InverseParent");
 
-                    b.Navigation("Subjects");
+                    b.Navigation("StudentSemesters");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultySemester", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultyPhase", b =>
+                {
+                    b.Navigation("FacultyHieryicals");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.FacultySemester", b =>
                 {
                     b.Navigation("FacultyHieryicals");
 
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.FacultyType", b =>
+            modelBuilder.Entity("EMS_SYSTEM.FacultyType", b =>
                 {
                     b.Navigation("Faculties");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Student", b =>
+            modelBuilder.Entity("EMS_SYSTEM.Student", b =>
                 {
                     b.Navigation("StudentSemesters");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.StudeyMethod", b =>
+            modelBuilder.Entity("EMS_SYSTEM.StudentSemester", b =>
+                {
+                    b.Navigation("StudentSemesterSubjects");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.StudeyMethod", b =>
                 {
                     b.Navigation("Bylaws");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Subject", b =>
+            modelBuilder.Entity("EMS_SYSTEM.StuentSatut", b =>
                 {
+                    b.Navigation("StudentSemesters");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.Subject", b =>
+                {
+                    b.Navigation("StudentSemesterSubjects");
+
                     b.Navigation("SubjectAssesses");
                 });
 #pragma warning restore 612, 618

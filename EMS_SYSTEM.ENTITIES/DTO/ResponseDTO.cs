@@ -10,6 +10,7 @@ namespace EMS_SYSTEM.DOMAIN.DTO
     {
         public int StatusCode { get; set; }
         public bool IsDone { get; set; }
+
         public object? Model { get; set; }
         public ICollection<object>? Models { get; set; }
         public string? Message { get; set; }
