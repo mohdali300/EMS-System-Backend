@@ -1,6 +1,9 @@
 using EMS_SYSTEM.APPLICATION;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
+using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.GenericRepository;
+using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.APPLICATION.Repositories.Services;
+using EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork;
 using EMS_SYSTEM.DOMAIN.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -93,7 +96,20 @@ builder.Services.AddAuthentication(option =>
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IObserversAndInvigilatorsService, ObserversAndInvigilatorsService>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+// add cores
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+        });
+});
 
 
 var app = builder.Build();
@@ -104,8 +120,10 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+app.UseCors();
 
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
@@ -113,4 +131,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-// Test
