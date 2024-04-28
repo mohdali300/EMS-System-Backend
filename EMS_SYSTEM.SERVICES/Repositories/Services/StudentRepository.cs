@@ -1,4 +1,5 @@
 ﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
+using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Student;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -10,18 +11,15 @@ using System.Threading.Tasks;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
-    public class StudentService : IStudentService
+    public class StudentRepository : GenericRepository<Student>,IStudentRepository
     {
-        private readonly UnvcenteralDataBaseContext _Db;
-        public StudentService(UnvcenteralDataBaseContext _Db)
+        public StudentRepository(UnvcenteralDataBaseContext Db):base(Db)
         {
-            this._Db = _Db;
         }
 
-
-        public async Task<StudentDTO> GetStudentByID(int Id)
+        public async Task<ResponseDTO> GetStudentDataByID(int Id)
         {
-            var studentDTO = await _Db.Students
+            var studentDTO = await _context.Students
             .Where(s => s.Id == Id)
             .SelectMany(student => student.StudentSemesters
             .Select(semester => new StudentDTO
@@ -35,7 +33,24 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             }))
             .FirstOrDefaultAsync();
 
-            return studentDTO;
+            if(studentDTO != null)
+            {
+                return new ResponseDTO
+                {
+                    Model = studentDTO,
+                    StatusCode = 200,
+                    IsDone = true
+                };
+            }
+            else
+            {
+                return new ResponseDTO
+                {
+                    StatusCode=400,
+                    IsDone = false,
+                    Message="Sorry, This Student is not exists!"
+                };
+            }
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.GenericRepository;
+﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
+using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.GenericRepository;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,13 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork
     public class UnitOfWork:IUnitOfWork
     {
         private readonly UnvcenteralDataBaseContext _context;
-        public IGenericRepository<Student> Students { get; private set; }
+        public IStudentRepository Students { get; private set; }
+        public IObserversAndInvigilatorsService Staff {  get; private set; }
         public UnitOfWork(UnvcenteralDataBaseContext _context)
         {
             this._context = _context;
-            Students = new GenericRepository<Student>(_context);
-
+            Students = new StudentRepository(_context);
+            Staff = new ObserversAndInvigilatorsService(_context);
         }
         public int Save()
         {

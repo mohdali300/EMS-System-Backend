@@ -1,4 +1,6 @@
 ﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
+using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
+using EMS_SYSTEM.DOMAIN.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,16 +10,27 @@ namespace EMS_SYSTEM.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly IStudentService _studentService;
-        public StudentController(IStudentService _studentService) 
+        private readonly IUnitOfWork _unitOfWork;
+        private ResponseDTO _responseDTO;
+        public StudentController(IUnitOfWork unitOfWork) 
         {
-            this._studentService = _studentService;
+            _unitOfWork=unitOfWork;
+            _responseDTO=new ResponseDTO();
         }
 
         [HttpGet("GetStudent/{Id}")]
         public async Task<IActionResult> GetStudentById(int Id)
         {
-              return Ok(await _studentService.GetStudentByID(Id));            
+            if(ModelState.IsValid)
+            {
+                _responseDTO = await _unitOfWork.Students.GetStudentDataByID(Id);
+                if (_responseDTO.IsDone)
+                {
+                    return StatusCode(_responseDTO.StatusCode,_responseDTO.Model);
+                }
+                return StatusCode(_responseDTO.StatusCode, _responseDTO.Message);
+            }
+            return BadRequest(ModelState);
         }
     }
 }

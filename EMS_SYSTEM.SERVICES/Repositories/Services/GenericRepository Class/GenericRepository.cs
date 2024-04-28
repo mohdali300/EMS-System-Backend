@@ -11,10 +11,10 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly UnvcenteralDataBaseContext _context;
-        public GenericRepository(UnvcenteralDataBaseContext _context)
+        protected readonly UnvcenteralDataBaseContext _context;
+        public GenericRepository(UnvcenteralDataBaseContext context)
         {
-            this._context = _context;
+            _context = context;
         }
         public async Task<T> AddAsync(T Model)
         {

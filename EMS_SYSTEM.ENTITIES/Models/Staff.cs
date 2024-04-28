@@ -6,12 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EMS_SYSTEM;
 
-[Keyless]
 [Table("STAFF")]
 public partial class Staff
 {
     [Column("ID")]
-    public int? Id { get; set; }
+    public int Id { get; set; }
 
     [Column("NAME")]
     [StringLength(50)]
