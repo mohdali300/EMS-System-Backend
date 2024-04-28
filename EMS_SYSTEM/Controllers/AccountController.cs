@@ -1,4 +1,6 @@
-﻿using System.Security.Claims;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Azure;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.LogIn;
@@ -33,9 +35,24 @@ namespace EMS_SYSTEM.Controllers
                 var Response= await _accountService.LogIn(model);
                 if (Response.IsAuthenticated==true)
                 {
-                    return Ok(new {Response.Message,Response.Token});
+                    return Ok(Response);
                 }
-                return BadRequest(new {Response.Message});
+                return BadRequest(Response);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet("RefreshToken")]
+        public async Task<IActionResult> RefreshTokenAsync(string token)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _accountService.NewRefreshToken(token);
+                if (Response.IsAuthenticated == true)
+                {
+                    return Ok(new { Response.Message, Response.Token });
+                }
+                return BadRequest(new { Response.Message });
             }
             return BadRequest(ModelState);
         }

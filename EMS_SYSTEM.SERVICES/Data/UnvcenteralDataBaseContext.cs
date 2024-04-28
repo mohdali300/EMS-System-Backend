@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using EMS_SYSTEM.DOMAIN.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EMS_SYSTEM.APPLICATION;
 
-public partial class UnvcenteralDataBaseContext : DbContext
+public partial class UnvcenteralDataBaseContext : IdentityDbContext<ApplicationUser>
 {
     public UnvcenteralDataBaseContext()
     {
@@ -16,6 +18,7 @@ public partial class UnvcenteralDataBaseContext : DbContext
     }
 
     public virtual DbSet<AcadYead> AcadYeads { get; set; }
+    public virtual DbSet<ApplicationUser> Users { get; set; }
 
     public virtual DbSet<Assess> Assesses { get; set; }
 
@@ -57,6 +60,7 @@ public partial class UnvcenteralDataBaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<AcadYead>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();

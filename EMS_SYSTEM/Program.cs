@@ -87,6 +87,7 @@ builder.Services.AddAuthentication(option =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
         ValidIssuer = builder.Configuration["JWT:issuer"],
         ValidAudience = builder.Configuration["JWT:audience"],
+        ClockSkew = TimeSpan.Zero
     };
 
 });
@@ -98,6 +99,17 @@ builder.Services.AddScoped<IObserversAndInvigilatorsService, ObserversAndInvigil
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+// add cores
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+        });
+});
 
 
 var app = builder.Build();
@@ -108,8 +120,10 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+app.UseCors();
 
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
@@ -117,4 +131,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-// Test

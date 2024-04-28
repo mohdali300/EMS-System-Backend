@@ -16,6 +16,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
+using Azure;
+
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
@@ -44,14 +47,32 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 {
                     var Token = await CreateToken(User);
                     var Roles = await _userManager.GetRolesAsync(User);
+                    var RefreshToken = "" ;
+                    DateTime RefreshTokenExpireDate ;
+
+                    if (User.RefreshTokens.Any(t => t.IsActive))
+                    {
+                        var ActiveRefreshToken = User.RefreshTokens.FirstOrDefault(t => t.IsActive);
+                        RefreshToken = ActiveRefreshToken.Token;
+                        RefreshTokenExpireDate = ActiveRefreshToken.ExpiresOn;
+                    }else
+                    {
+                       var RefreshTokenObj = CreateRefreshToken();
+                       RefreshToken = RefreshTokenObj.Token;
+                       RefreshTokenExpireDate = RefreshTokenObj.ExpiresOn;
+                       User.RefreshTokens.Add(RefreshTokenObj);
+                       await _userManager.UpdateAsync(User);
+                    }
+
                     return new AuthModel
                     {
                         IsAuthenticated = true,
-                        UserName=User.UserName,
-                        Email=User.Email,
-                        Message=$"Welcome {User.UserName}",
-                        Roles=Roles.ToList(),
-                        Token=new JwtSecurityTokenHandler().WriteToken(Token),  
+                        UserName = User.UserName,
+                        Email = User.Email,
+                        Message = $"Welcome {User.UserName}",
+                        Roles = Roles.ToList(),
+                        Token = new JwtSecurityTokenHandler().WriteToken(Token),
+                        RefreshToken = RefreshToken
                     };
                 }
                 return new AuthModel
@@ -75,7 +96,76 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 Token = string.Empty,
             };
         }
-        public async Task<JwtSecurityToken> CreateToken(ApplicationUser User)
+
+
+        public async Task<AuthModel> NewRefreshToken(string token)
+        {
+            var authModel = new AuthModel();
+
+            var user = _userManager.Users.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+            if (user == null)
+            {
+                authModel.IsAuthenticated = false;
+                authModel.Message = "Invaild Token";
+
+                return authModel;
+            }
+
+            var refreshToken = user.RefreshTokens.Single(t => t.Token == token);
+
+            if (!refreshToken.IsActive)
+            {
+                return new AuthModel
+                {
+                    IsAuthenticated = false,
+                    UserName = string.Empty,
+                    Email = string.Empty,
+                    Message = "InActive Token",
+                    Roles = new List<string>(),
+                    Token = string.Empty,
+                };
+            }
+
+            refreshToken.RevokedOn = DateTime.UtcNow;
+
+            var newRefreshToken = CreateRefreshToken();
+            user.RefreshTokens.Add(newRefreshToken);
+            await _userManager.UpdateAsync(user);
+
+            var jwtToken = await CreateToken(user);
+
+            return new AuthModel
+            {
+                IsAuthenticated = true,
+                UserName = string.Empty,
+                Email = string.Empty,
+                Message = "InActive Token",
+                Roles = new List<string>(),
+                Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
+                RefreshToken = newRefreshToken.Token,
+                RefreshTokenExpiration = newRefreshToken.ExpiresOn
+            };
+        }
+
+        private RefreshToken CreateRefreshToken()
+        {
+            var RandomNumber = new byte[32];
+            using var generator = new RNGCryptoServiceProvider();
+            generator.GetBytes(RandomNumber);
+
+            return new RefreshToken
+            {
+                Token = Convert.ToBase64String(RandomNumber),
+                ExpiresOn = DateTime.UtcNow.AddDays(10),
+                CreatedOn = DateTime.UtcNow, 
+            };
+        }
+
+
+       
+
+
+        private async Task<JwtSecurityToken> CreateToken(ApplicationUser User)
         {
             var claims = new List<Claim>
                       {
@@ -101,6 +191,9 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 );
             return Token;
         }
+
+       
+
 
         public async Task<ApplicationUser> GetCurrentUserAsync()
         {
