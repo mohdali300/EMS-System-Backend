@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using EMS_SYSTEM.DOMAIN.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -61,6 +62,42 @@ public partial class UnvcenteralDataBaseContext : IdentityDbContext<ApplicationU
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        //List<IdentityRole> roles = new List<IdentityRole>
+        //{
+        //    /*
+        //       GlobelAdmin=1,
+        //        FacultyAdmin,
+        //        Student,
+        //        Observers,
+        //        Invigilators
+        //     */
+        //    new IdentityRole()
+        //    {
+        //        Name="GlobelAdmin",
+        //        NormalizedName="GLOBELADMIN"
+        //    },
+        //    new IdentityRole()
+        //    {
+        //        Name="FacultyAdmin",
+        //        NormalizedName="FACULTYADMIN"
+        //    },
+        //    new IdentityRole()
+        //    {
+        //        Name="Student",
+        //        NormalizedName="STUDENT"
+        //    },
+        //    new IdentityRole()
+        //    {
+        //        Name="Observers",
+        //        NormalizedName="OBSERVERS"
+        //    },
+        //    new IdentityRole()
+        //    {
+        //        Name="Invigilators",
+        //        NormalizedName="INVIGILATORS"
+        //    },
+        //};
+        //modelBuilder.Entity<IdentityRole>().HasData(roles);
         modelBuilder.Entity<AcadYead>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
