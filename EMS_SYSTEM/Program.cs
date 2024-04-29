@@ -143,47 +143,6 @@ using (var scope = app.Services.CreateScope())
         }
     }
 
-    ApplicationUser user = new()
-    {
-        NID = "30307052100754",
-        UserName = "FacultyAdmin1",
-        Email = "FacultyAdmin1@gmail.com",
-        LockoutEnabled = false,
-        PhoneNumber = "0123456789"
-    };
-    ApplicationUser user2 = new()
-    {
-        NID = "40370921027543",
-        UserName = "Student1",
-        Email = "Student1@gmail.com",
-        LockoutEnabled = false,
-        PhoneNumber = "01111111111"
-    };
-    ApplicationUser user3 = new()
-    {
-        NID = "36707052155754",
-        UserName = "Globeladmin1",
-        Email = "Globeladmin1@gmail.com",
-        LockoutEnabled = false,
-        PhoneNumber = "01478523698"
-    };
-
-    if (await userManager.FindByIdAsync(user.NID) == null)
-    {
-
-
-        var result = await userManager.CreateAsync(user, "FacultyAdmin*123");
-        var result2 = await userManager.CreateAsync(user2, "Student1*123");
-        var result3 = await userManager.CreateAsync(user3, "Globeladmin1*123");
-
-
-        // Add user to roles
-        await userManager.AddToRoleAsync(user, "FacultyAdmin");
-        await userManager.AddToRoleAsync(user2, "Student");
-        await userManager.AddToRoleAsync(user3, "GlobelAdmin");
-    }
-
-
 
 }
 
