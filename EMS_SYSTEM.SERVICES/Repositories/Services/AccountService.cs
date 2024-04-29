@@ -54,10 +54,10 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     var RefreshToken = "" ;
                     DateTime RefreshTokenExpireDate ;
 
-                    if (User.RefreshTokens.Any(t => t.IsActive))
+                    if (User.RefreshTokens!.Any(t => t.IsActive))
                     {
                         var ActiveRefreshToken = User.RefreshTokens.FirstOrDefault(t => t.IsActive);
-                        RefreshToken = ActiveRefreshToken.Token;
+                        RefreshToken = ActiveRefreshToken!.Token;
                         RefreshTokenExpireDate = ActiveRefreshToken.ExpiresOn;
                     }else
                     {
@@ -177,7 +177,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                      new Claim(ClaimTypes.NameIdentifier, User.Id),
                      new Claim(JwtRegisteredClaimNames.Sub, User.UserName),
                      new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                     new Claim(JwtRegisteredClaimNames.Email, User.Email),
+                     new Claim(JwtRegisteredClaimNames.Email, User.Email!),
                      new Claim("uid", User.Id)
                      };
             var roles = await _userManager.GetRolesAsync(User);
@@ -234,14 +234,19 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         }
 
 
-        public async Task<ResponseDTO> RegisterAsync(RegisterDto dto)
+        public async Task<ResponseDTO> RegisterAsync(RegisterDto registerDto)
         {
             var user = new ApplicationUser
             {
-                NID = dto.NID,
-                UserName = dto.NID
+                NID = registerDto.NID,
+                UserName = registerDto.NID
             };
-            var result = await _userManager.CreateAsync(user, dto.Password);
+            var userExists = await _userManager.FindByNameAsync(user.UserName);
+
+            if (userExists != null)
+                return new ResponseDTO { Message = "UserName already Exists!", IsDone = false, StatusCode = 500 };
+
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
             string role = "FacultyAdmin";
             if (result.Succeeded)
             {
@@ -257,5 +262,38 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             }
         }
 
+        public async Task<ResponseDTO> DeleteUserAsync(string NID)
+        {
+            var Response = new ResponseDTO();
+
+            var userr = new ApplicationUser
+            {
+                NID = NID,
+                UserName = NID
+
+            };
+
+            var user = await _userManager.FindByNameAsync(userr.UserName);
+
+            if (user is null)
+            {
+                return new ResponseDTO { Message = "User Not Found", IsDone = false, StatusCode = 404 };
+
+            }
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                Response.Message = "Failed To Delete The User";
+                Response.IsDone = false;
+                Response.StatusCode = 400;
+            }
+            else
+            {
+                Response.Message = "User Deleted Successfully";
+                Response.IsDone = true;
+                Response.StatusCode = 200;
+            }
+            return Response;
+        }
     }
 }
