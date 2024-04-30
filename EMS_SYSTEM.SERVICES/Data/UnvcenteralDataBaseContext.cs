@@ -220,7 +220,7 @@ public partial class UnvcenteralDataBaseContext : IdentityDbContext<ApplicationU
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Subject)
+            entity.HasOne(d => d.FacultySemester).WithOne(p => p.Subject)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SUBJECTS_FACULTY_SEMESTER");
         });
