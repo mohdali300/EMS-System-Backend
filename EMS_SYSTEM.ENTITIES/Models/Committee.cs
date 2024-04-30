@@ -33,9 +33,7 @@ namespace EMS_SYSTEM.DOMAIN.Models
 
         [ForeignKey("FacultyNodeId")]
         public virtual FacultyNode FacultyNode { get; set; }
-
-        [InverseProperty("Committee")]
-        public ICollection<SubjectCommittee> subjectCommittees { get; set; }=new List<SubjectCommittee>();
+        public ICollection<SubjectCommittee> SubjectCommittees { get; set; }=new List<SubjectCommittee>();
 
 
     }

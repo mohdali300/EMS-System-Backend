@@ -35,5 +35,5 @@ public partial class FacultySemester
     public virtual ICollection<FacultyHieryical> FacultyHieryicals { get; set; } = new List<FacultyHieryical>();
 
     [InverseProperty("IdNavigation")]
-    public virtual Subject? Subject { get; set; }
+    public virtual Subject? Subject {get; set; }
 }
