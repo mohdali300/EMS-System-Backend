@@ -35,5 +35,5 @@ public partial class FacultyPhase
     [InverseProperty("Phase")]
     public virtual ICollection<FacultyHieryical> FacultyHieryicals { get; set; } = new List<FacultyHieryical>();
 
-    public ICollection<Committee> Committees { get; set; } = new List<Committee>();
+    public virtual ICollection<Committee> Committees { get; set; } = new List<Committee>();
 }
