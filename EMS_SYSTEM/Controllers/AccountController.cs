@@ -90,5 +90,21 @@ namespace EMS_SYSTEM.Controllers
             return BadRequest(ModelState);
 
         }
+
+        [HttpDelete("DeleteUser")]
+        public async Task<IActionResult> DeleteUserAsync(string NID)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _accountService.DeleteUserAsync(NID);
+                if (Response.IsDone == true)
+                {
+                    return StatusCode(Response.StatusCode, Response.Message);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+
+        }
     }
 }

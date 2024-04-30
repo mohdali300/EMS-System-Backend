@@ -4,6 +4,7 @@ using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.GenericRepository;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.APPLICATION.Repositories.Services;
 using EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork;
+using EMS_SYSTEM.DOMAIN.Enums;
 using EMS_SYSTEM.DOMAIN.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -128,5 +129,21 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+
+    foreach (UserRole role in Enum.GetValues(typeof(UserRole)))
+    {
+        if (!await roleManager.RoleExistsAsync(role.ToString()))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role.ToString()));
+        }
+    }
+
+
+}
 
 app.Run();
