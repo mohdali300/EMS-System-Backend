@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EMS_SYSTEM.DOMAIN.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EMS_SYSTEM;
@@ -17,8 +18,8 @@ public partial class Subject
     [StringLength(50)]
     public string? Name { get; set; }
 
-    [Column("FACULTY_HIERYICAL_ID")]
-    public int? FacultyHieryicalId { get; set; }
+    [Column("FACULTY_SEMESTER_ID")]
+    public int? FacultySemesterId { get; set; }
 
     [Column("MAX_DEGREE")]
     public int? MaxDegree { get; set; }
@@ -29,13 +30,16 @@ public partial class Subject
     [Column("CREDIT_HOURS")]
     public int? CreditHours { get; set; }
 
-    [ForeignKey("Id")]
+    [ForeignKey("FacultySemesterId")]
     [InverseProperty("Subject")]
-    public virtual FacultySemester IdNavigation { get; set; } = null!;
+    public virtual FacultySemester FacultySemester { get; set; }
 
     [InverseProperty("Subject")]
     public virtual ICollection<StudentSemesterSubject> StudentSemesterSubjects { get; set; } = new List<StudentSemesterSubject>();
 
     [InverseProperty("Subject")]
     public virtual ICollection<SubjectAssess> SubjectAssesses { get; set; } = new List<SubjectAssess>();
+
+    [InverseProperty("Subject")]
+    public ICollection<SubjectCommittee> SubjectCommittees { get; set; }=new List<SubjectCommittee>();
 }

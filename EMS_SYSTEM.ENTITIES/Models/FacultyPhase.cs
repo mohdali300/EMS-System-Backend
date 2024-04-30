@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EMS_SYSTEM.DOMAIN.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EMS_SYSTEM;
@@ -33,4 +34,6 @@ public partial class FacultyPhase
 
     [InverseProperty("Phase")]
     public virtual ICollection<FacultyHieryical> FacultyHieryicals { get; set; } = new List<FacultyHieryical>();
+
+    public ICollection<Committee> Committees { get; set; } = new List<Committee>();
 }
