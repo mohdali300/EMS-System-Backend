@@ -5,14 +5,14 @@
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     /// <inheritdoc />
-    public partial class addSubjectIDToCommittee : Migration
+    public partial class AddNID : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "SubjectID",
-                table: "Committees",
+                name: "NID",
+                table: "STAFF",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
@@ -22,8 +22,8 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "SubjectID",
-                table: "Committees");
+                name: "NID",
+                table: "STAFF");
         }
     }
 }

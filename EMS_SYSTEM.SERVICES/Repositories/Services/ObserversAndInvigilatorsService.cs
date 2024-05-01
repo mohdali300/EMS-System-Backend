@@ -2,6 +2,7 @@
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.ObserversAndInvigilators;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
-    public class ObserversAndInvigilatorsService:GenericRepository<Staff>
+    public class ObserversAndInvigilatorsService:GenericRepository<Staff>,IObserversAndInvigilatorsService
     {
         private readonly IUnitOfWork _unitOfWork;
         public ObserversAndInvigilatorsService(UnvcenteralDataBaseContext Db, IUnitOfWork unitOfWork) : base(Db)
@@ -18,9 +19,9 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseDTO> GetByID(int id)
+        public async Task<ResponseDTO> GetByNID(string id)
         {
-            var staff=await _unitOfWork.Staff.GetByIDAsync(id);
+            var staff=await _context.Staff.FirstOrDefaultAsync(s=>s.NID == id);
 
             if (staff != null)
             {

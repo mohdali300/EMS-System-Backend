@@ -4,6 +4,7 @@ using Azure;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.LogIn;
+using EMS_SYSTEM.DOMAIN.DTO.NewFolder;
 using EMS_SYSTEM.DOMAIN.DTO.PasswordSettings;
 using EMS_SYSTEM.DOMAIN.DTO.Register;
 using EMS_SYSTEM.DOMAIN.Models;
@@ -44,15 +45,15 @@ namespace EMS_SYSTEM.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpGet("RefreshToken")]
-        public async Task<IActionResult> RefreshTokenAsync(string token)
+        [HttpPost("RefreshToken")]
+        public async Task<IActionResult> RefreshTokenAsync([FromBody]RefreshDTO dto)
         {
             if (ModelState.IsValid)
             {
-                var Response = await _accountService.NewRefreshToken(token);
+                var Response = await _accountService.NewRefreshToken(dto.token);
                 if (Response.IsAuthenticated == true)
                 {
-                    return Ok(new { Response.Message, Response.Token });
+                    return Ok(new { Response });
                 }
                 return BadRequest(new { Response.Message });
             }

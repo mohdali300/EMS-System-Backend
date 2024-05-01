@@ -478,6 +478,11 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .HasColumnType("int")
                         .HasColumnName("FACULTY_ID");
 
+                    b.Property<string>("NID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("NID");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")

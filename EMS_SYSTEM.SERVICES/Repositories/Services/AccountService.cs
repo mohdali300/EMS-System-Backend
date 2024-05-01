@@ -135,16 +135,16 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             var newRefreshToken = CreateRefreshToken();
             user.RefreshTokens.Add(newRefreshToken);
             await _userManager.UpdateAsync(user);
-
+            var Roles = await _userManager.GetRolesAsync(user);
             var jwtToken = await CreateToken(user);
 
             return new AuthModel
             {
                 IsAuthenticated = true,
-                UserName = string.Empty,
+                UserName = user.UserName,
                 Email = string.Empty,
-                Message = "InActive Token",
-                Roles = new List<string>(),
+                Message = "Active Token",
+                Roles = Roles.ToList(),
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
                 RefreshToken = newRefreshToken.Token,
                 RefreshTokenExpiration = newRefreshToken.ExpiresOn
@@ -247,7 +247,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 return new ResponseDTO { Message = "UserName already Exists!", IsDone = false, StatusCode = 500 };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
-            string role = "FacultyAdmin";
+            string role = "";
             if (result.Succeeded)
             {
                 if(await _roleManager.RoleExistsAsync(role)) 

@@ -19,11 +19,11 @@ namespace EMS_SYSTEM.Controllers
         }
 
         [HttpGet("GetStudent/{Id}")]
-        public async Task<IActionResult> GetStudentById(int Id)
+        public async Task<IActionResult> GetStudentById(string Id)
         {
             if(ModelState.IsValid)
             {
-                _responseDTO = await _unitOfWork.Students.GetStudentDataByID(Id);
+                _responseDTO = await _unitOfWork.Students.GetStudentDataByNID(Id);
                 if (_responseDTO.IsDone)
                 {
                     return StatusCode(_responseDTO.StatusCode,_responseDTO.Model);

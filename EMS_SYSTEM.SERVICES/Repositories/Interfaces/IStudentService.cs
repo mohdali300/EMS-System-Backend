@@ -11,6 +11,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
 {
     public interface IStudentService:IGenericRepository<Student>
     {
-        Task<ResponseDTO> GetStudentDataByID(int Id);
+        Task<ResponseDTO> GetStudentDataByNID(string Id);
     }
 }

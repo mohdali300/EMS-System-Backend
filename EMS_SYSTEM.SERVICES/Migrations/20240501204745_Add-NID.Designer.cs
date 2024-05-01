@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     [DbContext(typeof(UnvcenteralDataBaseContext))]
-    [Migration("20240501172948_DropSybjectIDFromCommittee")]
-    partial class DropSybjectIDFromCommittee
+    [Migration("20240501204745_Add-NID")]
+    partial class AddNID
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -480,6 +480,10 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Property<int?>("FacultyId")
                         .HasColumnType("int")
                         .HasColumnName("FACULTY_ID");
+
+                    b.Property<int>("NID")
+                        .HasColumnType("int")
+                        .HasColumnName("NID");
 
                     b.Property<string>("Name")
                         .HasMaxLength(50)

@@ -12,7 +12,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
 {
     public interface IObserversAndInvigilatorsService
     {
-        Task<ResponseDTO>GetByID(int id);
+        Task<ResponseDTO>GetByNID(string id);
 
     }
 }

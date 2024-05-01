@@ -20,12 +20,12 @@ namespace EMS_SYSTEM.Controllers
         }
 
         [HttpGet("{id:int}",Name ="GetById")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(string id)
         {
             if(ModelState.IsValid)
             {
                 ResponseDTO response = new();
-                response = await _observers.GetByID(id);
+                response = await _observers.GetByNID(id);
 
                 if(response != null)
                 {

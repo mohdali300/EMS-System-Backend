@@ -11,6 +11,8 @@ public partial class Staff
 {
     [Column("ID")]
     public int Id { get; set; }
+    [Column("NID")]
+    public string NID { get; set; }
 
     [Column("NAME")]
     [StringLength(50)]
