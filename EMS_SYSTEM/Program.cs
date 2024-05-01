@@ -97,6 +97,7 @@ builder.Services.AddAuthentication(option =>
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ObserversAndInvigilatorsService>();
+builder.Services.AddScoped<ICommitteeService,CommitteeService>();
 
 // add cores
 builder.Services.AddCors(options =>

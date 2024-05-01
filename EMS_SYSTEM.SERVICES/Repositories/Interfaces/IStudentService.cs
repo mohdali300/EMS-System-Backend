@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
 {
-    public interface IStudentRepository:IGenericRepository<Student>
+    public interface IStudentService:IGenericRepository<Student>
     {
         Task<ResponseDTO> GetStudentDataByID(int Id);
     }

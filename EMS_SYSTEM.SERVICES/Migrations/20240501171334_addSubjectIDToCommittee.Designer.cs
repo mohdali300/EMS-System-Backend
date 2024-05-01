@@ -4,6 +4,7 @@ using EMS_SYSTEM.APPLICATION;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     [DbContext(typeof(UnvcenteralDataBaseContext))]
-    partial class UnvcenteralDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240501171334_addSubjectIDToCommittee")]
+    partial class addSubjectIDToCommittee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -199,6 +202,9 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Property<string>("StudyMethod")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubjectID")
+                        .HasColumnType("int");
 
                     b.Property<string>("SubjectName")
                         .IsRequired()

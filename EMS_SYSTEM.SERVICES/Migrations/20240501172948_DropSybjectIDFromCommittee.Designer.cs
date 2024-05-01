@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     [DbContext(typeof(UnvcenteralDataBaseContext))]
-    [Migration("20240430231731_init")]
-    partial class init
+    [Migration("20240501172948_DropSybjectIDFromCommittee")]
+    partial class DropSybjectIDFromCommittee
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -162,20 +162,23 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ByLawId")
-                        .HasColumnType("int");
+                    b.Property<string>("ByLaw")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
-                    b.Property<int>("FacultyNodeId")
-                        .HasColumnType("int");
+                    b.Property<string>("FacultyNode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FacultyPhaseId")
-                        .HasColumnType("int");
+                    b.Property<string>("FacultyPhase")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("From")
                         .HasColumnType("datetime2");
@@ -196,16 +199,18 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("StudyMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubjectName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("To")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ByLawId");
-
-                    b.HasIndex("FacultyNodeId");
-
-                    b.HasIndex("FacultyPhaseId");
 
                     b.ToTable("Committees");
                 });
@@ -918,37 +923,10 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("RefreshTokens");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Committee", b =>
-                {
-                    b.HasOne("EMS_SYSTEM.Bylaw", "Bylaw")
-                        .WithMany("Committees")
-                        .HasForeignKey("ByLawId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EMS_SYSTEM.FacultyNode", "FacultyNode")
-                        .WithMany("Committees")
-                        .HasForeignKey("FacultyNodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EMS_SYSTEM.FacultyPhase", "FacultyPhase")
-                        .WithMany("Committees")
-                        .HasForeignKey("FacultyPhaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bylaw");
-
-                    b.Navigation("FacultyNode");
-
-                    b.Navigation("FacultyPhase");
-                });
-
             modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.SubjectCommittee", b =>
                 {
                     b.HasOne("EMS_SYSTEM.DOMAIN.Models.Committee", "Committee")
-                        .WithMany("subjectCommittees")
+                        .WithMany("SubjectCommittees")
                         .HasForeignKey("CommitteeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1207,14 +1185,12 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
             modelBuilder.Entity("EMS_SYSTEM.Bylaw", b =>
                 {
-                    b.Navigation("Committees");
-
                     b.Navigation("FacultyHieryicals");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Committee", b =>
                 {
-                    b.Navigation("subjectCommittees");
+                    b.Navigation("SubjectCommittees");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.Faculty", b =>
@@ -1239,8 +1215,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
             modelBuilder.Entity("EMS_SYSTEM.FacultyNode", b =>
                 {
-                    b.Navigation("Committees");
-
                     b.Navigation("InverseParent");
 
                     b.Navigation("StudentSemesters");
@@ -1248,8 +1222,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
             modelBuilder.Entity("EMS_SYSTEM.FacultyPhase", b =>
                 {
-                    b.Navigation("Committees");
-
                     b.Navigation("FacultyHieryicals");
                 });
 

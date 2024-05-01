@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
-    public class StudentRepository : GenericRepository<Student>,IStudentRepository
+    public class StudentService : GenericRepository<Student>,IStudentService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public StudentRepository(UnvcenteralDataBaseContext Db):base(Db)
+        public StudentService(UnvcenteralDataBaseContext Db):base(Db)
         {
         }
 

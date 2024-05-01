@@ -76,6 +76,31 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Committees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Interval = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    From = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    To = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SubjectName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Place = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Day = table.Column<int>(type: "int", nullable: false),
+                    StudyMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ByLaw = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FacultyNode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FacultyPhase = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Committees", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FACULTY_TYPE",
                 columns: table => new
                 {
@@ -413,47 +438,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Committees",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateOnly>(type: "date", nullable: false),
-                    Interval = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    From = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    To = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Place = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Day = table.Column<int>(type: "int", nullable: false),
-                    ByLawId = table.Column<int>(type: "int", nullable: false),
-                    FacultyNodeId = table.Column<int>(type: "int", nullable: false),
-                    FacultyPhaseId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Committees", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Committees_BYLAW_ByLawId",
-                        column: x => x.ByLawId,
-                        principalTable: "BYLAW",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Committees_FACULTY_PHASES_FacultyPhaseId",
-                        column: x => x.FacultyPhaseId,
-                        principalTable: "FACULTY_PHASES",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Committees_FACULTY__NODES_FacultyNodeId",
-                        column: x => x.FacultyNodeId,
-                        principalTable: "FACULTY__NODES",
-                        principalColumn: "FACULTY_NODE_ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "FACULTY_HIERYICAL",
                 columns: table => new
                 {
@@ -682,21 +666,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 column: "FACULTY_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Committees_ByLawId",
-                table: "Committees",
-                column: "ByLawId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Committees_FacultyNodeId",
-                table: "Committees",
-                column: "FacultyNodeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Committees_FacultyPhaseId",
-                table: "Committees",
-                column: "FacultyPhaseId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_FACULTY_FACULTY_TYPE_ID",
                 table: "FACULTY",
                 column: "FACULTY_TYPE_ID");
@@ -870,6 +839,9 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 name: "ACAD_YEAD");
 
             migrationBuilder.DropTable(
+                name: "FACULTY__NODES");
+
+            migrationBuilder.DropTable(
                 name: "STUDENTS");
 
             migrationBuilder.DropTable(
@@ -877,9 +849,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
             migrationBuilder.DropTable(
                 name: "STUENT_SATUTS");
-
-            migrationBuilder.DropTable(
-                name: "FACULTY__NODES");
 
             migrationBuilder.DropTable(
                 name: "BYLAW");

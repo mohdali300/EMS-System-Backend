@@ -1,6 +1,7 @@
 ﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.GenericRepository;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
+using EMS_SYSTEM.DOMAIN.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,17 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork
     public class UnitOfWork:IUnitOfWork
     {
         private readonly UnvcenteralDataBaseContext _context;
-        public IStudentRepository Students { get; private set; }
+        public IStudentService Students { get; private set; }
+        public IGenericRepository<Committee> Committees { get; private set; }
+        public IGenericRepository<SubjectCommittee> SubjectCommittees { get; private set; }
         public IGenericRepository<Staff> Staff {  get; private set; }
         public UnitOfWork(UnvcenteralDataBaseContext _context)
         {
             this._context = _context;
-            Students = new StudentRepository(_context);
+            Students = new StudentService(_context);
             Staff = new GenericRepository<Staff>(_context);
+            Committees= new GenericRepository<Committee>(_context);
+            SubjectCommittees = new GenericRepository<SubjectCommittee>(_context);
         }
         public int Save()
         {
