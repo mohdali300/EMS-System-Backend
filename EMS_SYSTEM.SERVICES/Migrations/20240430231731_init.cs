@@ -413,6 +413,47 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Committees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Interval = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    From = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    To = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Place = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Day = table.Column<int>(type: "int", nullable: false),
+                    ByLawId = table.Column<int>(type: "int", nullable: false),
+                    FacultyNodeId = table.Column<int>(type: "int", nullable: false),
+                    FacultyPhaseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Committees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Committees_BYLAW_ByLawId",
+                        column: x => x.ByLawId,
+                        principalTable: "BYLAW",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Committees_FACULTY_PHASES_FacultyPhaseId",
+                        column: x => x.FacultyPhaseId,
+                        principalTable: "FACULTY_PHASES",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Committees_FACULTY__NODES_FacultyNodeId",
+                        column: x => x.FacultyNodeId,
+                        principalTable: "FACULTY__NODES",
+                        principalColumn: "FACULTY_NODE_ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FACULTY_HIERYICAL",
                 columns: table => new
                 {
@@ -455,7 +496,7 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false),
                     NAME = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    FACULTY_HIERYICAL_ID = table.Column<int>(type: "int", nullable: true),
+                    FACULTY_SEMESTER_ID = table.Column<int>(type: "int", nullable: true),
                     MAX_DEGREE = table.Column<int>(type: "int", nullable: true),
                     MIN_DEGREE = table.Column<int>(type: "int", nullable: true),
                     CREDIT_HOURS = table.Column<int>(type: "int", nullable: true)
@@ -465,7 +506,7 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     table.PrimaryKey("PK_SUBJECTS", x => x.ID);
                     table.ForeignKey(
                         name: "FK_SUBJECTS_FACULTY_SEMESTER",
-                        column: x => x.ID,
+                        column: x => x.FACULTY_SEMESTER_ID,
                         principalTable: "FACULTY_SEMESTER",
                         principalColumn: "ID");
                 });
@@ -541,6 +582,32 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SubjectCommittees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubjectId = table.Column<int>(type: "int", nullable: false),
+                    CommitteeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectCommittees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubjectCommittees_Committees_CommitteeId",
+                        column: x => x.CommitteeId,
+                        principalTable: "Committees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SubjectCommittees_SUBJECTS_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "SUBJECTS",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "STUDENT_SEMESTER_SUBJECT",
                 columns: table => new
                 {
@@ -613,6 +680,21 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 name: "IX_BYLAW_FACULTY_ID",
                 table: "BYLAW",
                 column: "FACULTY_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Committees_ByLawId",
+                table: "Committees",
+                column: "ByLawId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Committees_FacultyNodeId",
+                table: "Committees",
+                column: "FacultyNodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Committees_FacultyPhaseId",
+                table: "Committees",
+                column: "FacultyPhaseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FACULTY_FACULTY_TYPE_ID",
@@ -713,6 +795,21 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 name: "IX_SUBJECT_ASSESS_SUBJECT_ID",
                 table: "SUBJECT_ASSESS",
                 column: "SUBJECT_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubjectCommittees_CommitteeId",
+                table: "SubjectCommittees",
+                column: "CommitteeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubjectCommittees_SubjectId",
+                table: "SubjectCommittees",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SUBJECTS_FACULTY_SEMESTER_ID",
+                table: "SUBJECTS",
+                column: "FACULTY_SEMESTER_ID");
         }
 
         /// <inheritdoc />
@@ -749,6 +846,9 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 name: "SUBJECT_ASSESS");
 
             migrationBuilder.DropTable(
+                name: "SubjectCommittees");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -761,13 +861,13 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 name: "ASSESS");
 
             migrationBuilder.DropTable(
+                name: "Committees");
+
+            migrationBuilder.DropTable(
                 name: "SUBJECTS");
 
             migrationBuilder.DropTable(
                 name: "ACAD_YEAD");
-
-            migrationBuilder.DropTable(
-                name: "FACULTY__NODES");
 
             migrationBuilder.DropTable(
                 name: "STUDENTS");
@@ -777,6 +877,9 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
             migrationBuilder.DropTable(
                 name: "STUENT_SATUTS");
+
+            migrationBuilder.DropTable(
+                name: "FACULTY__NODES");
 
             migrationBuilder.DropTable(
                 name: "BYLAW");

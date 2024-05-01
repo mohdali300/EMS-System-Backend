@@ -15,11 +15,9 @@ namespace EMS_SYSTEM.DOMAIN.Models
         public int CommitteeId { get; set; }
 
         [ForeignKey("SubjectId")]
-        [InverseProperty("SubjectCommittee")]
         public virtual Subject? Subject { get; set; }
 
         [ForeignKey("CommitteeId")]
-        [InverseProperty("SubjectCommittee")]
         public virtual Committee? Committee { get; set; }
     }
 }

@@ -48,6 +48,5 @@ public partial class FacultyNode
     [InverseProperty("FacultyNode")]
     public virtual ICollection<StudentSemester> StudentSemesters { get; set; } = new List<StudentSemester>();
 
-    [InverseProperty("FacultyNode")]
     public virtual ICollection<Committee> Committees { get; set; }=new List<Committee>();
 }

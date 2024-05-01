@@ -31,7 +31,6 @@ public partial class Subject
     public int? CreditHours { get; set; }
 
     [ForeignKey("FacultySemesterId")]
-    [InverseProperty("Subject")]
     public virtual FacultySemester FacultySemester { get; set; }
 
     [InverseProperty("Subject")]

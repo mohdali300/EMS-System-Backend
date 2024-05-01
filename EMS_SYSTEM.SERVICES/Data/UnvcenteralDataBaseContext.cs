@@ -56,6 +56,8 @@ public partial class UnvcenteralDataBaseContext : IdentityDbContext<ApplicationU
     public virtual DbSet<SubjectAssess> SubjectAssesses { get; set; }
     public virtual DbSet<Committee> Committees { get; set; }
 
+    public virtual DbSet<SubjectCommittee> SubjectCommittees { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=.; Initial Catalog=UNVCenteralDataBase; Integrated Security=True;TrustServerCertificate=True");
@@ -221,7 +223,7 @@ public partial class UnvcenteralDataBaseContext : IdentityDbContext<ApplicationU
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
 
-            entity.HasOne(d => d.FacultySemester).WithOne(p => p.Subject)
+            entity.HasOne(d => d.FacultySemester).WithMany(p => p.Subjects)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SUBJECTS_FACULTY_SEMESTER");
         });
