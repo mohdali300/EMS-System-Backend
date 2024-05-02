@@ -12,7 +12,7 @@ namespace EMS_SYSTEM.DOMAIN.DTO.Student
         public string? FacultyCode { get; set; }
 
         public string? FacultyName { get; set; }
-
+        public int? FacultyId { get; set; }
         public string? Level { get; set; }
         public string? Status { get; set; }
         public string? Department {  get; set; }

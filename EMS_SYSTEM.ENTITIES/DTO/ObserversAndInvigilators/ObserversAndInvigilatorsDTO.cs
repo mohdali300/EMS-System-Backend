@@ -11,5 +11,8 @@ namespace EMS_SYSTEM.DOMAIN.DTO.ObserversAndInvigilators
         
 
         public string Name { get; set; }
+        public string FacultyName { get; set; }
+        public int? FacultyId { get; set; }
+
     }
 }

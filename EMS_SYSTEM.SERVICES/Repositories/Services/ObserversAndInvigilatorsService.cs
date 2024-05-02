@@ -21,13 +21,19 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
         public async Task<ResponseDTO> GetByNID(string id)
         {
-            var staff=await _context.Staff.FirstOrDefaultAsync(s=>s.NID == id);
+            var staff = _context.Staff.Where(s => s.NID == id).Select(s=> new ObserversAndInvigilatorsDTO
+            {
+                Name = s.Name,
+                FacultyName = s.Faculty.FacultyName,
+                FacultyId = s.Faculty.Id,
+            });
 
             if (staff != null)
             {
+                ObserversAndInvigilatorsDTO data = new ObserversAndInvigilatorsDTO();
                 return new ResponseDTO
                 {
-                    Model = staff.Name,
+                    Model = staff,
                     StatusCode = 200,
                     IsDone = true,
                 };
