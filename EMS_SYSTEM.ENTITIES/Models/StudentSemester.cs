@@ -11,6 +11,7 @@ public partial class StudentSemester
 {
     [Key]
     [Column("ID")]
+    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [Column("STUENT_ID")]

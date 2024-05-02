@@ -12,6 +12,8 @@ public partial class FacultyNode
 {
     [Key]
     [Column("FACULTY_NODE_ID")]
+    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+
     public int FacultyNodeId { get; set; }
 
     [Column("NAME")]
@@ -47,5 +49,6 @@ public partial class FacultyNode
 
     [InverseProperty("FacultyNode")]
     public virtual ICollection<StudentSemester> StudentSemesters { get; set; } = new List<StudentSemester>();
+    public virtual ICollection<Subject> Subjects { get; set; }= new List<Subject>();
 
 }

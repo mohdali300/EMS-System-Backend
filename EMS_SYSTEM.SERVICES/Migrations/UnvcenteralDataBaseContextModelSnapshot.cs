@@ -676,16 +676,23 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
             modelBuilder.Entity("EMS_SYSTEM.Subject", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CreditHours")
                         .HasColumnType("int")
                         .HasColumnName("CREDIT_HOURS");
 
-                    b.Property<int?>("FacultySemesterId")
+                    b.Property<int>("FacultyHieryricalId")
                         .HasColumnType("int")
-                        .HasColumnName("FACULTY_SEMESTER_ID");
+                        .HasColumnName("FACULTY_Hieryrical_ID");
+
+                    b.Property<int>("FacultyNodeId")
+                        .HasColumnType("int")
+                        .HasColumnName("FACULTY_NODE_ID");
 
                     b.Property<int?>("MaxDegree")
                         .HasColumnType("int")
@@ -702,7 +709,9 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FacultySemesterId");
+                    b.HasIndex("FacultyHieryricalId");
+
+                    b.HasIndex("FacultyNodeId");
 
                     b.ToTable("SUBJECTS");
                 });
@@ -1099,12 +1108,21 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
             modelBuilder.Entity("EMS_SYSTEM.Subject", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.FacultySemester", "FacultySemester")
+                    b.HasOne("EMS_SYSTEM.FacultyHieryical", "FacultyHieryrical")
                         .WithMany("Subjects")
-                        .HasForeignKey("FacultySemesterId")
-                        .HasConstraintName("FK_SUBJECTS_FACULTY_SEMESTER");
+                        .HasForeignKey("FacultyHieryricalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("FacultySemester");
+                    b.HasOne("EMS_SYSTEM.FacultyNode", "FacultyNode")
+                        .WithMany("Subjects")
+                        .HasForeignKey("FacultyNodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FacultyHieryrical");
+
+                    b.Navigation("FacultyNode");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.SubjectAssess", b =>
@@ -1213,6 +1231,8 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("InverseParent");
 
                     b.Navigation("StudentSemesters");
+
+                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.FacultyNode", b =>
@@ -1220,6 +1240,8 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("InverseParent");
 
                     b.Navigation("StudentSemesters");
+
+                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.FacultyPhase", b =>
@@ -1230,8 +1252,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
             modelBuilder.Entity("EMS_SYSTEM.FacultySemester", b =>
                 {
                     b.Navigation("FacultyHieryicals");
-
-                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.FacultyType", b =>

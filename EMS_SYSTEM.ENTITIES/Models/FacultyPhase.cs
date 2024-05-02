@@ -12,6 +12,7 @@ public partial class FacultyPhase
 {
     [Key]
     [Column("ID")]
+    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [Column("NAME")]

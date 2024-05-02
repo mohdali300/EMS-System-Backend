@@ -58,48 +58,48 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 };
             }
         }
-        public async Task<ResponseDTO> GetSubjects(int bylawId, int facultyPhaseId, int facultyNodeId, int facultyId)
-        {
-            var Hierarchical = await _context.FacultyHieryicals.FirstOrDefaultAsync
-                (h =>
-                h.BylawId == bylawId &&
-                h.PhaseId == facultyPhaseId &&
-                h.Bylaw.FacultyId == facultyId &&
-                h.StudentSemesters.Any(s => s.FacultyNodeId == facultyNodeId));
+        //public async Task<ResponseDTO> GetSubjects(int bylawId, int facultyPhaseId, int facultyNodeId, int facultyId)
+        //{
+        //    var Hierarchical = await _context.FacultyHieryicals.FirstOrDefaultAsync
+        //        (h =>
+        //        h.BylawId == bylawId &&
+        //        h.PhaseId == facultyPhaseId &&
+        //        h.Bylaw.FacultyId == facultyId &&
+        //        h.StudentSemesters.Any(s => s.FacultyNodeId == facultyNodeId));
 
-            if (Hierarchical == null)
-            {
-                return new ResponseDTO
-                {
-                    StatusCode = 400,
-                    IsDone = false,
-                    Message = "Faculty hierarchical record not found"
-                };
+        //    if (Hierarchical == null)
+        //    {
+        //        return new ResponseDTO
+        //        {
+        //            StatusCode = 400,
+        //            IsDone = false,
+        //            Message = "Faculty hierarchical record not found"
+        //        };
 
-            }
+        //    }
 
-            var subjects = await _context.Subjects
-                .Where(s => s.FacultySemester.FacultyHieryicals.Contains(Hierarchical))
-                .ToListAsync();
+        // //   var subjects = await _context.Subjects
+        //     //   .Where(s => s.FacultySemester.FacultyHieryicals.Contains(Hierarchical))
+        //        //.ToListAsync();
 
-            if (subjects != null)
-            {
-                return new ResponseDTO
-                {
-                    Model = subjects,
-                    StatusCode = 200,
-                    IsDone = true
-                };
-            }
-            else
-            {
-                return new ResponseDTO
-                {
-                    StatusCode = 400,
-                    IsDone = false,
-                    Message = "No subjects found "
-                };
-            }
-        }
+        //    if (subjects != null)
+        //    {
+        //        return new ResponseDTO
+        //        {
+        //            Model = subjects,
+        //            StatusCode = 200,
+        //            IsDone = true
+        //        };
+        //    }
+        //    else
+        //    {
+        //        return new ResponseDTO
+        //        {
+        //            StatusCode = 400,
+        //            IsDone = false,
+        //            Message = "No subjects found "
+        //        };
+        //    }
+        //}
     }
 }

@@ -33,20 +33,20 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
-        [HttpGet("subjects")]
-        public async Task<IActionResult> GetSubjects(int bylawId, int facultyPhaseId, int facultyNodeId, int facultyId)
-        {
-            if (ModelState.IsValid)
-            {
-                _responseDTO = await _facultyService.GetSubjects(bylawId, facultyPhaseId, facultyNodeId, facultyId);
-                if (_responseDTO.IsDone)
-                {
-                    return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);
-                }
-                return StatusCode(_responseDTO.StatusCode, _responseDTO.Message);
-            }
-            return BadRequest(ModelState);
-        }
+       // [HttpGet("subjects")]
+        //public async Task<IActionResult> GetSubjects(int bylawId, int facultyPhaseId, int facultyNodeId, int facultyId)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _responseDTO = await _facultyService.GetSubjects(bylawId, facultyPhaseId, facultyNodeId, facultyId);
+        //        if (_responseDTO.IsDone)
+        //        {
+        //            return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);
+        //        }
+        //        return StatusCode(_responseDTO.StatusCode, _responseDTO.Message);
+        //    }
+        //    return BadRequest(ModelState);
+        //}
 
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     [DbContext(typeof(UnvcenteralDataBaseContext))]
-    [Migration("20240501204745_Add-NID")]
-    partial class AddNID
+    [Migration("20240502175109_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -481,8 +481,9 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .HasColumnType("int")
                         .HasColumnName("FACULTY_ID");
 
-                    b.Property<int>("NID")
-                        .HasColumnType("int")
+                    b.Property<string>("NID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("NID");
 
                     b.Property<string>("Name")
@@ -678,16 +679,26 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
             modelBuilder.Entity("EMS_SYSTEM.Subject", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CreditHours")
                         .HasColumnType("int")
                         .HasColumnName("CREDIT_HOURS");
 
-                    b.Property<int?>("FacultySemesterId")
+                    b.Property<int>("FacultyHieryricalId")
                         .HasColumnType("int")
-                        .HasColumnName("FACULTY_SEMESTER_ID");
+                        .HasColumnName("FACULTY_Hieryrical_ID");
+
+                    b.Property<int>("FacultyNodeId")
+                        .HasColumnType("int")
+                        .HasColumnName("FACULTY_NODE_ID");
+
+                    b.Property<int?>("FacultySemesterId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("MaxDegree")
                         .HasColumnType("int")
@@ -703,6 +714,10 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .HasColumnName("NAME");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FacultyHieryricalId");
+
+                    b.HasIndex("FacultyNodeId");
 
                     b.HasIndex("FacultySemesterId");
 
@@ -1101,12 +1116,25 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
             modelBuilder.Entity("EMS_SYSTEM.Subject", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.FacultySemester", "FacultySemester")
+                    b.HasOne("EMS_SYSTEM.FacultyHieryical", "FacultyHieryrical")
                         .WithMany("Subjects")
-                        .HasForeignKey("FacultySemesterId")
-                        .HasConstraintName("FK_SUBJECTS_FACULTY_SEMESTER");
+                        .HasForeignKey("FacultyHieryricalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("FacultySemester");
+                    b.HasOne("EMS_SYSTEM.FacultyNode", "FacultyNode")
+                        .WithMany("Subjects")
+                        .HasForeignKey("FacultyNodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EMS_SYSTEM.FacultySemester", null)
+                        .WithMany("Subjects")
+                        .HasForeignKey("FacultySemesterId");
+
+                    b.Navigation("FacultyHieryrical");
+
+                    b.Navigation("FacultyNode");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.SubjectAssess", b =>
@@ -1215,6 +1243,8 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("InverseParent");
 
                     b.Navigation("StudentSemesters");
+
+                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.FacultyNode", b =>
@@ -1222,6 +1252,8 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("InverseParent");
 
                     b.Navigation("StudentSemesters");
+
+                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.FacultyPhase", b =>

@@ -219,14 +219,7 @@ public partial class UnvcenteralDataBaseContext : IdentityDbContext<ApplicationU
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<Subject>(entity =>
-        {
-            entity.Property(e => e.Id).ValueGeneratedNever();
-
-            entity.HasOne(d => d.FacultySemester).WithMany(p => p.Subjects)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_SUBJECTS_FACULTY_SEMESTER");
-        });
+        
 
         modelBuilder.Entity<SubjectAssess>(entity =>
         {
