@@ -11,6 +11,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
     public interface IFacultyService 
     {
        public Task<ResponseDTO> GetFacultyDataByID(int Id);
+       public Task<ResponseDTO> GetSubjects(int bylawId, int facultyPhaseId, int facultyNodeId, int facultyId);
+
 
     }
 }
