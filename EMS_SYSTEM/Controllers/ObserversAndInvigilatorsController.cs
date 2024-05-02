@@ -29,7 +29,7 @@ namespace EMS_SYSTEM.Controllers
 
                 if(response != null)
                 {
-                    return StatusCode(response.StatusCode, response.Model);
+                    return Ok(response);
                 }
                 return StatusCode(response.StatusCode, response.Message);
             }
