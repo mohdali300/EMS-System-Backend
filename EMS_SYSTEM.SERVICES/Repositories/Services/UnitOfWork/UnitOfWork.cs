@@ -14,12 +14,16 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork
     {
         private readonly UnvcenteralDataBaseContext _context;
         public IStudentService Students { get; private set; }
+
+        public IGenericRepository<Faculty> Faculty { get; private set; }
+
         public IGenericRepository<Committee> Committees { get; private set; }
         public IGenericRepository<SubjectCommittee> SubjectCommittees { get; private set; }
         public IGenericRepository<Staff> Staff {  get; private set; }
         public UnitOfWork(UnvcenteralDataBaseContext _context)
         {
             this._context = _context;
+            Faculty = new GenericRepository<Faculty>(_context);
             Students = new StudentService(_context);
             Staff = new GenericRepository<Staff>(_context);
             Committees= new GenericRepository<Committee>(_context);

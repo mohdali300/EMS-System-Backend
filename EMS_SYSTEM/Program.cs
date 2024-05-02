@@ -98,6 +98,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ObserversAndInvigilatorsService>();
 builder.Services.AddScoped<ICommitteeService,CommitteeService>();
+builder.Services.AddScoped<IFacultyService, FacultyService>();
 
 // add cores
 builder.Services.AddCors(options =>

@@ -1,4 +1,5 @@
 ﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.GenericRepository;
+using EMS_SYSTEM.APPLICATION.Repositories.Services;
 using EMS_SYSTEM.DOMAIN.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         public IStudentService Students { get; }
+        public IGenericRepository<Faculty> Faculty { get; }
+
         public IGenericRepository<Staff> Staff {  get; }
         public IGenericRepository<Committee> Committees { get;}
         public IGenericRepository<SubjectCommittee> SubjectCommittees { get; }
