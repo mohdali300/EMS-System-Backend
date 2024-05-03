@@ -31,7 +31,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 Status = semester.StuentSatuts.StuentSatuts,
                 Department = semester.FacultyNode.Name,
                 Level = semester.FacultyHieryical.Phase.Name,
-                FacultyName = semester.FacultyNode.Faculty.FacultyName
+                FacultyName = semester.FacultyNode.Faculty.FacultyName,
+                FacultyId = semester.FacultyNode.Faculty.Id
             }))
             .FirstOrDefaultAsync();
 
