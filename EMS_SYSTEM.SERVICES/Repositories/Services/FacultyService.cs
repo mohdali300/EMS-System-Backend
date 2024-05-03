@@ -77,7 +77,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             }
         }
 
-        public async Task<ResponseDTO> GetSubjects(FacultyHieryicalDTO hieryicalDTO)
+        public async Task<ResponseDTO> GetSubjects([FromBody]FacultyHieryicalDTO hieryicalDTO)
         {
             var Hierarchical = await _context.FacultyHieryicals.Include(h => h.Subjects)
                 .Where
