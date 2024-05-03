@@ -18,7 +18,7 @@ namespace EMS_SYSTEM.DOMAIN.Models
         public string To { get; set; }
         public string SubjectName { get; set; }
         public string Place { get; set; }
-        public string Status { get; set; }
+        public string Status { get; set; }  
         public Days Day { get; set; }
         public string StudyMethod { get; set; }  
         public string ByLaw { get; set; }
