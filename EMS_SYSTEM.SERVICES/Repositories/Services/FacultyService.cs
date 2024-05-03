@@ -8,6 +8,7 @@ using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Faculty;
 using EMS_SYSTEM.DOMAIN.DTO.Student;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
@@ -58,48 +59,65 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 };
             }
         }
-        //public async Task<ResponseDTO> GetSubjects(int bylawId, int facultyPhaseId, int facultyNodeId, int facultyId)
-        //{
-        //    var Hierarchical = await _context.FacultyHieryicals.FirstOrDefaultAsync
-        //        (h =>
-        //        h.BylawId == bylawId &&
-        //        h.PhaseId == facultyPhaseId &&
-        //        h.Bylaw.FacultyId == facultyId &&
-        //        h.StudentSemesters.Any(s => s.FacultyNodeId == facultyNodeId));
+        public async Task<ResponseDTO> GetSubjects(FacultyHieryicalDTO hieryicalDTO)
+        {
+            var Hierarchical = await _context.FacultyHieryicals.Include(h => h.Subjects)
+                .Where
+                (h =>
+                h.BylawId ==hieryicalDTO.BylawId &&
+                h.PhaseId == hieryicalDTO.PhaseId &&
+                h.Bylaw.FacultyId == hieryicalDTO.FacultyId &&
+                h.SemeterId== hieryicalDTO .FacultySemesterId&&
+                h.StudentSemesters.Any(s => s.FacultyNodeId == hieryicalDTO.FacultyNodeId)).FirstOrDefaultAsync();
 
-        //    if (Hierarchical == null)
-        //    {
-        //        return new ResponseDTO
-        //        {
-        //            StatusCode = 400,
-        //            IsDone = false,
-        //            Message = "Faculty hierarchical record not found"
-        //        };
+            if (Hierarchical == null)
+            {
 
-        //    }
+                return new ResponseDTO
+                {
+                    StatusCode = 400,
+                    IsDone = false,
+                    Message = "Faculty hierarchical record not found"
+                };
+            }
+            //else
+            //{
+            //    return new ResponseDTO
+            //    {
+            //        StatusCode = 200,
+            //        IsDone = true,
+            //        Model = Hierarchical.Id
+            //    };
 
-        // //   var subjects = await _context.Subjects
-        //     //   .Where(s => s.FacultySemester.FacultyHieryicals.Contains(Hierarchical))
-        //        //.ToListAsync();
 
-        //    if (subjects != null)
-        //    {
-        //        return new ResponseDTO
-        //        {
-        //            Model = subjects,
-        //            StatusCode = 200,
-        //            IsDone = true
-        //        };
-        //    }
-        //    else
-        //    {
-        //        return new ResponseDTO
-        //        {
-        //            StatusCode = 400,
-        //            IsDone = false,
-        //            Message = "No subjects found "
-        //        };
-        //    }
-        //}
+            //}
+            var Subjects = Hierarchical.Subjects.Select(s => new SubjectDTO
+            {
+                Id = s.Id,
+                Name = s.Name
+                
+            }).ToList();
+
+            
+
+            if (Subjects != null)
+            {
+                return new ResponseDTO
+                {
+                    Model = Subjects,
+                    StatusCode = 200,
+                    IsDone = true
+                };
+            }
+            else
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 400,
+                    IsDone = false,
+                    Message = "No subjects found "
+                };
+            }
+        }
     }
 }

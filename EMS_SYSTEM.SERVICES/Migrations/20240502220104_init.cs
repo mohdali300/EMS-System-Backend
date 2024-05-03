@@ -531,8 +531,7 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     FACULTY_Hieryrical_ID = table.Column<int>(type: "int", nullable: false),
                     MAX_DEGREE = table.Column<int>(type: "int", nullable: true),
                     MIN_DEGREE = table.Column<int>(type: "int", nullable: true),
-                    CREDIT_HOURS = table.Column<int>(type: "int", nullable: true),
-                    FacultySemesterId = table.Column<int>(type: "int", nullable: true)
+                    CREDIT_HOURS = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -543,11 +542,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         principalTable: "FACULTY_HIERYICAL",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SUBJECTS_FACULTY_SEMESTER_FacultySemesterId",
-                        column: x => x.FacultySemesterId,
-                        principalTable: "FACULTY_SEMESTER",
-                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_SUBJECTS_FACULTY__NODES_FACULTY_NODE_ID",
                         column: x => x.FACULTY_NODE_ID,
@@ -800,11 +794,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 name: "IX_SUBJECTS_FACULTY_NODE_ID",
                 table: "SUBJECTS",
                 column: "FACULTY_NODE_ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SUBJECTS_FacultySemesterId",
-                table: "SUBJECTS",
-                column: "FacultySemesterId");
         }
 
         /// <inheritdoc />

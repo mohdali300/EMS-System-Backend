@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     [DbContext(typeof(UnvcenteralDataBaseContext))]
-    [Migration("20240502175109_init")]
+    [Migration("20240502220104_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -697,9 +697,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .HasColumnType("int")
                         .HasColumnName("FACULTY_NODE_ID");
 
-                    b.Property<int?>("FacultySemesterId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("MaxDegree")
                         .HasColumnType("int")
                         .HasColumnName("MAX_DEGREE");
@@ -718,8 +715,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.HasIndex("FacultyHieryricalId");
 
                     b.HasIndex("FacultyNodeId");
-
-                    b.HasIndex("FacultySemesterId");
 
                     b.ToTable("SUBJECTS");
                 });
@@ -1128,10 +1123,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EMS_SYSTEM.FacultySemester", null)
-                        .WithMany("Subjects")
-                        .HasForeignKey("FacultySemesterId");
-
                     b.Navigation("FacultyHieryrical");
 
                     b.Navigation("FacultyNode");
@@ -1264,8 +1255,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
             modelBuilder.Entity("EMS_SYSTEM.FacultySemester", b =>
                 {
                     b.Navigation("FacultyHieryicals");
-
-                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.FacultyType", b =>
