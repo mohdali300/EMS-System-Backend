@@ -8,7 +8,7 @@ namespace EMS_SYSTEM.DOMAIN.DTO.Faculty
 {
     public class FacultyDTO
     {
-        public string? FacultyName { get; set; }
+        public object? FacultyName { get; set; }
 
         public object? BYlaw { get; set; }
 

@@ -48,20 +48,15 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 .Where(f => f.FacultyId == Id).Select(f => new facultysemsterDTO { Id = f.Id, Name = f.Name })
                 .ToListAsync();
 
-            var faculty = await _context.Faculties
-                .Where(f => f.Id == Id).SelectMany
-                (faculty => faculty.Bylaws.Select(Bylaw => new FacultyDTO
+            var faculty = new FacultyDTO
+            {
+                BYlaw = facultyBylaws,
+                StudyMethod = studymethod,
+                facultyNode = departmentnames,
+                facultyPhase = facultyphases,
+                facultysemster = facultysemster,
 
-                {
-                    FacultyName = faculty.FacultyName,
-                    BYlaw = facultyBylaws.Select(f => $"{f.Id}: {f.Name}").ToList(),
-                    StudyMethod = studymethod.Select(f => $"{f.Id}: {f.Name}").ToList(),
-                    facultyNode = departmentnames.Select(d => $"{d.Id}: {d.Name}").ToList(),
-                    facultyPhase = facultyphases.Select(p => $"{p.Id}: {p.Name}").ToList(),
-                    facultysemster = facultysemster.Select(p => $"{p.Id}: {p.Name}").ToList(),
-
-                }
-                )).FirstOrDefaultAsync();
+            };
             if (faculty != null)
             {
                 return new ResponseDTO
