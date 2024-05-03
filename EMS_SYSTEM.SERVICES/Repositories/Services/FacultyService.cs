@@ -27,6 +27,9 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             var departmentnames = _context.FacultyNodes.Where(d => d.FacultyId == Id).Select(d => d.Name).ToList();
             var facultyphases = _context.FacultyPhases.Where(p => p.FacultyId == Id).Select(p => p.Name).ToList();
             var facultybylaws=_context.Bylaws.Where(l=>l.FacultyId==Id).Select(l=>l.Name).ToList();
+            var facultysemster = _context.FacultySemesters.Where(f => f.FacultyId == Id).Select(f => f.Name).ToList();
+            var studymethods = _context.Bylaws.Where(l => l.FacultyId == Id).Select(l => l.CodeStudyMethod!.Name).ToList();
+
             var faculty = await _context.Faculties
                 .Where(f => f.Id == Id).SelectMany
                 (faculty => faculty.Bylaws.Select(Bylaw => new FacultyDTO
@@ -34,9 +37,10 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 {
                     FacultyName = faculty.FacultyName,
                     BYlaw = facultybylaws!,
-                    StudyMethod = Bylaw.CodeStudyMethod!.Name,
+                    StudyMethod = studymethods!,
                     facultyNode = departmentnames!,
                     facultyPhase = facultyphases!,
+                    facultysemster= facultysemster!
 
                 }
                 )).FirstOrDefaultAsync();
