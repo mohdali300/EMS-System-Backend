@@ -166,9 +166,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         }
 
 
-       
-
-
         private async Task<JwtSecurityToken> CreateToken(ApplicationUser User)
         {
             var claims = new List<Claim>
@@ -247,7 +244,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 return new ResponseDTO { Message = "UserName already Exists!", IsDone = false, StatusCode = 500 };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
-            string role = "";
+            string role = "GlobalAdmin";
             if (result.Succeeded)
             {
                 if(await _roleManager.RoleExistsAsync(role)) 

@@ -1,6 +1,7 @@
 ﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,7 @@ namespace EMS_SYSTEM.Controllers
         }
 
         [HttpGet("GetStudent/{Id}")]
+        [Authorize(Roles = "FacultyAdmin , GlobalAdmin")]
         public async Task<IActionResult> GetStudentById(string Id)
         {
             if(ModelState.IsValid)

@@ -9,7 +9,7 @@ namespace EMS_SYSTEM.DOMAIN.Enums
     public enum UserRole
 
     {
-        GlobelAdmin=1,
+        GlobalAdmin=1,
         FacultyAdmin,
         Student,
         Observers,
