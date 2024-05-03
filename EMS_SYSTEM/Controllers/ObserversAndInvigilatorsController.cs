@@ -4,6 +4,7 @@ using EMS_SYSTEM.APPLICATION.Repositories.Services;
 using EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.ObserversAndInvigilators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
