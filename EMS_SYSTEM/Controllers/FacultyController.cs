@@ -2,6 +2,7 @@
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
+using EMS_SYSTEM.DOMAIN.DTO.Faculty;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EMS_SYSTEM.Controllers
@@ -33,20 +34,20 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
-       // [HttpGet("subjects")]
-        //public async Task<IActionResult> GetSubjects(int bylawId, int facultyPhaseId, int facultyNodeId, int facultyId)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _responseDTO = await _facultyService.GetSubjects(bylawId, facultyPhaseId, facultyNodeId, facultyId);
-        //        if (_responseDTO.IsDone)
-        //        {
-        //            return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);
-        //        }
-        //        return StatusCode(_responseDTO.StatusCode, _responseDTO.Message);
-        //    }
-        //    return BadRequest(ModelState);
-        //}
+        [HttpGet("subjects")]
+        public async Task<IActionResult> GetSubjects([FromQuery] FacultyHieryicalDTO hieryicalDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                _responseDTO = await _facultyService.GetSubjects(hieryicalDTO);
+                if (_responseDTO.IsDone)
+                {
+                    return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);
+                }
+                return StatusCode(_responseDTO.StatusCode, _responseDTO.Message);
+            }
+            return BadRequest(ModelState);
+        }
 
     }
 }
