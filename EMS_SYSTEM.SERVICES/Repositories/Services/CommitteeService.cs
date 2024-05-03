@@ -41,7 +41,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     FacultyPhase = model.FacultyPhase
                     
                 };
-                var isSubjectIdExist= await _context.Subjects.FirstOrDefaultAsync(s=>s.Id==model.SubjectID);
+                var isSubjectIdExist= await _unitOfWork.Subject.IsExistAsync(s => s.Id ==model.SubjectID);
                 if (isSubjectIdExist != null)
                 {
                     await _unitOfWork.Committees.AddAsync(Committee);
@@ -79,23 +79,23 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 .Join(_context.FacultyNodes, FNS => FNS.Subject.FacultyNodeId, FN => FN.FacultyNodeId, (FNS, FN) => new { FacultyNodeSubject = FNS, FacultyNode = FN })
                 .Join(_context.Faculties, FAN => FAN.FacultyNode.FacultyId, FA => FA.Id, (FAN, FA) => new { NodeInFaculty = FAN, Faculty = FA })
                 .Where(C=>C.Faculty.Id==FacultyID)
-                .Select(C=>new Committee
+                .GroupBy(g => g.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees)
+                .Select(C=>new 
                 {
-                    Id= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.Id,
-                    Name =C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.Name,
-                    Date= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.Date,
-                    Interval= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.Interval,
-                    From= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.From,
-                    To= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.To,
-                    SubjectName= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.SubjectName,
-                    Place= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.Place,
-                    Status= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.Status,
-                    Day= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.Day,
-                    StudyMethod= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.StudyMethod,
-                    ByLaw = C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.ByLaw,
-                    FacultyNode= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.FacultyNode,
-                    FacultyPhase= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.FacultyPhase,
-                                 
+                    Id= C.Key.Id,
+                    Name =C.Key.Name,
+                    Date= C.Key.Date,
+                    Interval= C.Key.Interval,
+                    From= C.Key.From,
+                    To= C.Key.To,
+                    SubjectName= C.Key.SubjectName,
+                    Place= C.Key.Place,
+                    Status= C.Key.Status,
+                    Day= C.Key.Day,
+                    StudyMethod= C.Key.StudyMethod,
+                    ByLaw = C.Key.ByLaw,
+                    FacultyNode= C.Key.FacultyNode,
+                    FacultyPhase= C.Key.FacultyPhase                   
                 })
                 .AsNoTracking()
                 .ToListAsync();

@@ -16,6 +16,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork
         public IStudentService Students { get; private set; }
 
         public IGenericRepository<Faculty> Faculty { get; private set; }
+        public IGenericRepository<Subject> Subject { get; private set; }
 
         public IGenericRepository<Committee> Committees { get; private set; }
         public IGenericRepository<SubjectCommittee> SubjectCommittees { get; private set; }
@@ -24,6 +25,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork
         {
             this._context = _context;
             Faculty = new GenericRepository<Faculty>(_context);
+            Subject = new GenericRepository<Subject>(_context);
             Students = new StudentService(_context);
             Staff = new GenericRepository<Staff>(_context);
             Committees= new GenericRepository<Committee>(_context);
