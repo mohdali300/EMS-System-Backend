@@ -24,26 +24,39 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
         public async Task<ResponseDTO> GetFacultyDataByID(int Id)
         {
-            var departmentnames = _context.FacultyNodes.Where(d => d.FacultyId == Id).Select(d => d.Name).ToList();
-            var facultyphases = _context.FacultyPhases.Where(p => p.FacultyId == Id).Select(p => p.Name).ToList();
-            var facultybylaws=_context.Bylaws.Where(l=>l.FacultyId==Id).Select(l=>l.Name).ToList();
-            var facultysemster = _context.FacultySemesters.Where(f => f.FacultyId == Id).Select(f => f.Name).ToList();
-            var studymethods = _context.Bylaws.Where(l => l.FacultyId == Id).Select(l => l.CodeStudyMethod!.Name).ToList();
 
-            var faculty = await _context.Faculties
-                .Where(f => f.Id == Id).SelectMany
-                (faculty => faculty.Bylaws.Select(Bylaw => new FacultyDTO
+            var departmentnames = await _context.FacultyNodes.Where(d => d.FacultyId == Id)
+                .Select(d => new facultyNodeDTO { Id = d.FacultyNodeId, Name = d.Name })
+                .ToListAsync()
+                ;
+            var facultyphases = await _context.FacultyPhases.Where(p => p.FacultyId == Id)
+                .Select(p => new facultyPhaseDTO { Id = p.Id, Name = p.Name })
+                .ToListAsync();
 
-                {
-                    FacultyName = faculty.FacultyName,
-                    BYlaw = facultybylaws!,
-                    StudyMethod = studymethods!,
-                    facultyNode = departmentnames!,
-                    facultyPhase = facultyphases!,
-                    facultysemster= facultysemster!
 
-                }
-                )).FirstOrDefaultAsync();
+            var facultyBylaws = await _context.Bylaws
+                                               .Where(l => l.FacultyId == Id)
+                                               .Select(l => new BylawDTO { Id = l.Id, Name = l.Name })
+                                               .ToListAsync();
+
+
+            var studymethod = await _context.Bylaws
+                .Where(s => s.FacultyId == Id).Select(s => new StudyMethodDTO { Id = (int)s.CodeStudyMethodId!, Name = s.CodeStudyMethod!.Name })
+                .ToListAsync();
+
+            var facultysemster = await _context.FacultySemesters
+                .Where(f => f.FacultyId == Id).Select(f => new facultysemsterDTO { Id = f.Id, Name = f.Name })
+                .ToListAsync();
+
+            var faculty = new FacultyDTO
+            {
+                BYlaw = facultyBylaws,
+                StudyMethod = studymethod,
+                facultyNode = departmentnames,
+                facultyPhase = facultyphases,
+                facultysemster = facultysemster,
+
+            };
             if (faculty != null)
             {
                 return new ResponseDTO
@@ -59,10 +72,11 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 {
                     StatusCode = 400,
                     IsDone = false,
-                    Message = "We Couldn't Find The Faculty"
+                    Message = "Couldn't Find The Faculty"
                 };
             }
         }
+
         public async Task<ResponseDTO> GetSubjects(FacultyHieryicalDTO hieryicalDTO)
         {
             var Hierarchical = await _context.FacultyHieryicals.Include(h => h.Subjects)
@@ -84,17 +98,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     Message = "Faculty hierarchical record not found"
                 };
             }
-            //else
-            //{
-            //    return new ResponseDTO
-            //    {
-            //        StatusCode = 200,
-            //        IsDone = true,
-            //        Model = Hierarchical.Id
-            //    };
-
-
-            //}
+ 
             var Subjects = Hierarchical.Subjects.Select(s => new SubjectDTO
             {
                 Id = s.Id,
