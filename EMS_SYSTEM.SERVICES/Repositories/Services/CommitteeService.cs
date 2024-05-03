@@ -105,7 +105,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 .AsNoTracking()
                 .ToListAsync();
 
-            if (Committees.Count > 0)
+            if (Committees != null)
             {
                 return new ResponseDTO
                 {
