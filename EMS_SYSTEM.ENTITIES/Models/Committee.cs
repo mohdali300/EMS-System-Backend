@@ -14,11 +14,11 @@ namespace EMS_SYSTEM.DOMAIN.Models
         public string Name { get; set; }
         public DateTime Date { get; set; } = DateTime.Now.Date;
         public string Interval { get; set; }
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
         public string SubjectName { get; set; }
         public string Place { get; set; }
-        public string Status { get; set; }
+        public string Status { get; set; }  
         public Days Day { get; set; }
         public string StudyMethod { get; set; }  
         public string ByLaw { get; set; }

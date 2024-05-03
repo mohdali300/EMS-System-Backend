@@ -41,15 +41,27 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     FacultyPhase = model.FacultyPhase
                     
                 };
-                await  _unitOfWork.Committees.AddAsync(Committee);
-                await _unitOfWork.SaveAsync();
-                await _unitOfWork.SubjectCommittees.AddAsync(new SubjectCommittee { SubjectId = model.SubjectID, CommitteeId = Committee.Id });
-                await _unitOfWork.SaveAsync();
-                return new ResponseDTO {
-                    Message= "Committee Created Successfully",
-                    IsDone=true,
-                    Model=Committee,
-                    StatusCode=201
+                var isSubjectIdExist= await _context.Subjects.FirstOrDefaultAsync(s=>s.Id==model.SubjectID);
+                if (isSubjectIdExist != null)
+                {
+                    await _unitOfWork.Committees.AddAsync(Committee);
+                    await _unitOfWork.SaveAsync();
+                    await _unitOfWork.SubjectCommittees.AddAsync(new SubjectCommittee { SubjectId = model.SubjectID, CommitteeId = Committee.Id });
+                    await _unitOfWork.SaveAsync();
+                    return new ResponseDTO
+                    {
+                        Message = "Committee Created Successfully",
+                        IsDone = true,
+                        Model = Committee,
+                        StatusCode = 201
+                    };
+                }
+                return new ResponseDTO
+                {
+                    Message = "Invalid SubjectID", // For FrontEnd not User
+                    IsDone = false,
+                    Model = null,
+                    StatusCode = 400
                 };
             }
             return new ResponseDTO { 
@@ -64,7 +76,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             var Committees = await _context.Committees
                 .Join(_context.SubjectCommittees, C => C.Id, su => su.CommitteeId, (C, su) => new { Committees = C, SubjectCommittes = su })
                 .Join(_context.Subjects, SC => SC.SubjectCommittes.SubjectId, SUB => SUB.Id, (SC, SUB) => new { SubjectCommittes = SC, Subject = SUB })
-                .Join(_context.FacultyNodes, FNS => FNS.Subject.Id, FN => FN.FacultyNodeId, (FNS, FN) => new { FacultyNodeSubject = FNS, FacultyNode = FN })
+                .Join(_context.FacultyNodes, FNS => FNS.Subject.FacultyNodeId, FN => FN.FacultyNodeId, (FNS, FN) => new { FacultyNodeSubject = FNS, FacultyNode = FN })
                 .Join(_context.Faculties, FAN => FAN.FacultyNode.FacultyId, FA => FA.Id, (FAN, FA) => new { NodeInFaculty = FAN, Faculty = FA })
                 .Where(C=>C.Faculty.Id==FacultyID)
                 .Select(C=>new Committee
@@ -83,8 +95,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     ByLaw = C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.ByLaw,
                     FacultyNode= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.FacultyNode,
                     FacultyPhase= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.FacultyPhase,
-                    SubjectCommittees = _context.SubjectCommittees.Where(su=>su.SubjectId==C.NodeInFaculty.FacultyNodeSubject.Subject.Id)
-                    .ToList()                    
+                                 
                 })
                 .AsNoTracking()
                 .ToListAsync();
