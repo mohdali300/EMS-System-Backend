@@ -84,17 +84,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     Message = "Faculty hierarchical record not found"
                 };
             }
-            //else
-            //{
-            //    return new ResponseDTO
-            //    {
-            //        StatusCode = 200,
-            //        IsDone = true,
-            //        Model = Hierarchical.Id
-            //    };
-
-
-            //}
+ 
             var Subjects = Hierarchical.Subjects.Select(s => new SubjectDTO
             {
                 Id = s.Id,
