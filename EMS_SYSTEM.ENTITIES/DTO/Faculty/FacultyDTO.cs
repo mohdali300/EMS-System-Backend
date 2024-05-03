@@ -9,18 +9,42 @@ namespace EMS_SYSTEM.DOMAIN.DTO.Faculty
     public class FacultyDTO
     {
         public string? FacultyName { get; set; }
-        public List<string>? BYlaw { get; set; }
 
-        public List<string>? StudyMethod { get; set; }
+        public object? BYlaw { get; set; }
 
-        public List<string>? facultyNode { get; set; }
+        public object? StudyMethod { get; set; }
 
-        public List<string>? facultyPhase { get; set; }
-        public List<string>? facultysemster { get; set; }
+        public object? facultyNode { get; set; }
 
-  
-
-
-
+        public object? facultyPhase { get; set; }
+        public object? facultysemster { get; set; }
     }
+    public class BylawDTO
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+    }
+    public class StudyMethodDTO
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+    }
+
+    public class facultyNodeDTO
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+    }
+
+    public class facultyPhaseDTO
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+    }
+    public class facultysemsterDTO
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+    }
+
 }
