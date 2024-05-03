@@ -45,5 +45,20 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
+        [HttpDelete("DeleteCommitee")]
+        public async Task<IActionResult> DeleteCommitee(int CommiteeId)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _committee.DeleteCommitee(CommiteeId);
+                if (Response.IsDone)
+                {
+                    return StatusCode(Response.StatusCode, Response.Model);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+        }
+
     }
 }

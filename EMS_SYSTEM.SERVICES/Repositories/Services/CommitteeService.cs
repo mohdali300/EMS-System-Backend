@@ -3,10 +3,12 @@ using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Committee;
 using EMS_SYSTEM.DOMAIN.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -71,6 +73,9 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 StatusCode = 400 
             };
         }
+
+      
+
         public async Task<ResponseDTO> GetCommitteesForFaculty(int FacultyID)
         {
             var Committees = await _context.Committees
@@ -118,5 +123,31 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 Model = null,
             };
         }
+        public async Task<ResponseDTO> DeleteCommitee(int CommiteeID)
+        {
+            var Commitee = await _context.Committees.SingleOrDefaultAsync(c => c.Id == CommiteeID);
+            if (Commitee == null)
+            {
+                return new ResponseDTO
+                {
+                    IsDone = false,
+                    Message = $"There is No Committee was found with ID {CommiteeID}",
+                    StatusCode = 404,
+                    Model = null,
+                };
+            }
+
+            _context.Committees.Remove(Commitee);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                IsDone = true,
+                Message = $"Commitee with ID {CommiteeID} was Deleted",
+                StatusCode = 200,
+                Model = Commitee,
+            };
+        }
+
     }
 }
