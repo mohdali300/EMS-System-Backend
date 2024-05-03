@@ -83,8 +83,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     ByLaw = C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.ByLaw,
                     FacultyNode= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.FacultyNode,
                     FacultyPhase= C.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees.FacultyPhase,
-                    SubjectCommittees = _context.SubjectCommittees.Where(su=>su.SubjectId==C.NodeInFaculty.FacultyNodeSubject.Subject.Id)
-                    .ToList()                    
+                                 
                 })
                 .AsNoTracking()
                 .ToListAsync();

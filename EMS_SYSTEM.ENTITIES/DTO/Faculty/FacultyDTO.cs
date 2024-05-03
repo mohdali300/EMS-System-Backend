@@ -18,7 +18,7 @@ namespace EMS_SYSTEM.DOMAIN.DTO.Faculty
         public List<string>? facultyPhase { get; set; }
         public List<string>? facultysemster { get; set; }
 
-        public List<string>? facultysemster { get; set; }
+  
 
 
 
