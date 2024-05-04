@@ -53,8 +53,8 @@ namespace EMS_SYSTEM.Controllers
         }
 
 
-        [HttpGet("Faculty Committees Details ")]
-        [Authorize(Roles = "GlobalAdmin , FacultyAdmin")]
+        [HttpGet("FacultyCommitteesDetails")]
+ 
         public async Task<IActionResult> GetFacultyCommitteesDetails(int FacultyID)
         {
             if (ModelState.IsValid)
