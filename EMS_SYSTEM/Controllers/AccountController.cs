@@ -86,11 +86,11 @@ namespace EMS_SYSTEM.Controllers
             if (ModelState.IsValid)
             {
                 var Response = await _accountService.ChangePasswordAsync(ChangePassword);
-                if (Response.IsAuthenticated == true)
+                if (Response.IsDone == true)
                 {
-                    return StatusCode(StatusCodes.Status200OK, Response.Message);
+                    return StatusCode(Response.StatusCode, Response.Message);
                 }
-                return StatusCode(StatusCodes.Status200OK, Response.Message);
+                return StatusCode(Response.StatusCode, Response.Message);
             }        
             return BadRequest(ModelState);
 
