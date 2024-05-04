@@ -9,6 +9,7 @@ namespace EMS_SYSTEM.DOMAIN.DTO.Committee
 {
     public class CommitteeDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string StudyMethod { get; set; }
         public string ByLaw { get; set; }

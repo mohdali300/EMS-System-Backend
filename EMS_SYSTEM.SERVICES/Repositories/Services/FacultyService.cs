@@ -81,9 +81,9 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 (h =>
                 h.BylawId ==hieryicalDTO.BylawId &&
                 h.PhaseId == hieryicalDTO.PhaseId &&
-                h.Bylaw.FacultyId == hieryicalDTO.FacultyId &&
-                h.SemeterId== hieryicalDTO .FacultySemesterId&&
-                h.StudentSemesters.Any(s => s.FacultyNodeId == hieryicalDTO.FacultyNodeId)).FirstOrDefaultAsync();
+                h.SemeterId == hieryicalDTO.FacultySemesterId
+                ).FirstOrDefaultAsync();
+
 
             if (Hierarchical == null)
             {
@@ -95,34 +95,31 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     Message = "Faculty hierarchical record not found"
                 };
             }
- 
-            var Subjects = Hierarchical.Subjects.Select(s => new SubjectDTO
-            {
-                Id = s.Id,
-                Name = s.Name
-                
-            }).ToList();
 
+            var Subjects = Hierarchical.Subjects
+                .Where
+                (s =>
+                s.FacultyNodeId == hieryicalDTO.FacultyNodeId &&
+                s.FacultyHieryricalId == Hierarchical.Id
+                )
+             .Select(s => new SubjectDTO
+             {
+                 Id = s.Id,
+                 Name = s.Name
+
+             }).ToList();
+
+
+
+
+            return new ResponseDTO
+            {
+                Model = Subjects,
+                StatusCode = 200,
+                IsDone = true
+            };
             
-
-            if (Subjects != null)
-            {
-                return new ResponseDTO
-                {
-                    Model = Subjects,
-                    StatusCode = 200,
-                    IsDone = true
-                };
-            }
-            else
-            {
-                return new ResponseDTO
-                {
-                    StatusCode = 400,
-                    IsDone = false,
-                    Message = "No subjects found "
-                };
-            }
+            
         }
 
     }

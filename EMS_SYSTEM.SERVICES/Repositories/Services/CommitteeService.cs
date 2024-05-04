@@ -28,6 +28,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             {
                 var Committee = new Committee()
                 {
+    
                     Name = model.Name,
                     Date=model.Date,
                     Interval=model.Interval,
@@ -76,15 +77,19 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
         public async Task<ResponseDTO> GetCommitteesSchedule(int Id)
         {
+
             var schedule = await _context.FacultyNodes
                 .Where(n => n.FacultyId == Id)
                 .SelectMany(n => n.Subjects
                 .SelectMany(s => s.SubjectCommittees
                 .Select(sc => new CommitteeDTO
                 {
+                    Id = sc.Id,
                     Name = sc.Committee.Name,
+                    Day = sc.Committee.Day,
                     SubjectsName = s.Name,
                     SubjectID = s.Id,
+                    Date = sc.Committee.Date,
                     StudyMethod = sc.Committee.StudyMethod,
                     Status = sc.Committee.Status,
                     ByLaw = sc.Committee.ByLaw,
@@ -94,7 +99,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     Place = sc.Committee.Place,
                     FacultyNode = sc.Committee.FacultyNode,
                     FacultyPhase = sc.Committee.FacultyPhase,
-                }))).ToListAsync();
+                }))).OrderBy(x=>x.Date).ThenBy(x=>x.From).ToListAsync();
 
             if (schedule != null)
             {
