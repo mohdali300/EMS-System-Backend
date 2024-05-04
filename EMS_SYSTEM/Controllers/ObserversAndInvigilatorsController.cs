@@ -21,6 +21,7 @@ namespace EMS_SYSTEM.Controllers
         }
 
         [HttpGet("{id}", Name ="GetById")]
+        [Authorize(Roles = "Observers , Invigilators , FacultyAdmin ,GlobalAdmin")]
         public async Task<IActionResult> GetById(string id)
         {
             if(ModelState.IsValid)

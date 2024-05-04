@@ -3,6 +3,7 @@ using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Faculty;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EMS_SYSTEM.Controllers
@@ -21,6 +22,7 @@ namespace EMS_SYSTEM.Controllers
         }
         
         [HttpGet("GetFaculty/{Id}")]
+        [Authorize]// For All Roles
         public async Task<IActionResult> GetFacultyById(int Id)
         {
             if (ModelState.IsValid)
@@ -35,6 +37,7 @@ namespace EMS_SYSTEM.Controllers
             return BadRequest(ModelState);
         }
         [HttpGet("subjects")]
+        [Authorize]
         public async Task<IActionResult> GetSubjects([FromQuery] FacultyHieryicalDTO hieryicalDTO)
         {
             if (ModelState.IsValid)

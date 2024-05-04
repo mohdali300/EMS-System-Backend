@@ -2,6 +2,7 @@
 using EMS_SYSTEM.APPLICATION.Repositories.Services;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Committee;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace EMS_SYSTEM.Controllers
             this._committee= _committee;
         }
         [HttpPost("AddCommittee")]
+        [Authorize(Roles = "FacultyAdmin , GlobalAdmin")]
         public async Task<IActionResult> AddCommittee(CommitteeDTO model)
         {
             if (ModelState.IsValid)
@@ -32,6 +34,7 @@ namespace EMS_SYSTEM.Controllers
         }
 
         [HttpGet("GetCommitteesForFaculty")]
+        [Authorize]
         public async Task<IActionResult> GetCommitteesForFaculty(int FacultyID)
         {
             if (ModelState.IsValid)
