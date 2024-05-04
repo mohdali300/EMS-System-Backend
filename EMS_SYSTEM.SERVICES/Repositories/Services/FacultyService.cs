@@ -127,8 +127,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     .GroupBy(fp => new { fp.FacultyPhase.Name, fp.FacultyPhase.Id })
                     .Select(s => new
                     {
-                        Name = s.Key.Name,
-                        CommittesNumbers = s.Count(),
+                        name = s.Key.Name,
+                        value = s.Count(),
                     })
                     .AsNoTracking()
                     .ToListAsync();
@@ -162,8 +162,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     .GroupBy(fp => new { fp.FacultyPhase.Name, fp.FacultyPhase.Id })
                     .Select(s => new
                     {
-                        Name = s.Key.Name,
-                        CommittesNumbers = s.Count(),
+                        name = s.Key.Name,
+                        value = s.Count(),
                     })
                     .AsNoTracking()
                     .ToListAsync();

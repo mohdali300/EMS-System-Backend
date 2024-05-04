@@ -68,8 +68,7 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
-        [HttpGet("Faculty Committees For Current Day ")]
-        [Authorize(Roles = "GlobalAdmin , FacultyAdmin")]
+        [HttpGet("FacultyCommitteesForCurrentDay")]
         public async Task<IActionResult> GetFacultyCommitteesForCurrentDay(int FacultyID)
         {
             if (ModelState.IsValid)
