@@ -89,11 +89,12 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             for (var i=0; i<phase.Count; i++)
             {
                 var sub = _context.FacultyPhases
-                    .Where(p=>p.Id == phase[i])
+                    .Where(p => p.Id == phase[i])
                     .Join(_context.FacultyHieryicals, p => p.Id, h => h.PhaseId, (p, h) => new { h.Id })
                     .Join(_context.Subjects, p => p.Id, s => s.FacultyHieryricalId, (h, s) => new { s.Id })
                     .Join(_context.SubjectCommittees, s => s.Id, sc => sc.SubjectId, (s, sc) => new { sc.CommitteeId })
-                    .Join(_context.Committees, sc=>sc.CommitteeId , c => c.Id, (sc, c) => new { c })
+                    .Join(_context.Committees, sc => sc.CommitteeId, c => c.Id, (sc, c) => new { c })
+                    .OrderBy(p=>p.c.Date).ThenBy(p=>p.c.From)
                     .ToList();
                 switch(i+1)
                 {
@@ -105,11 +106,19 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                         levels.level3 = sub; break;
                     case 4:
                         levels.level4 = sub; break;
+                    case 5:
+                        levels.level5 = sub; break;
+                    case 6:
+                        levels.level6 = sub; break;
+                    case 7:
+                        levels.level7 = sub; break;
+                   
                 }
 
             }
 
 
+            levels.len = phase.Count;
 
             return new ResponseDTO
             {
