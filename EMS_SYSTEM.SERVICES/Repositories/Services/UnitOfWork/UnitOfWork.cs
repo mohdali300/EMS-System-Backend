@@ -39,7 +39,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork
         {
             return await _context.SaveChangesAsync();
         }
-
         public void Dispose()
         {
             _context.Dispose();
