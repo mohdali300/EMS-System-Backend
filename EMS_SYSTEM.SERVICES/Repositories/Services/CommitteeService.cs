@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,48 +78,46 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
         public async Task<ResponseDTO> GetCommitteesSchedule(int Id)
         {
+            var phase = _context.Faculties
+                .Where(f => f.Id == Id)
+                .Join(_context.FacultyPhases, f => f.Id, p => p.FacultyId, (f, p) => new { FacultyPhase = p })    
+                .Select(f=>f.FacultyPhase.Id)
+                .ToList();
+  
+            CommiteLevels levels = new CommiteLevels();
 
-            var schedule = await _context.FacultyNodes
-                .Where(n => n.FacultyId == Id)
-                .SelectMany(n => n.Subjects
-                .SelectMany(s => s.SubjectCommittees
-                .Select(sc => new CommitteeDTO
+            for (var i=0; i<phase.Count; i++)
+            {
+                var sub = _context.FacultyPhases
+                    .Where(p=>p.Id == phase[i])
+                    .Join(_context.FacultyHieryicals, p => p.Id, h => h.PhaseId, (p, h) => new { h.Id })
+                    .Join(_context.Subjects, p => p.Id, s => s.FacultyHieryricalId, (h, s) => new { s.Id })
+                    .Join(_context.SubjectCommittees, s => s.Id, sc => sc.SubjectId, (s, sc) => new { sc.CommitteeId })
+                    .Join(_context.Committees, sc=>sc.CommitteeId , c => c.Id, (sc, c) => new { c })
+                    .ToList();
+                switch(i+1)
                 {
-                    Id = sc.Id,
-                    Name = sc.Committee.Name,
-                    Day = sc.Committee.Day,
-                    SubjectsName = s.Name,
-                    SubjectID = s.Id,
-                    Date = sc.Committee.Date,
-                    StudyMethod = sc.Committee.StudyMethod,
-                    Status = sc.Committee.Status,
-                    ByLaw = sc.Committee.ByLaw,
-                    Interval = sc.Committee.Interval,
-                    From = sc.Committee.From,
-                    To = sc.Committee.To,
-                    Place = sc.Committee.Place,
-                    FacultyNode = sc.Committee.FacultyNode,
-                    FacultyPhase = sc.Committee.FacultyPhase,
-                }))).OrderBy(x=>x.Date).ThenBy(x=>x.From).ToListAsync();
+                    case 1:
+                        levels.level1 = sub; break;
+                    case 2:
+                        levels.level2 = sub; break;
+                    case 3:
+                        levels.level3 = sub; break;
+                    case 4:
+                        levels.level4 = sub; break;
+                }
 
-            if (schedule != null)
-            {
-                return new ResponseDTO
-                {
-                    Model = schedule,
-                    StatusCode = 200,
-                    IsDone = true
-                };
             }
-            else
+
+
+
+            return new ResponseDTO
             {
-                return new ResponseDTO
-                {
-                    StatusCode = 400,
-                    IsDone = false,
-                    Message = "There is no Schedule Yet!"
-                };
-            }
+                Model = levels,
+                StatusCode = 200,
+                IsDone = true
+            };
+            
         }
 
         public async Task<ResponseDTO> DeleteCommitee(int CommiteeID)
