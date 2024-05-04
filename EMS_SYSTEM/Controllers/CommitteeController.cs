@@ -2,6 +2,7 @@
 using EMS_SYSTEM.APPLICATION.Repositories.Services;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Committee;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace EMS_SYSTEM.Controllers
             this._committee= _committee;
         }
         [HttpPost("AddCommittee")]
+        [Authorize(Roles = "FacultyAdmin , GlobalAdmin")]
         public async Task<IActionResult> AddCommittee(CommitteeDTO model)
         {
             if (ModelState.IsValid)
@@ -46,5 +48,36 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
+        [HttpDelete("DeleteCommitee")]
+        public async Task<IActionResult> DeleteCommitee(int CommiteeId)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _committee.DeleteCommitee(CommiteeId);
+                if (Response.IsDone)
+                {
+                    return StatusCode(Response.StatusCode, Response.Model);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+        }
+
+
+        [HttpDelete("DeleteAllFacultyCommitee")]
+        public async Task<IActionResult> DeleteAllFacultyCommitee(int FacultyID)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _committee.DeleteAllFacultyCommitee(FacultyID);
+                if (Response.IsDone)
+                {
+                    return StatusCode(Response.StatusCode, Response.Model);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+        }
+
     }
 }

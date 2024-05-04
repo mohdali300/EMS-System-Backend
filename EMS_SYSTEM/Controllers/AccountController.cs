@@ -8,6 +8,7 @@ using EMS_SYSTEM.DOMAIN.DTO.NewFolder;
 using EMS_SYSTEM.DOMAIN.DTO.PasswordSettings;
 using EMS_SYSTEM.DOMAIN.DTO.Register;
 using EMS_SYSTEM.DOMAIN.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +31,22 @@ namespace EMS_SYSTEM.Controllers
             this.httpContextAccessor = httpContextAccessor;
             this.userManager = userManager;
         }
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _accountService.RegisterAsync(dto);
+                if (Response.IsDone == true)
+                {
+                    return Ok(Response);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+
+        }
+
         [HttpPost("LogIn")]
         public async Task<IActionResult> LogIn([FromBody]LogInDTO model)
         {
@@ -46,6 +63,7 @@ namespace EMS_SYSTEM.Controllers
         }
 
         [HttpPost("RefreshToken")]
+        [Authorize] 
         public async Task<IActionResult> RefreshTokenAsync([FromBody]RefreshDTO dto)
         {
             if (ModelState.IsValid)
@@ -62,6 +80,7 @@ namespace EMS_SYSTEM.Controllers
 
 
         [HttpPost("ChangePassword")]
+        [Authorize(Roles = "GlobalAdmin , FacultyAdmin")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO ChangePassword)
         {
             if (ModelState.IsValid)
@@ -76,23 +95,9 @@ namespace EMS_SYSTEM.Controllers
             return BadRequest(ModelState);
 
         }
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody]RegisterDto dto)
-        {
-            if (ModelState.IsValid)
-            {
-                var Response = await _accountService.RegisterAsync(dto);
-                if (Response.IsDone == true)
-                {
-                    return Ok(Response);
-                }
-                return StatusCode(Response.StatusCode, Response.Message);
-            }
-            return BadRequest(ModelState);
-
-        }
-
+      
         [HttpDelete("DeleteUser")]
+        [Authorize(Roles = "GlobalAdmin , FacultyAdmin")]
         public async Task<IActionResult> DeleteUserAsync(string NID)
         {
             if (ModelState.IsValid)

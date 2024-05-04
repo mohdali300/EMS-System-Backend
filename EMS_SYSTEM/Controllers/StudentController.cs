@@ -20,7 +20,7 @@ namespace EMS_SYSTEM.Controllers
         }
 
         [HttpGet("GetStudent/{Id}")]
-        [Authorize(Roles = "Student")]
+        [Authorize(Roles = "Student ,FacultyAdmin ,GlobalAdmin")]
         public async Task<IActionResult> GetStudentById(string Id)
         {
             if(ModelState.IsValid)

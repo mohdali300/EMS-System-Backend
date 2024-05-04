@@ -3,7 +3,7 @@ using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Committee;
 using EMS_SYSTEM.DOMAIN.DTO.Faculty;
-using EMS_SYSTEM.DOMAIN.DTO.Schedule;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using System.Net.Security;
@@ -74,7 +74,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             }
         }
 
-        public async Task<ResponseDTO> GetSubjects(FacultyHieryicalDTO hieryicalDTO)
+        public async Task<ResponseDTO> GetSubjects([FromBody]FacultyHieryicalDTO hieryicalDTO)
         {
             var Hierarchical = await _context.FacultyHieryicals.Include(h => h.Subjects)
                 .Where

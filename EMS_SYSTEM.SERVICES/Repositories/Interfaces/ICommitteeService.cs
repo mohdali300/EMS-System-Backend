@@ -12,6 +12,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
     {
        public Task<ResponseDTO> AddCommitteeAsync(CommitteeDTO model);
         public Task<ResponseDTO> GetCommitteesSchedule(int id);
+        public Task<ResponseDTO> DeleteCommitee(int CommiteeID);
+        public Task<ResponseDTO> DeleteAllFacultyCommitee(int FacultyID);
 
     }
 }
