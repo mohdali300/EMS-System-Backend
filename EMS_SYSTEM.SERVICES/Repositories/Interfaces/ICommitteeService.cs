@@ -11,7 +11,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
     public interface ICommitteeService
     {
        public Task<ResponseDTO> AddCommitteeAsync(CommitteeDTO model);
-        public Task<ResponseDTO> GetCommitteesForFaculty(int FacultyID);
+        public Task<ResponseDTO> GetCommitteesSchedule(int id);
 
     }
 }

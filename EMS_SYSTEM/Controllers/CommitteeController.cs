@@ -31,17 +31,18 @@ namespace EMS_SYSTEM.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpGet("GetCommitteesForFaculty")]
-        public async Task<IActionResult> GetCommitteesForFaculty(int FacultyID)
+
+        [HttpGet("Schedule")]
+        public async Task<IActionResult> GetLevelSchedule(int Id)
         {
             if (ModelState.IsValid)
             {
-                var Response = await _committee.GetCommitteesForFaculty(FacultyID);
-                if (Response.IsDone)
+                var _responseDTO = await _committee.GetCommitteesSchedule(Id);
+                if (_responseDTO.IsDone)
                 {
-                    return StatusCode(Response.StatusCode, Response.Model);
+                    return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);
                 }
-                return StatusCode(Response.StatusCode, Response.Message);
+                return StatusCode(_responseDTO.StatusCode, _responseDTO.Message);
             }
             return BadRequest(ModelState);
         }

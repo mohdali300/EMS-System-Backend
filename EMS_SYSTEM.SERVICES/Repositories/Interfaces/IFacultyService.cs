@@ -12,7 +12,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
     public interface IFacultyService 
     {
        public Task<ResponseDTO> GetFacultyDataByID(int Id);
-     public Task<ResponseDTO> GetSubjects(FacultyHieryicalDTO hieryicalDTO);
+        public Task<ResponseDTO> GetSubjects(FacultyHieryicalDTO hieryicalDTO);
 
     }
 }

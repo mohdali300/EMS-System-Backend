@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
+﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
+using EMS_SYSTEM.DOMAIN.DTO.Committee;
 using EMS_SYSTEM.DOMAIN.DTO.Faculty;
-using EMS_SYSTEM.DOMAIN.DTO.Student;
-using Microsoft.AspNetCore.Mvc;
+using EMS_SYSTEM.DOMAIN.DTO.Schedule;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
+using System.Net.Security;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
@@ -127,5 +124,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 };
             }
         }
+
     }
 }

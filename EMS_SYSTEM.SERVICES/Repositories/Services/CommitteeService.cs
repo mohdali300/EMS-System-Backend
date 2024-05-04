@@ -71,52 +71,47 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 StatusCode = 400 
             };
         }
-        public async Task<ResponseDTO> GetCommitteesForFaculty(int FacultyID)
-        {
-            var Committees = await _context.Committees
-                .Join(_context.SubjectCommittees, C => C.Id, su => su.CommitteeId, (C, su) => new { Committees = C, SubjectCommittes = su })
-                .Join(_context.Subjects, SC => SC.SubjectCommittes.SubjectId, SUB => SUB.Id, (SC, SUB) => new { SubjectCommittes = SC, Subject = SUB })
-                .Join(_context.FacultyNodes, FNS => FNS.Subject.FacultyNodeId, FN => FN.FacultyNodeId, (FNS, FN) => new { FacultyNodeSubject = FNS, FacultyNode = FN })
-                .Join(_context.Faculties, FAN => FAN.FacultyNode.FacultyId, FA => FA.Id, (FAN, FA) => new { NodeInFaculty = FAN, Faculty = FA })
-                .Where(C=>C.Faculty.Id==FacultyID)
-                .GroupBy(g => g.NodeInFaculty.FacultyNodeSubject.SubjectCommittes.Committees)
-                .Select(C=>new 
-                {
-                    Id= C.Key.Id,
-                    Name =C.Key.Name,
-                    Date= C.Key.Date,
-                    Interval= C.Key.Interval,
-                    From= C.Key.From,
-                    To= C.Key.To,
-                    SubjectName= C.Key.SubjectName,
-                    Place= C.Key.Place,
-                    Status= C.Key.Status,
-                    Day= C.Key.Day,
-                    StudyMethod= C.Key.StudyMethod,
-                    ByLaw = C.Key.ByLaw,
-                    FacultyNode= C.Key.FacultyNode,
-                    FacultyPhase= C.Key.FacultyPhase                   
-                })
-                .AsNoTracking()
-                .ToListAsync();
 
-            if (Committees.Count > 0)
+        public async Task<ResponseDTO> GetCommitteesSchedule(int Id)
+        {
+            var schedule = await _context.FacultyNodes
+                .Where(n => n.FacultyId == Id)
+                .SelectMany(n => n.Subjects
+                .SelectMany(s => s.SubjectCommittees
+                .Select(sc => new CommitteeDTO
+                {
+                    Name = sc.Committee.Name,
+                    SubjectsName = s.Name,
+                    SubjectID = s.Id,
+                    StudyMethod = sc.Committee.StudyMethod,
+                    Status = sc.Committee.Status,
+                    ByLaw = sc.Committee.ByLaw,
+                    Interval = sc.Committee.Interval,
+                    From = sc.Committee.From,
+                    To = sc.Committee.To,
+                    Place = sc.Committee.Place,
+                    FacultyNode = sc.Committee.FacultyNode,
+                    FacultyPhase = sc.Committee.FacultyPhase,
+                }))).ToListAsync();
+
+            if (schedule != null)
             {
                 return new ResponseDTO
                 {
-                    IsDone = true,
-                    Message = $"All Committees For Faculty {FacultyID}",
+                    Model = schedule,
                     StatusCode = 200,
-                    Model = Committees.ToList(),
+                    IsDone = true
                 };
             }
-            return new ResponseDTO
+            else
             {
-                IsDone = false,
-                Message = $"There is No Committees Until Now For This Faculty {FacultyID}",
-                StatusCode = 404,
-                Model = null,
-            };
+                return new ResponseDTO
+                {
+                    StatusCode = 400,
+                    IsDone = false,
+                    Message = "There is no Schedule Yet!"
+                };
+            }
         }
     }
 }
