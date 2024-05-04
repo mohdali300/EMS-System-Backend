@@ -128,7 +128,42 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     .Select(s => new
                     {
                         Name = s.Key.Name,
-                        CommittesNumber = s.Count(),
+                        CommittesNumbers = s.Count(),
+                    })
+                    .AsNoTracking()
+                    .ToListAsync();
+            if (CommitteesDetails.Count > 0)
+            {
+                return new ResponseDTO
+                {
+                    IsDone = true,
+                    StatusCode = 200,
+                    Model = CommitteesDetails.ToList(),
+                    Message = $"CommitteesDetails For Faculty :  {id}"
+                };
+            }
+            return new ResponseDTO
+            {
+                IsDone = false,
+                StatusCode = 400,
+                Model = null,
+                Message = $"No Committees Created Until Now for This Faculty {id}"
+            };
+
+        }
+        public async Task<ResponseDTO> GetFacultyCommitteesForCurrentDay(int id)
+        {
+            var CommitteesDetails = await _context.Committees
+                    .Join(_context.SubjectCommittees, c => c.Id, sc => sc.CommitteeId, (c, sc) => new { Committee = c, SubjectCommittee = sc })
+                    .Join(_context.Subjects, sc => sc.SubjectCommittee.SubjectId, s => s.Id, (sc, s) => new { sc, Subject = s })
+                    .Join(_context.FacultyHieryicals, s => s.Subject.FacultyHieryricalId, fh => fh.Id, (s, fh) => new { s, FacultyHieryical = fh })
+                    .Join(_context.FacultyPhases, fh => fh.FacultyHieryical.PhaseId, fp => fp.Id, (fh, fp) => new { fh, FacultyPhase = fp })
+                    .Where(fp => fp.FacultyPhase.FacultyId == id && fp.fh.s.sc.Committee.Date== DateTime.Now.Date)
+                    .GroupBy(fp => new { fp.FacultyPhase.Name, fp.FacultyPhase.Id })
+                    .Select(s => new
+                    {
+                        Name = s.Key.Name,
+                        CommittesNumbers = s.Count(),
                     })
                     .AsNoTracking()
                     .ToListAsync();

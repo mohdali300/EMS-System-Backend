@@ -68,6 +68,21 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
+        [HttpGet("Faculty Committees For Current Day ")]
+        [Authorize(Roles = "GlobalAdmin , FacultyAdmin")]
+        public async Task<IActionResult> GetFacultyCommitteesForCurrentDay(int FacultyID)
+        {
+            if (ModelState.IsValid)
+            {
+                _responseDTO = await _facultyService.GetFacultyCommitteesForCurrentDay(FacultyID);
+                if (_responseDTO.IsDone)
+                {
+                    return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);
+                }
+                return StatusCode(_responseDTO.StatusCode, _responseDTO.Message);
+            }
+            return BadRequest(ModelState);
+        }
 
     }
 }

@@ -14,6 +14,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
        public Task<ResponseDTO> GetFacultyDataByID(int Id);
         public Task<ResponseDTO> GetSubjects(FacultyHieryicalDTO hieryicalDTO);
         public Task<ResponseDTO> GetFacultyCommitteesDetails(int id);
+        public Task<ResponseDTO> GetFacultyCommitteesForCurrentDay(int id);
 
     }
 }
