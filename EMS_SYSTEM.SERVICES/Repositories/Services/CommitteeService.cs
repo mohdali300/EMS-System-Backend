@@ -108,9 +108,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 }
 
             }
-
-
-
             return new ResponseDTO
             {
                 Model = levels,

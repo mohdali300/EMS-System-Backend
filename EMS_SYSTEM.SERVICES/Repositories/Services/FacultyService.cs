@@ -3,6 +3,7 @@ using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Committee;
 using EMS_SYSTEM.DOMAIN.DTO.Faculty;
+using EMS_SYSTEM.DOMAIN.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
@@ -84,7 +85,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 h.SemeterId == hieryicalDTO.FacultySemesterId
                 ).FirstOrDefaultAsync();
 
-
             if (Hierarchical == null)
             {
 
@@ -95,7 +95,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     Message = "Faculty hierarchical record not found"
                 };
             }
-
             var Subjects = Hierarchical.Subjects
                 .Where
                 (s =>
@@ -108,18 +107,49 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                  Name = s.Name
 
              }).ToList();
-
-
-
-
             return new ResponseDTO
             {
                 Model = Subjects,
                 StatusCode = 200,
                 IsDone = true
+            };       
+            
+        }
+
+        public async Task<ResponseDTO> GetFacultyCommitteesDetails(int id)
+        {
+            var CommitteesDetails = await _context.Committees
+                    .Join(_context.SubjectCommittees, c => c.Id, sc => sc.CommitteeId, (c, sc) => new { Committee = c, SubjectCommittee = sc })
+                    .Join(_context.Subjects, sc => sc.SubjectCommittee.SubjectId, s => s.Id, (sc, s) => new { sc, Subject = s })
+                    .Join(_context.FacultyHieryicals, s => s.Subject.FacultyHieryricalId, fh => fh.Id, (s, fh) => new { s, FacultyHieryical = fh })
+                    .Join(_context.FacultyPhases, fh => fh.FacultyHieryical.PhaseId, fp => fp.Id, (fh, fp) => new { fh, FacultyPhase = fp })
+                    .Where(fp => fp.FacultyPhase.FacultyId == id)
+                    .GroupBy(fp => new { fp.FacultyPhase.Name, fp.FacultyPhase.Id })
+                    .Select(s => new
+                    {
+                        Name = s.Key.Name,
+                        CommittesNumber = s.Count(),
+                    })
+                    .AsNoTracking()
+                    .ToListAsync();
+            if (CommitteesDetails.Count > 0)
+            {
+                return new ResponseDTO
+                {
+                    IsDone = true,
+                    StatusCode = 200,
+                    Model = CommitteesDetails.ToList(),
+                    Message = $"CommitteesDetails For Faculty :  {id}"
+                };
+            }
+            return new ResponseDTO
+            {
+                IsDone = false,
+                StatusCode = 400,
+                Model = null,
+                Message = $"No Committees Created Until Now for This Faculty {id}"
             };
-            
-            
+
         }
 
     }
