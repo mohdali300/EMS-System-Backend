@@ -31,7 +31,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 {
     
                     Name = model.Name,
-                    Date=model.Date,
+                    Date=model.Date.Date,
                     Interval=model.Interval,
                     From=model.From,
                     To=model.To,

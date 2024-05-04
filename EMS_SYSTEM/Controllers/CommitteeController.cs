@@ -18,7 +18,7 @@ namespace EMS_SYSTEM.Controllers
             this._committee= _committee;
         }
         [HttpPost("AddCommittee")]
-        [Authorize(Roles = "FacultyAdmin , GlobalAdmin")]
+      //  [Authorize(Roles = "FacultyAdmin , GlobalAdmin")]
         public async Task<IActionResult> AddCommittee(CommitteeDTO model)
         {
             if (ModelState.IsValid)
