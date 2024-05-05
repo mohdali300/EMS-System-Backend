@@ -28,6 +28,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 Name = s.Name,
                 FacultyName = s.Faculty.FacultyName,
                 FacultyId = s.Faculty.Id,
+                Degree = s.Degree
             });
 
             if (staff != null)
