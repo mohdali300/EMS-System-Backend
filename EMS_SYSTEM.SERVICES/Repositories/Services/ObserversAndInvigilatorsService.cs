@@ -69,6 +69,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     Place = c.Committee.Place,
                     ByLaw=c.Committee.ByLaw,
                     StudyMethod=c.Committee.StudyMethod,
+                    StudentNumber=c.Committee.StudentsCommittees.Count
                 })).ToListAsync();
 
             if (committee != null)
