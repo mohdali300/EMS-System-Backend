@@ -96,5 +96,20 @@ namespace EMS_SYSTEM.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpPut("UpdateCommitee")]
+        public async Task<IActionResult> UpdateCommitee(int committeeID, CommitteeDTO model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _committee.UpdateCommitee(committeeID, model);
+                if (Response.IsDone)
+                {
+                    return StatusCode(Response.StatusCode, Response.Model);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+        }
+
     }
 }
