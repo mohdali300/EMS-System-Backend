@@ -19,6 +19,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         {
         }
 
+     
+
         public async Task<ResponseDTO> GetStudentDataByNID(string Id)
         {
             var studentDTO = await _context.Students
@@ -28,11 +30,11 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             {
                 Name = student.Name,
                 FacultyCode = student.FacultyCode,
-                Status = semester.StuentSatuts.StuentSatuts,
-                Department = semester.FacultyNode.Name,
-                Level = semester.FacultyHieryical.Phase.Name,
-                FacultyName = semester.FacultyNode.Faculty.FacultyName,
-                FacultyId = semester.FacultyNode.Faculty.Id
+                //Status = semester.StuentSatuts.StuentSatuts,
+                //Department = semester.FacultyNode.Name,
+                //Level = semester.FacultyHieryical.Phase.Name,
+                //FacultyName = semester.FacultyNode.Faculty.FacultyName,
+                //FacultyId = semester.FacultyNode.Faculty.Id
             }))
             .FirstOrDefaultAsync();
 
@@ -56,5 +58,42 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             }
 
         }
+        // method return list of ids of subject in which student join 
+        public async Task<List<int>> GetSubjectsForStudent(string studentNationalId, int nodeid, int phaseid, int semsterid)
+        {
+            var subjectIds = await _context.Students
+       .Where(s => s.Nationalid == studentNationalId)
+       .SelectMany(s => s.StudentSemesters)
+       .Where( ss => ss.FacultyHieryical != null && ss.FacultyHieryical.Phase != null && ss.FacultyHieryical.Phase.Id == phaseid && ss.FacultyNode!.FacultyNodeId == nodeid && ss.Id == semsterid)
+       .SelectMany(ss => ss.StudentSemesterSubjects.Select(sss => sss.SubjectId))
+       .ToListAsync();
+
+
+            return subjectIds.Where(id => id.HasValue).Select(id => id!.Value).ToList();
+
+
+        }
+
+        // method return the order of the student in each subject in alphabetic order
+        public async Task<Dictionary<int, int>> GetStudentOrderAmongOthers(string studentNationalId, int nodeid, int phaseid, int semsterid)
+        {
+            var studentOrder = new Dictionary<int, int>();
+            var subjects = await GetSubjectsForStudent(studentNationalId, nodeid, phaseid, semsterid);
+
+            foreach (var subjectId in subjects)
+            {
+                var order = await _context.Students
+                    .Where(s => s.Nationalid != studentNationalId) 
+                    .Where(s => s.StudentSemesters.Any(ss => ss.StudentSemesterSubjects.Any(sss => sss.SubjectId == subjectId))) // Filter by subject ID
+                    .OrderBy(s => s.Name) // Order by student name 
+                    .Select((s, index) => new { s.Name, Index = index + 1 }) 
+                    .FirstOrDefaultAsync(s => s.Name == studentNationalId);
+
+                studentOrder.Add(subjectId, order?.Index ?? 0);
+            }
+
+            return studentOrder;
+        }
+
     }
 }
