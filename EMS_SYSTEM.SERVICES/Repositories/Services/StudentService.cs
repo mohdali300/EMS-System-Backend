@@ -64,15 +64,14 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             var subjectIds = await _context.Students
        .Where(s => s.Nationalid == studentNationalId)
        .SelectMany(s => s.StudentSemesters)
-       .Where(ss => ss.FacultyHieryical!.Phase!.Id == phaseid && ss.FacultyNode!.FacultyNodeId == nodeid && ss.Id == semsterid)
+       .Where( ss => ss.FacultyHieryical != null && ss.FacultyHieryical.Phase != null && ss.FacultyHieryical.Phase.Id == phaseid && ss.FacultyNode!.FacultyNodeId == nodeid && ss.Id == semsterid)
        .SelectMany(ss => ss.StudentSemesterSubjects.Select(sss => sss.SubjectId))
        .ToListAsync();
 
-            var nonNullableSubjectIds = subjectIds.Select(id => id.GetValueOrDefault()).ToList();
 
-            return nonNullableSubjectIds;
+            return subjectIds.Where(id => id.HasValue).Select(id => id!.Value).ToList();
 
-           
+
         }
 
         // method return the order of the student in each subject in alphabetic order
