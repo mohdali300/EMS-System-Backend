@@ -36,5 +36,5 @@ public partial class Staff
     [ForeignKey("FacultyId")]
     public virtual Faculty? Faculty { get; set; }
 
-    public virtual ICollection<Committee> Committees { get; set; } = new List<Committee>();
+    public virtual ICollection<StaffCommittees> StaffCommittees { get; set; } = new List<StaffCommittees>();
 }
