@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EMS_SYSTEM.DOMAIN.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EMS_SYSTEM;
@@ -17,6 +18,9 @@ public partial class Staff
     [Column("NAME")]
     [StringLength(50)]
     public string? Name { get; set; }
+    [Column("Degree")]
+    [StringLength(50)]
+    public string? Degree { get; set; }
 
     [Column("ADDRESS")]
     [StringLength(50)]
@@ -31,4 +35,6 @@ public partial class Staff
 
     [ForeignKey("FacultyId")]
     public virtual Faculty? Faculty { get; set; }
+
+    public virtual ICollection<Committee> Committees { get; set; } = new List<Committee>();
 }

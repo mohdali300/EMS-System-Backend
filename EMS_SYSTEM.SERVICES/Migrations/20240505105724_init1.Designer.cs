@@ -4,6 +4,7 @@ using EMS_SYSTEM.APPLICATION;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     [DbContext(typeof(UnvcenteralDataBaseContext))]
-    partial class UnvcenteralDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240505105724_init1")]
+    partial class init1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,9 +222,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PalceId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Place")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -243,8 +243,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PalceId");
 
                     b.ToTable("Committees");
                 });
@@ -1006,13 +1004,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("RefreshTokens");
                 });
 
-            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Committee", b =>
-                {
-                    b.HasOne("EMS_SYSTEM.Palce", null)
-                        .WithMany("Committees")
-                        .HasForeignKey("PalceId");
-                });
-
             modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.SubjectCommittee", b =>
                 {
                     b.HasOne("EMS_SYSTEM.DOMAIN.Models.Committee", "Committee")
@@ -1336,11 +1327,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
             modelBuilder.Entity("EMS_SYSTEM.FacultyType", b =>
                 {
                     b.Navigation("Faculties");
-                });
-
-            modelBuilder.Entity("EMS_SYSTEM.Palce", b =>
-                {
-                    b.Navigation("Committees");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.Student", b =>

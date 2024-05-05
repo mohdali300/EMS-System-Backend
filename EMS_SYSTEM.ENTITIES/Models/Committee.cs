@@ -25,6 +25,8 @@ namespace EMS_SYSTEM.DOMAIN.Models
         public string FacultyNode { get; set; }
         public string FacultyPhase { get; set; }
         public virtual ICollection<SubjectCommittee> SubjectCommittees { get; set; } = new List<SubjectCommittee>();
+        public virtual ICollection<Student> Students{ get; set; } = new List<Student>();
+        public virtual ICollection<Staff> Staffs { get; set; } = new List<Staff>();
 
 
     }

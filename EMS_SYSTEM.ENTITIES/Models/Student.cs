@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EMS_SYSTEM.DOMAIN.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EMS_SYSTEM;
@@ -55,4 +56,5 @@ public partial class Student
 
     [InverseProperty("Stuent")]
     public virtual ICollection<StudentSemester> StudentSemesters { get; set; } = new List<StudentSemester>();
+    public virtual ICollection<Committee> Committees { get; set; } = new List<Committee>();
 }
