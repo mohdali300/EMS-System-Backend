@@ -24,6 +24,7 @@ namespace EMS_SYSTEM.DOMAIN.DTO.Committee
         public string ?Place { get; set; }
         public string ?Status { get; set; }
         public int SubjectID { get; set; }
+        public int StudentNumber { get; set; }
 
     }
 }

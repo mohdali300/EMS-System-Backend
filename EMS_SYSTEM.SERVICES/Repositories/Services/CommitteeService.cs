@@ -37,7 +37,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     Day=model.Day,
                     ByLaw = model.ByLaw,
                     FacultyNode=model.FacultyNode,
-                    FacultyPhase = model.FacultyPhase
+                    FacultyPhase = model.FacultyPhase,                  
                     
                 };
                 var isSubjectIdExist= await _unitOfWork.Subject.IsExistAsync(s => s.Id ==model.SubjectID);
@@ -70,6 +70,17 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 StatusCode = 400 
             };
         }
+        
+
+        //public async Task<ResponseDTO> Distrbiutions(int observerId,List<int> noticers,CommitteeDTO model) 
+        //{
+        //      var Committees =  await AddCommitteeAsync(model);
+
+
+
+        
+            
+        //}
 
         public async Task<ResponseDTO> GetCommitteesSchedule(int Id)
         {

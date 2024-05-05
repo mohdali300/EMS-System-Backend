@@ -189,12 +189,12 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PalceId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Place")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PlaceID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -214,7 +214,7 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PalceId");
+                    b.HasIndex("PlaceID");
 
                     b.ToTable("Committees");
                 });
@@ -994,9 +994,13 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
             modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Committee", b =>
                 {
-                    b.HasOne("EMS_SYSTEM.Palce", null)
+                    b.HasOne("EMS_SYSTEM.Palce", "Palce")
                         .WithMany("Committees")
-                        .HasForeignKey("PalceId");
+                        .HasForeignKey("PlaceID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Palce");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.StaffCommittees", b =>

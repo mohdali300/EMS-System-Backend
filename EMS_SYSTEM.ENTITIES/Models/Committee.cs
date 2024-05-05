@@ -24,9 +24,13 @@ namespace EMS_SYSTEM.DOMAIN.Models
         public string ByLaw { get; set; }
         public string FacultyNode { get; set; }
         public string FacultyPhase { get; set; }
+        public int PlaceID { get; set; }
+        [ForeignKey("PlaceID")]
+        public virtual Palce Palce { get; set; }
         public virtual ICollection<SubjectCommittee> SubjectCommittees { get; set; } = new List<SubjectCommittee>();
         public virtual ICollection<StudentsCommittees> StudentsCommittees { get; set; } = new List<StudentsCommittees>();
         public virtual ICollection<StaffCommittees> StaffCommittees { get; set; } = new List<StaffCommittees>();
+
 
 
     }
