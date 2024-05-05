@@ -80,6 +80,8 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 14;
     options.Password.RequiredUniqueChars = 0;
 });
+// Making Fields That are Required in EndPoints Accept Null Values
+builder.Services.AddControllers(option=>option.AllowEmptyInputInBodyModelBinding = true);
 
 // Add Authentication Service
 builder.Services.AddAuthentication(option =>
@@ -110,6 +112,7 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ObserversAndInvigilatorsService>();
 builder.Services.AddScoped<ICommitteeService,CommitteeService>();
 builder.Services.AddScoped<IFacultyService, FacultyService>();
+
 
 // add cores
 builder.Services.AddCors(options =>

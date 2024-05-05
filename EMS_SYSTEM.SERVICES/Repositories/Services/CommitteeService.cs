@@ -129,9 +129,9 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             
         }
 
-        public async Task<ResponseDTO> DeleteCommitee(int CommiteeID)
+        public async Task<ResponseDTO> DeleteCommittee(int CommiteeID)
         {
-            var Commitee = await _context.Committees.SingleOrDefaultAsync(c => c.Id == CommiteeID);
+            var Commitee = await _context.Committees.FirstOrDefaultAsync(c => c.Id == CommiteeID);
             if (Commitee == null)
             {
                 return new ResponseDTO
@@ -200,10 +200,53 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             return new ResponseDTO
             {
                 IsDone = true,
-                Message = $"All Committees For Faculty {FacultyID} Was Deleted Succesfully",
+                Message = $"All Committees For Faculty {FacultyID} Was Deleted Successfully",
                 StatusCode = 200,
                 Model = Committees.ToList(),
             };
+        }
+        public async Task<ResponseDTO> FilterFacultyCommittees(int facultyID, int level, string committeeName)
+        {
+            var CommitteesDetails = _context.Committees
+               .Join(_context.SubjectCommittees, c => c.Id, sc => sc.CommitteeId, (c, sc) => new { Committee = c, SubjectCommittee = sc })
+               .Join(_context.Subjects, sc => sc.SubjectCommittee.SubjectId, s => s.Id, (sc, s) => new { sc, Subject = s })
+               .Join(_context.FacultyHieryicals, s => s.Subject.FacultyHieryricalId, fh => fh.Id, (s, fh) => new { s, FacultyHieryical = fh })
+               .Join(_context.FacultyPhases, fh => fh.FacultyHieryical.PhaseId, fp => fp.Id, (fh, fp) => new { fh, FacultyPhase = fp });
+            if (facultyID == 0)
+            {
+                return new ResponseDTO()
+                {
+                    IsDone = false,
+                    StatusCode = 400,
+                    Model = null,
+                    Message = "Faculty Id is Required!"
+                };
+            }
+            else
+            {
+                if (facultyID != 0)
+                {
+                    CommitteesDetails = CommitteesDetails.Where(f => f.FacultyPhase.FacultyId == facultyID);
+                }
+
+                if (level != 0)
+                {
+                    CommitteesDetails = CommitteesDetails.Where(f => f.FacultyPhase.Id == level);
+                }
+
+                if (!string.IsNullOrEmpty(committeeName))
+                {
+                    CommitteesDetails = CommitteesDetails.Where(f => f.fh.s.sc.Committee.Name.Contains(committeeName));
+                }
+
+                return new ResponseDTO
+                {
+                    IsDone = CommitteesDetails.Count() > 0,
+                    Model = CommitteesDetails.Select(s => s.fh.s.sc.Committee)  ,
+                    StatusCode = CommitteesDetails.Count() > 0 ? 200 : 400,
+                    Message = CommitteesDetails.Count() > 0 ? "Success Response" : "No Data Matching Your Inputs !"
+                };
+            }
         }
     }
 }

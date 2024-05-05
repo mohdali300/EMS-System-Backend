@@ -13,6 +13,7 @@ namespace EMS_SYSTEM.Controllers
     public class CommitteeController : ControllerBase
     {
         private readonly ICommitteeService _committee;
+
         public CommitteeController(ICommitteeService _committee)
         {
             this._committee= _committee;
@@ -48,12 +49,28 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
-        [HttpDelete("DeleteCommitee")]
-        public async Task<IActionResult> DeleteCommitee(int CommiteeId)
+
+        [HttpGet("FilteringForCommittees")]
+        public async Task<IActionResult> FilterFacultyCommittees(int FacultyID, int Level=0, string CommitteeName=null)
         {
             if (ModelState.IsValid)
             {
-                var Response = await _committee.DeleteCommitee(CommiteeId);
+                var _responseDTO = await _committee.FilterFacultyCommittees(FacultyID,Level,CommitteeName);
+                if (_responseDTO.IsDone)
+                {
+                    return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);
+                }
+                return StatusCode(_responseDTO.StatusCode, _responseDTO.Message);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpDelete("DeleteCommittee")]
+        public async Task<IActionResult> DeleteCommittee(int CommitteeId)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _committee.DeleteCommittee(CommitteeId);
                 if (Response.IsDone)
                 {
                     return StatusCode(Response.StatusCode, Response.Model);
@@ -64,8 +81,8 @@ namespace EMS_SYSTEM.Controllers
         }
 
 
-        [HttpDelete("DeleteAllFacultyCommitee")]
-        public async Task<IActionResult> DeleteAllFacultyCommitee(int FacultyID)
+        [HttpDelete("DeleteAllFacultyCommittee")]
+        public async Task<IActionResult> DeleteAllFacultyCommittee(int FacultyID)
         {
             if (ModelState.IsValid)
             {
