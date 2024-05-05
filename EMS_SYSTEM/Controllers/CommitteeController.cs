@@ -51,11 +51,11 @@ namespace EMS_SYSTEM.Controllers
         }
 
         [HttpGet("FilteringForCommittees")]
-        public async Task<IActionResult> FilterFacultyCommittees(int FacultyID, int Level=0, string CommitteeName=null)
+        public async Task<IActionResult> FilterFacultyCommittees(int FacultyID, int Level=0, string CommitteeName=null , string subjectName = null)
         {
             if (ModelState.IsValid)
             {
-                var _responseDTO = await _committee.FilterFacultyCommittees(FacultyID,Level,CommitteeName);
+                var _responseDTO = await _committee.FilterFacultyCommittees(FacultyID,Level,CommitteeName,subjectName);
                 if (_responseDTO.IsDone)
                 {
                     return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);

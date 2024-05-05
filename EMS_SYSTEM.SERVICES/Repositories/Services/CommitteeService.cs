@@ -205,7 +205,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 Model = Committees.ToList(),
             };
         }
-        public async Task<ResponseDTO> FilterFacultyCommittees(int facultyID, int level, string committeeName)
+        public async Task<ResponseDTO> FilterFacultyCommittees(int facultyID, int level, string committeeName , string subjectName)
         {
             var CommitteesDetails = _context.Committees
                .Join(_context.SubjectCommittees, c => c.Id, sc => sc.CommitteeId, (c, sc) => new { Committee = c, SubjectCommittee = sc })
@@ -234,6 +234,11 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     CommitteesDetails = CommitteesDetails.Where(f => f.FacultyPhase.Id == level);
                 }
 
+                if (!string.IsNullOrEmpty(subjectName))
+                {
+                    CommitteesDetails = CommitteesDetails.Where(f => f.fh.s.sc.Committee.SubjectName.Contains(subjectName));
+                }
+
                 if (!string.IsNullOrEmpty(committeeName))
                 {
                     CommitteesDetails = CommitteesDetails.Where(f => f.fh.s.sc.Committee.Name.Contains(committeeName));
@@ -241,10 +246,10 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
                 return new ResponseDTO
                 {
-                    IsDone = CommitteesDetails.Count() > 0,
-                    Model = CommitteesDetails.Select(s => s.fh.s.sc.Committee)  ,
-                    StatusCode = CommitteesDetails.Count() > 0 ? 200 : 400,
-                    Message = CommitteesDetails.Count() > 0 ? "Success Response" : "No Data Matching Your Inputs !"
+                    IsDone = true,
+                    Model = CommitteesDetails.OrderBy(s => s.fh.s.sc.Committee.Date).ThenBy(s => s.fh.s.sc.Committee.From).Select(s => s.fh.s.sc.Committee)  ,
+                    StatusCode = 200,
+                    Message = "Success Response"
                 };
             }
         }
