@@ -16,5 +16,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
         public Task<ResponseDTO> DeleteCommittee(int CommiteeID);
         public Task<ResponseDTO> DeleteAllFacultyCommitee(int FacultyID);
 
+        public Task<ResponseDTO> UpdateCommitee(int committeeID, CommitteeDTO model);
+
     }
 }

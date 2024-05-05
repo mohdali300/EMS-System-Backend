@@ -2,6 +2,7 @@
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Committee;
+using EMS_SYSTEM.DOMAIN.Enums;
 using EMS_SYSTEM.DOMAIN.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -250,6 +251,90 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     Model = CommitteesDetails.OrderBy(s => s.fh.s.sc.Committee.Date).ThenBy(s => s.fh.s.sc.Committee.From).Select(s => s.fh.s.sc.Committee)  ,
                     StatusCode = 200,
                     Message = "Success Response"
+                };
+            }
+        }
+
+        public async Task<ResponseDTO> UpdateCommitee(int committeeID, CommitteeDTO model)
+        {
+            if (model is not null)
+            {
+                var existingCommittee = await _unitOfWork.Committees.IsExistAsync(c => c.Id == committeeID);
+                // if committee found
+                if (existingCommittee != null)
+                {
+                    // if the user doen't enter value it take the already exist
+                    if (model.Name != null)
+                        existingCommittee.Name = model.Name;
+
+                    if (model.Date != default(DateTime))
+                        existingCommittee.Date = model.Date.Date;
+                    if (model.Interval != null)
+                        existingCommittee.Interval = model.Interval;
+
+                    if (model.From != null)
+                        existingCommittee.From = model.From;
+
+                    if (model.To != null)
+                        existingCommittee.To = model.To;
+
+
+                    if (model.Place != null)
+                        existingCommittee.Place = model.Place;
+
+                    if (model.SubjectsName != null)
+                        existingCommittee.SubjectName = model.SubjectsName;
+
+                    if (model.StudyMethod != null)
+                        existingCommittee.StudyMethod = model.StudyMethod;
+
+
+                    if (model.Status != null)
+                        existingCommittee.Status = model.Status;
+
+                    if (model.Day != default(Days))
+                        existingCommittee.Day = model.Day;
+
+                    if (model.ByLaw != null)
+                        existingCommittee.ByLaw = model.ByLaw;
+
+                    if (model.FacultyNode != null)
+                        existingCommittee.FacultyNode = model.FacultyNode;
+
+                    if (model.FacultyPhase != null)
+                        existingCommittee.FacultyPhase = model.FacultyPhase;
+
+
+                    await _unitOfWork.Committees.UpdateAsync(existingCommittee, committeeID);
+                    await _unitOfWork.SaveAsync();
+
+                    return new ResponseDTO
+                    {
+                        Message = "Committee Updated Successfully",
+                        IsDone = true,
+                        Model = existingCommittee,
+                        StatusCode = 200
+                    };
+                }
+                else
+                {
+                    return new ResponseDTO
+                    {
+                        Message = "Committee not found",
+                        IsDone = false,
+                        Model = null,
+                        StatusCode = 404
+                    };
+                }
+            }
+            else
+            {
+                return new ResponseDTO
+                {
+                    Message = "Invalid Data in Model",
+                    IsDone = false,
+                    Model = null,
+                    StatusCode = 400
                 };
             }
         }
