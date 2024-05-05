@@ -37,7 +37,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     Day=model.Day,
                     ByLaw = model.ByLaw,
                     FacultyNode=model.FacultyNode,
-                    FacultyPhase = model.FacultyPhase,                  
+                    FacultyPhase = model.FacultyPhase, 
+                    PlaceID = 1
                     
                 };
                 var isSubjectIdExist= await _unitOfWork.Subject.IsExistAsync(s => s.Id ==model.SubjectID);
@@ -72,15 +73,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         }
         
 
-        //public async Task<ResponseDTO> Distrbiutions(int observerId,List<int> noticers,CommitteeDTO model) 
-        //{
-        //      var Committees =  await AddCommitteeAsync(model);
-
-
-
-        
-            
-        //}
 
         public async Task<ResponseDTO> GetCommitteesSchedule(int Id)
         {
@@ -344,38 +336,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             }
         }
 
-        //public async Task<List<ResponseDTO>> GetObserversInFaculty(int facultyId)
-        //{
-
-        //    var observers = await _userManager.GetUsersInRoleAsync("Observers");
-
-        //    if (observers.Count == 0)
-        //    {
-        //        return new List<ResponseDTO>
-        //            {
-        //                new ResponseDTO
-        //                {
-        //                    StatusCode = 404,
-        //                    IsDone = false,
-        //                    Message = "No observers found for the specified faculty."
-        //                }
-        //            };
-        //    }
-        //    var observerDTOs = observers.Select(user => new ObserverDTO
-        //    {
-        //        Id = user.Id,
-        //        Name = user.UserName
-        //    }).ToList();
-
-        //    var responseDTOs = observerDTOs.Select(observerDTO => new ResponseDTO
-        //    {
-        //        Model = observerDTO,
-        //        StatusCode = 200,
-        //        IsDone = true
-        //    }).ToList();
-
-        //    return responseDTOs;
-        //}
         public async Task<ResponseDTO> GetObserversInFaculty(int facultyId)
         {
             var observers = await _userManager.GetUsersInRoleAsync("Observers");
@@ -392,9 +352,11 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
             var observerDTOs = observers.Select(user => new ObserverDTO
             {
-                Id = user.Id,
-                Name = user.UserName
+                Id = _context.Staff.Where(s => s.NID == user.NID && s.FacultyId ==facultyId).Select(s => s.Id).FirstOrDefault(),
+                Name = _context.Staff.Where(s => s.NID == user.NID && s.FacultyId ==facultyId).Select(s => s.Name).FirstOrDefault()
             }).ToList();
+
+            observerDTOs = observerDTOs.Where(s => s.Id != 0).ToList();
 
             return new ResponseDTO
             {
@@ -406,7 +368,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         public async Task<ResponseDTO> GetInvigilatorsInFaculty(int facultyId)
         {
             var Invigilators = await _userManager.GetUsersInRoleAsync("Invigilators");
-
+            
+                 
             if (Invigilators.Count == 0)
             {
                 return new ResponseDTO
@@ -419,10 +382,12 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
             var InvigilatorDTOs = Invigilators.Select(user => new InvigilatorDTO
             {
-                Id = user.Id,
-                Name = user.UserName
+                Id = _context.Staff.Where(s => s.NID == user.NID && s.FacultyId == facultyId).Select(s => s.Id).FirstOrDefault(),
+                Name = _context.Staff.Where(s => s.NID == user.NID && s.FacultyId == facultyId).Select(s => s.Name).FirstOrDefault()
             }).ToList();
 
+
+            InvigilatorDTOs = InvigilatorDTOs.Where(s => s.Id != 0).ToList();
             return new ResponseDTO
             {
                 Model = InvigilatorDTOs,
@@ -430,6 +395,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 IsDone = true
             };
         }
+
+
     }
 
 }
