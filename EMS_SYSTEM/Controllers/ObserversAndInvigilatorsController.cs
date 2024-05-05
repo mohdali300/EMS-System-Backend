@@ -15,9 +15,12 @@ namespace EMS_SYSTEM.Controllers
     public class ObserversAndInvigilatorsController : ControllerBase
     {
         private readonly ObserversAndInvigilatorsService _observers;
+        private ResponseDTO response;
+
         public ObserversAndInvigilatorsController(ObserversAndInvigilatorsService observers)
         {
             _observers = observers;
+            response = new();
         }
 
         [HttpGet("{id}", Name ="GetById")]
@@ -26,7 +29,6 @@ namespace EMS_SYSTEM.Controllers
         {
             if(ModelState.IsValid)
             {
-                ResponseDTO response = new();
                 response = await _observers.GetByNID(id);
 
                 if(response.IsDone)
@@ -34,6 +36,21 @@ namespace EMS_SYSTEM.Controllers
                     return Ok(response);
                 }
                 return StatusCode(response.StatusCode, response.Message);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet("StaffCommittee")]
+        public async Task<IActionResult> GetCommittees(string nid)
+        {
+            if(ModelState.IsValid)
+            {
+                response=await _observers.GetStaffCommittees(nid);
+                if (response.IsDone)
+                {
+                    return StatusCode(response.StatusCode, response.Model);
+                }
+                return StatusCode(response.StatusCode,response.Message);
             }
             return BadRequest(ModelState);
         }
