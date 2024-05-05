@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS_SYSTEM.APPLICATION.Migrations
 {
     [DbContext(typeof(UnvcenteralDataBaseContext))]
-    [Migration("20240505105724_init1")]
-    partial class init1
+    [Migration("20240505144547_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,36 +24,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CommitteeStaff", b =>
-                {
-                    b.Property<int>("CommitteesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StaffsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CommitteesId", "StaffsId");
-
-                    b.HasIndex("StaffsId");
-
-                    b.ToTable("CommitteeStaff");
-                });
-
-            modelBuilder.Entity("CommitteeStudent", b =>
-                {
-                    b.Property<int>("CommitteesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CommitteesId", "StudentsId");
-
-                    b.HasIndex("StudentsId");
-
-                    b.ToTable("CommitteeStudent");
-                });
 
             modelBuilder.Entity("EMS_SYSTEM.AcadYead", b =>
                 {
@@ -226,6 +196,9 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PlaceID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -244,7 +217,55 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PlaceID");
+
                     b.ToTable("Committees");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.StaffCommittees", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CommitteeID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StaffID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommitteeID");
+
+                    b.HasIndex("StaffID");
+
+                    b.ToTable("StaffCommittees");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.StudentsCommittees", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CommitteeID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommitteeID");
+
+                    b.HasIndex("StudentID");
+
+                    b.ToTable("StudentsCommittees");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.SubjectCommittee", b =>
@@ -920,36 +941,6 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CommitteeStaff", b =>
-                {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Committee", null)
-                        .WithMany()
-                        .HasForeignKey("CommitteesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EMS_SYSTEM.Staff", null)
-                        .WithMany()
-                        .HasForeignKey("StaffsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CommitteeStudent", b =>
-                {
-                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Committee", null)
-                        .WithMany()
-                        .HasForeignKey("CommitteesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EMS_SYSTEM.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("EMS_SYSTEM.Bylaw", b =>
                 {
                     b.HasOne("EMS_SYSTEM.StudeyMethod", "CodeStudyMethod")
@@ -1002,6 +993,55 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                         });
 
                     b.Navigation("RefreshTokens");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Committee", b =>
+                {
+                    b.HasOne("EMS_SYSTEM.Palce", "Palce")
+                        .WithMany("Committees")
+                        .HasForeignKey("PlaceID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Palce");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.StaffCommittees", b =>
+                {
+                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Committee", "Committee")
+                        .WithMany("StaffCommittees")
+                        .HasForeignKey("CommitteeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EMS_SYSTEM.Staff", "Staff")
+                        .WithMany("StaffCommittees")
+                        .HasForeignKey("StaffID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Committee");
+
+                    b.Navigation("Staff");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.StudentsCommittees", b =>
+                {
+                    b.HasOne("EMS_SYSTEM.DOMAIN.Models.Committee", "Committee")
+                        .WithMany("StudentsCommittees")
+                        .HasForeignKey("CommitteeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EMS_SYSTEM.Student", "Student")
+                        .WithMany("StudentsCommittees")
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Committee");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.SubjectCommittee", b =>
@@ -1280,6 +1320,10 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
 
             modelBuilder.Entity("EMS_SYSTEM.DOMAIN.Models.Committee", b =>
                 {
+                    b.Navigation("StaffCommittees");
+
+                    b.Navigation("StudentsCommittees");
+
                     b.Navigation("SubjectCommittees");
                 });
 
@@ -1329,9 +1373,21 @@ namespace EMS_SYSTEM.APPLICATION.Migrations
                     b.Navigation("Faculties");
                 });
 
+            modelBuilder.Entity("EMS_SYSTEM.Palce", b =>
+                {
+                    b.Navigation("Committees");
+                });
+
+            modelBuilder.Entity("EMS_SYSTEM.Staff", b =>
+                {
+                    b.Navigation("StaffCommittees");
+                });
+
             modelBuilder.Entity("EMS_SYSTEM.Student", b =>
                 {
                     b.Navigation("StudentSemesters");
+
+                    b.Navigation("StudentsCommittees");
                 });
 
             modelBuilder.Entity("EMS_SYSTEM.StudentSemester", b =>
