@@ -1,7 +1,9 @@
 ﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
+using EMS_SYSTEM.DOMAIN.DTO.Committee;
 using EMS_SYSTEM.DOMAIN.DTO.ObserversAndInvigilators;
+using EMS_SYSTEM.DOMAIN.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -46,5 +48,87 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             };
         }
 
+        public async Task<ResponseDTO> GetStaffCommittees(string nid)
+        {
+            var committee = await _context.Staff
+                .Where(s => s.NID == nid)
+                .SelectMany(s => s.StaffCommittees
+                .Select(c => new
+                {
+                    Id = c.Committee.Id,
+                    Name = c.Committee.Name,
+                    SubjectsName = c.Committee.SubjectName,
+                    FacultyNode = c.Committee.FacultyNode,
+                    FacultyPhase = c.Committee.FacultyPhase,
+                    Day = c.Committee.Day,
+                    Date = c.Committee.Date,
+                    Interval = c.Committee.Interval,
+                    From = c.Committee.From,
+                    To = c.Committee.To,
+                    Status = c.Committee.Status,
+                    Place = c.Committee.Place,
+                    ByLaw=c.Committee.ByLaw,
+                    StudyMethod=c.Committee.StudyMethod,
+                })).ToListAsync();
+
+            if (committee != null)
+            {
+                return new ResponseDTO
+                {
+                    Model = committee,
+                    StatusCode = 200,
+                    IsDone = true
+                };
+            }          
+
+            else
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 400,
+                    Message = $"There is no Committees for this Staff {nid}"
+                };
+            }
+        }
+
     }
 }
+
+
+
+/*
+  var committee = await _context.Staff
+                .Where(s => s.NID == nid)
+                .SelectMany(s => s.StaffCommittees
+                .Join(_context.Committees, sc => sc.CommitteeID, c => c.Id, (sc, c) => new { com = c })
+                .Select(c => c.com.Id)).ToListAsync();
+
+            if (committee != null)
+            {
+                List<object> committs = new List<object>();
+                for (var i = 0; i < committee.Count; i++)
+                {
+                    var query = await _context.Committees
+                        .FirstOrDefaultAsync(c => c.Id == committee[i]);
+                    if(query != null)
+                    {
+                        committs.Add(query);
+                    }
+                }
+                return new ResponseDTO
+                {
+                    Model = committs,
+                    StatusCode = 200,
+                    IsDone = true
+                };
+            }          
+
+            else
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 400,
+                    Message = $"There is no Committees for this Staff {nid}"
+                };
+            }
+*/
