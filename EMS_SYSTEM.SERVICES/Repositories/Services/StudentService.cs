@@ -64,7 +64,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             var subjectIds = await _context.Students
        .Where(s => s.Nationalid == studentNationalId)
        .SelectMany(s => s.StudentSemesters)
-       .Where( ss => ss.FacultyHieryical != null && ss.FacultyHieryical.Phase != null && ss.FacultyHieryical.Phase.Id == phaseid && ss.FacultyNode!.FacultyNodeId == nodeid && ss.Id == semsterid)
+       .Where(ss => ss.FacultyHieryical != null && ss.FacultyHieryical.Phase != null && ss.FacultyHieryical.Phase.Id == phaseid && ss.FacultyNode!.FacultyNodeId == nodeid && ss.Id == semsterid)
        .SelectMany(ss => ss.StudentSemesterSubjects.Select(sss => sss.SubjectId))
        .ToListAsync();
 
@@ -82,17 +82,92 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
             foreach (var subjectId in subjects)
             {
-                var order = await _context.Students
-                    .Where(s => s.Nationalid != studentNationalId) 
-                    .Where(s => s.StudentSemesters.Any(ss => ss.StudentSemesterSubjects.Any(sss => sss.SubjectId == subjectId))) // Filter by subject ID
-                    .OrderBy(s => s.Name) // Order by student name 
-                    .Select((s, index) => new { s.Name, Index = index + 1 }) 
-                    .FirstOrDefaultAsync(s => s.Name == studentNationalId);
+                var otherStudentsInSubject = await _context.Students
+                    .Where(s => s.StudentSemesters.Any(ss => ss.StudentSemesterSubjects.Any(sss => sss.SubjectId == subjectId)))
+                    .Where(s => s.Nationalid != studentNationalId)
+                    .OrderBy(s => s.Name)
+                    .ToListAsync();
 
-                studentOrder.Add(subjectId, order?.Index ?? 0);
+                var studentIndex = otherStudentsInSubject.FindIndex(s => s.Nationalid == studentNationalId);
+                studentOrder.Add(subjectId, studentIndex != -1 ? studentIndex + 1 : 0);
             }
 
             return studentOrder;
+        }
+
+        public async Task<ResponseDTO> GetStudentCommitteesBySubject(string studentNationalId)
+        {
+            try
+            {
+                var studentCommittees = await _context.StudentSemesterSubjects
+                    .Include(ss => ss.StudentSemesters)
+                        .ThenInclude(ss => ss.Stuent)
+                    .Include(ss => ss.Subject)
+                    .Join(
+                        _context.SubjectCommittees,
+                        ss => ss.SubjectId,
+                        sc => sc.SubjectId,
+                        (ss, sc) => new
+                        {
+                            StudentId = ss.StudentSemesters.Stuent.Nationalid,
+                            StudentName = ss.StudentSemesters.Stuent.Name,
+                            SubjectId = ss.SubjectId,
+                            SubjectName = ss.Subject.Name,
+                            CommitteeName = sc.Committee.Name,
+                            CommitteeDate = sc.Committee.Date,
+                            committeeinterval = sc.Committee.Interval,
+                            Committeeplace = sc.Committee.Palce.Name,
+                            Committeeday = sc.Committee.Day,
+                            Committeefrom = sc.Committee.From,
+                            Committeeto = sc.Committee.To,
+
+
+                        })
+                    .Where(s => s.StudentId == studentNationalId)
+                    .GroupBy(s => new { s.SubjectId, s.SubjectName })
+                    .Select(g => new
+                    {
+                        SubjectName = g.Key.SubjectName,
+                        CommitteeDate = g.Select(x => x.CommitteeDate).FirstOrDefault(),
+                        Committeeday = g.Select(x => x.Committeeday.ToString()).FirstOrDefault(),
+                        CommitteeInterval = g.Select(x => x.committeeinterval).FirstOrDefault(),
+                        Committeetime = g.Select(x => x.Committeefrom + " To " + x.Committeeto).FirstOrDefault(),
+
+                        // CommitteePlace = g.Select(x => x.Committeeplace).FirstOrDefault() ,
+                        CommitteeName = g.Select(x => x.CommitteeName).FirstOrDefault(),
+                    })
+                    .ToListAsync();
+
+                if (studentCommittees.Any())
+                {
+                    return new ResponseDTO
+                    {
+                        StatusCode = 200,
+                        IsDone = true,
+                        Model = studentCommittees
+                    };
+                }
+                else
+                {
+                    return new ResponseDTO
+                    {
+                        StatusCode = 404,
+                        IsDone = false,
+                        Message = "No data found for the student.",
+                        Status = "Not Found"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 500,
+                    IsDone = false,
+                    Message = ex.Message,
+                    Status = "Internal Server Error"
+                };
+            }
         }
 
     }

@@ -16,5 +16,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
 
       public  Task<Dictionary<int, int>> GetStudentOrderAmongOthers(string studentNationalId, int nodeid, int phaseid, int semsterid);
 
+        public Task<ResponseDTO> GetStudentCommitteesBySubject(string studentNationalId);
     }
 }

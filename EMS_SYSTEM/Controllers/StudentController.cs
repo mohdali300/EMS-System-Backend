@@ -34,6 +34,21 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
-       
+
+        [HttpGet("GetStudentCommittees")]
+        public async Task<IActionResult> GetStudentCommitteesBySubject(string studentNationalId)
+        {
+            if (ModelState.IsValid)
+            {
+                _responseDTO = await _unitOfWork.Students.GetStudentCommitteesBySubject(studentNationalId);
+                if (_responseDTO.IsDone)
+                {
+                    return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);
+                }
+                return StatusCode(_responseDTO.StatusCode, _responseDTO.Message);
+            }
+            return BadRequest(ModelState);
+        }
+
     }
 }
