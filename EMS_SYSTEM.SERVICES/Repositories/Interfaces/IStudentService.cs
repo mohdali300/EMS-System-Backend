@@ -11,6 +11,10 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
 {
     public interface IStudentService:IGenericRepository<Student>
     {
-        Task<ResponseDTO> GetStudentDataByNID(string Id);
+       public Task<ResponseDTO> GetStudentDataByNID(string Id);
+        public Task<List<int>> GetSubjectsForStudent(string studentNationalId,int nodeid , int phaseid , int semsterid);
+
+      public  Task<Dictionary<int, int>> GetStudentOrderAmongOthers(string studentNationalId, int nodeid, int phaseid, int semsterid);
+
     }
 }

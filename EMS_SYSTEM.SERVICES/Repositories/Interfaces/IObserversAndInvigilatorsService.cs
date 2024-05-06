@@ -13,6 +13,6 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
     public interface IObserversAndInvigilatorsService
     {
         Task<ResponseDTO>GetByNID(string id);
-
+        Task<ResponseDTO> GetStaffCommittees(string nid);
     }
 }

@@ -158,7 +158,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     .Join(_context.Subjects, sc => sc.SubjectCommittee.SubjectId, s => s.Id, (sc, s) => new { sc, Subject = s })
                     .Join(_context.FacultyHieryicals, s => s.Subject.FacultyHieryricalId, fh => fh.Id, (s, fh) => new { s, FacultyHieryical = fh })
                     .Join(_context.FacultyPhases, fh => fh.FacultyHieryical.PhaseId, fp => fp.Id, (fh, fp) => new { fh, FacultyPhase = fp })
-                    .Where(fp => fp.FacultyPhase.FacultyId == id && fp.fh.s.sc.Committee.Date== DateTime.Now.Date)
+                    .Where(fp => fp.FacultyPhase.FacultyId == id && fp.fh.s.sc.Committee.Date == DateTime.Now.Date)
                     .GroupBy(fp => new { fp.FacultyPhase.Name, fp.FacultyPhase.Id })
                     .Select(s => new
                     {
@@ -183,6 +183,20 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 StatusCode = 400,
                 Model = null,
                 Message = $"No Committees Created Until Now for This Faculty {id}"
+            };
+
+        }
+
+
+        public async Task<ResponseDTO> GetPlaces()
+        {
+            var Places =  _context.Palces.ToList();
+            
+            return new ResponseDTO
+            {
+                IsDone = true,
+                StatusCode = 400,
+                Model = Places,
             };
 
         }

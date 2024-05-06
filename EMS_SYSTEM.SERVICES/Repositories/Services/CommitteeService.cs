@@ -4,6 +4,7 @@ using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Committee;
 using EMS_SYSTEM.DOMAIN.Enums;
 using EMS_SYSTEM.DOMAIN.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +21,11 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
     public class CommitteeService : GenericRepository<Committee>, ICommitteeService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public CommitteeService(UnvcenteralDataBaseContext Db, IUnitOfWork unitOfWork) : base(Db)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public CommitteeService(UnvcenteralDataBaseContext Db, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager) : base(Db)
         {
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
         }
 
         public async Task<ResponseDTO> Distributions(int observerId, List<int> noticers, CommitteeDTO model)
@@ -386,5 +389,68 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 };
             }
         }
+
+        public async Task<ResponseDTO> GetObserversInFaculty(int facultyId)
+        {
+            var observers = await _userManager.GetUsersInRoleAsync("Observers");
+
+            if (observers.Count == 0)
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 404,
+                    IsDone = false,
+                    Message = "No observers found for the specified faculty."
+                };
+            }
+
+            var observerDTOs = observers.Select(user => new ObserverDTO
+            {
+                Id = _context.Staff.Where(s => s.NID == user.NID && s.FacultyId ==facultyId).Select(s => s.Id).FirstOrDefault(),
+                Name = _context.Staff.Where(s => s.NID == user.NID && s.FacultyId ==facultyId).Select(s => s.Name).FirstOrDefault()
+            }).ToList();
+
+            observerDTOs = observerDTOs.Where(s => s.Id != 0).ToList();
+
+            return new ResponseDTO
+            {
+                Model = observerDTOs,
+                StatusCode = 200,
+                IsDone = true
+            };
+        }
+        public async Task<ResponseDTO> GetInvigilatorsInFaculty(int facultyId)
+        {
+            var Invigilators = await _userManager.GetUsersInRoleAsync("Invigilators");
+            
+                 
+            if (Invigilators.Count == 0)
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 404,
+                    IsDone = false,
+                    Message = "No Invigilators found for the specified faculty."
+                };
+            }
+
+            var InvigilatorDTOs = Invigilators.Select(user => new InvigilatorDTO
+            {
+                Id = _context.Staff.Where(s => s.NID == user.NID && s.FacultyId == facultyId).Select(s => s.Id).FirstOrDefault(),
+                Name = _context.Staff.Where(s => s.NID == user.NID && s.FacultyId == facultyId).Select(s => s.Name).FirstOrDefault()
+            }).ToList();
+
+
+            InvigilatorDTOs = InvigilatorDTOs.Where(s => s.Id != 0).ToList();
+            return new ResponseDTO
+            {
+                Model = InvigilatorDTOs,
+                StatusCode = 200,
+                IsDone = true
+            };
+        }
+
+
     }
+
 }

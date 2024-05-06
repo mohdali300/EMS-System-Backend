@@ -22,7 +22,7 @@ namespace EMS_SYSTEM.Controllers
         }
         
         [HttpGet("GetFaculty/{Id}")]
-        [Authorize]// For All Roles
+    
         public async Task<IActionResult> GetFacultyById(int Id)
         {
             if (ModelState.IsValid)
@@ -74,6 +74,22 @@ namespace EMS_SYSTEM.Controllers
             if (ModelState.IsValid)
             {
                 _responseDTO = await _facultyService.GetFacultyCommitteesForCurrentDay(FacultyID);
+                if (_responseDTO.IsDone)
+                {
+                    return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);
+                }
+                return StatusCode(_responseDTO.StatusCode, _responseDTO.Message);
+            }
+            return BadRequest(ModelState);
+        }
+
+
+        [HttpGet("Places")]
+        public async Task<IActionResult> GelAllPlaces()
+       {
+            if (ModelState.IsValid)
+            {
+                _responseDTO = await _facultyService.GetPlaces();
                 if (_responseDTO.IsDone)
                 {
                     return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);

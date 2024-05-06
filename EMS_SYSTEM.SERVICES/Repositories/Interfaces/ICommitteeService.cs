@@ -18,6 +18,11 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
         public Task<ResponseDTO> DeleteAllFacultyCommitee(int FacultyID);
 
         public Task<ResponseDTO> UpdateCommitee(int committeeID, CommitteeDTO model);
+        //public  Task<List<ResponseDTO>> GetObserversInFaculty(int facultyId);
+        public  Task<ResponseDTO> GetObserversInFaculty(int facultyId);
+        public Task<ResponseDTO> GetInvigilatorsInFaculty(int facultyId);
+
+
 
     }
 }
