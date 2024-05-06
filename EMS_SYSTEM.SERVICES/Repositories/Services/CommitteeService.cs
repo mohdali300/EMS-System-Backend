@@ -88,9 +88,11 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
             if (model.StudentNumber > availableStudents.Count || availableStudents.Count == 0)
             {
+                _context.Committees.Remove(committee);
+                await _unitOfWork.SaveAsync();
                 return new ResponseDTO
                 {
-                    Message = "There is No More Students To Distribute",
+                    Message = $"{availableStudents.Count}",
                     IsDone = false,
                     StatusCode = 400,
                 };

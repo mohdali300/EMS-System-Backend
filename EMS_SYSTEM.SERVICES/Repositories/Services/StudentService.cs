@@ -30,11 +30,11 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             {
                 Name = student.Name,
                 FacultyCode = student.FacultyCode,
-                //Status = semester.StuentSatuts.StuentSatuts,
-                //Department = semester.FacultyNode.Name,
-                //Level = semester.FacultyHieryical.Phase.Name,
-                //FacultyName = semester.FacultyNode.Faculty.FacultyName,
-                //FacultyId = semester.FacultyNode.Faculty.Id
+                Status = semester.StuentSatuts.StuentSatuts,
+                Department = semester.FacultyNode.Name,
+                Level = semester.FacultyHieryical.Phase.Name,
+                FacultyName = semester.FacultyNode.Faculty.FacultyName,
+                FacultyId = semester.FacultyNode.Faculty.Id
             }))
             .FirstOrDefaultAsync();
 
