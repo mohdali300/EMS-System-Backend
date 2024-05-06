@@ -4,6 +4,7 @@ using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Committee;
 using EMS_SYSTEM.DOMAIN.Enums;
 using EMS_SYSTEM.DOMAIN.Models;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,80 +14,116 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
-    public class CommitteeService:GenericRepository<Committee>, ICommitteeService
+    public class CommitteeService : GenericRepository<Committee>, ICommitteeService
     {
         private readonly IUnitOfWork _unitOfWork;
         public CommitteeService(UnvcenteralDataBaseContext Db, IUnitOfWork unitOfWork) : base(Db)
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<ResponseDTO> AddCommitteeAsync(CommitteeDTO model)
+
+        public async Task<ResponseDTO> Distributions(int observerId, List<int> noticers, CommitteeDTO model)
         {
-           if(model is not null)
+            var committee = new Committee
             {
-                var Committee = new Committee()
-                {
-    
-                    Name = model.Name,
-                    Date=model.Date.Date,
-                    Interval=model.Interval,
-                    From=model.From,
-                    To=model.To,
-                    Place=model.Place,
-                    SubjectName=model.SubjectsName,
-                    StudyMethod=model.StudyMethod,
-                    Status = model.Status,
-                    Day=model.Day,
-                    ByLaw = model.ByLaw,
-                    FacultyNode=model.FacultyNode,
-                    FacultyPhase = model.FacultyPhase,                  
-                    
-                };
-                var isSubjectIdExist= await _unitOfWork.Subject.IsExistAsync(s => s.Id ==model.SubjectID);
-                if (isSubjectIdExist != null)
-                {
-                    await _unitOfWork.Committees.AddAsync(Committee);
-                    await _unitOfWork.SaveAsync();
-                    await _unitOfWork.SubjectCommittees.AddAsync(new SubjectCommittee { SubjectId = model.SubjectID, CommitteeId = Committee.Id });
-                    await _unitOfWork.SaveAsync();
-                    return new ResponseDTO
-                    {
-                        Message = "Committee Created Successfully",
-                        IsDone = true,
-                        Model = Committee,
-                        StatusCode = 201
-                    };
-                }
+                Name = model.Name,
+                Date = model.Date.Date,
+                Interval = model.Interval,
+                From = model.From,
+                To = model.To,
+                Place = model.Place,
+                SubjectName = model.SubjectsName,
+                StudyMethod = model.StudyMethod,
+                Status = model.Status,
+                Day = model.Day,
+                ByLaw = model.ByLaw,
+                FacultyNode = model.FacultyNode,
+                FacultyPhase = model.FacultyPhase,
+                PlaceID = model.PlaceID
+            };
+
+            var isSubjectIdExist = await _unitOfWork.Subject.IsExistAsync(s => s.Id == model.SubjectID);
+            if (isSubjectIdExist == null)
+            {
                 return new ResponseDTO
                 {
-                    Message = "Invalid SubjectID", // For FrontEnd not User
+                    Message = "Subject ID does not exist",
                     IsDone = false,
-                    Model = null,
                     StatusCode = 400
                 };
             }
-            return new ResponseDTO { 
-                Message = "Invalid Data in Model",
-                IsDone = false,
-                Model = null,
-                StatusCode = 400 
+
+            await _unitOfWork.Committees.AddAsync(committee);
+            await _unitOfWork.SaveAsync();
+
+            await _unitOfWork.SubjectCommittees.AddAsync(new SubjectCommittee
+            {
+                SubjectId = model.SubjectID,
+                CommitteeId = committee.Id
+            });
+            await _unitOfWork.SaveAsync();
+
+            var allStudents = await _context.Students
+                .Join(_context.StudentSemesters, s => s.Id, ss => ss.StuentId, (s, ss) => new { Student = s, StudentSemester = ss })
+                .Join(_context.StudentSemesterSubjects, sss => sss.StudentSemester.Id, s => s.StudentSemestersId, (sss, s) => new { sss.Student, StudentSemester = s })
+                .Join(_context.Subjects, ss => ss.StudentSemester.SubjectId, su => su.Id, (ss, su) => new { ss.Student, Subject = su })
+                .Where(ss => ss.Subject.Id == model.SubjectID)
+                .OrderBy(s => s.Student.Name)
+                .ToListAsync();
+
+            var existingStudent = await _context.StudentsCommittees
+                .Select(s => s.StudentID)
+                .ToListAsync();
+
+            var availableStudents = allStudents
+                .Where(s => !existingStudent.Contains(s.Student.Id))
+                .Take(model.StudentNumber)
+                .ToList();
+
+            if (model.StudentNumber > availableStudents.Count || availableStudents.Count == 0)
+            {
+                return new ResponseDTO
+                {
+                    Message = "There is No More Students To Distribute",
+                    IsDone = false,
+                    StatusCode = 400,
+                };
+            }
+            var studentCommittees = availableStudents.Select(student => new StudentsCommittees
+            {
+                CommitteeID = committee.Id,
+                StudentID = student.Student.Id
+            }).ToList();
+
+            await _context.StudentsCommittees.AddRangeAsync(studentCommittees);
+            await _context.SaveChangesAsync();
+
+            var staffCommittees = noticers.Select(observer => new StaffCommittees
+            {
+                CommitteeID = committee.Id,
+                StaffID = observer
+            }).ToList();
+
+            staffCommittees.Add(new StaffCommittees
+            {
+                CommitteeID = committee.Id,
+                StaffID = observerId
+            });
+
+            await _context.AddRangeAsync(staffCommittees);
+            await _context.SaveChangesAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Committee Created Successfully",
+                IsDone = true,
+                StatusCode = 200
             };
         }
-        
 
-        //public async Task<ResponseDTO> Distrbiutions(int observerId,List<int> noticers,CommitteeDTO model) 
-        //{
-        //      var Committees =  await AddCommitteeAsync(model);
-
-
-
-        
-            
-        //}
 
         public async Task<ResponseDTO> GetCommitteesSchedule(int Id)
         {

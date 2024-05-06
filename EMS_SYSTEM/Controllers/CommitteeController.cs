@@ -20,11 +20,11 @@ namespace EMS_SYSTEM.Controllers
         }
         [HttpPost("AddCommittee")]
       //  [Authorize(Roles = "FacultyAdmin , GlobalAdmin")]
-        public async Task<IActionResult> AddCommittee(CommitteeDTO model)
+        public async Task<IActionResult> AddCommittee([FromQuery] int observerID,[FromQuery]List<int> noticers,[FromBody]CommitteeDTO model)
         {
             if (ModelState.IsValid)
             {
-                var Response = await _committee.AddCommitteeAsync(model);
+                var Response = await _committee.Distributions(observerID, noticers, model);
                 if (Response.IsDone)
                 {
                     return StatusCode(Response.StatusCode , Response.Message);

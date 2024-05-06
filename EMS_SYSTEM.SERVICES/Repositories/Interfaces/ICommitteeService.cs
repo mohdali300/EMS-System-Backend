@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EMS_SYSTEM.DOMAIN.Models;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
 {
     public interface ICommitteeService
     {
-       public Task<ResponseDTO> AddCommitteeAsync(CommitteeDTO model);
+        public Task<ResponseDTO> Distributions(int observerId, List<int> noticers, CommitteeDTO model);      
         public Task<ResponseDTO> GetCommitteesSchedule(int id);
         public Task<ResponseDTO> FilterFacultyCommittees(int FacultyID, int Level, string CommitteeName , string subjectName);
         public Task<ResponseDTO> DeleteCommittee(int CommiteeID);
