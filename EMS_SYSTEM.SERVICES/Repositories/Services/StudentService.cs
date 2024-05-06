@@ -99,64 +99,36 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         {
             try
             {
-                var studentCommittees = await _context.StudentSemesterSubjects
-                    .Include(ss => ss.StudentSemesters)
-                        .ThenInclude(ss => ss.Stuent)
-                    .Include(ss => ss.Subject)
-                    .Join(
-                        _context.SubjectCommittees,
-                        ss => ss.SubjectId,
-                        sc => sc.SubjectId,
-                        (ss, sc) => new
-                        {
-                            StudentId = ss.StudentSemesters.Stuent.Nationalid,
-                            StudentName = ss.StudentSemesters.Stuent.Name,
-                            SubjectId = ss.SubjectId,
-                            SubjectName = ss.Subject.Name,
-                            CommitteeName = sc.Committee.Name,
-                            CommitteeDate = sc.Committee.Date,
-                            committeeinterval = sc.Committee.Interval,
-                            Committeeplace = sc.Committee.Palce.Name,
-                            Committeeday = sc.Committee.Day,
-                            Committeefrom = sc.Committee.From,
-                            Committeeto = sc.Committee.To,
-
-
-                        })
-                    .Where(s => s.StudentId == studentNationalId)
-                    .GroupBy(s => new { s.SubjectId, s.SubjectName })
-                    .Select(g => new
+                var studentId = await _context.Students
+                    .Where(s => s.Nationalid == studentNationalId).Select(s=>s.Id).FirstOrDefaultAsync();
+                var studentCommittees = await _context.StudentsCommittees
+                    .Where(sc => sc.StudentID == studentId)
+                    .Join(_context.Committees, sc => sc.CommitteeID, c => c.Id, (sc, c) => new
                     {
-                        SubjectName = g.Key.SubjectName,
-                        CommitteeDate = g.Select(x => x.CommitteeDate).FirstOrDefault(),
-                        Committeeday = g.Select(x => x.Committeeday.ToString()).FirstOrDefault(),
-                        CommitteeInterval = g.Select(x => x.committeeinterval).FirstOrDefault(),
-                        Committeetime = g.Select(x => x.Committeefrom + " To " + x.Committeeto).FirstOrDefault(),
+                        StudentName = sc.Student.Name,
+                        SubjectName = sc.Committee.SubjectName,
+                        CommitteeName = sc.Committee.Name,
+                        CommitteeDate = sc.Committee.Date,
+                        committeeinterval = sc.Committee.Interval,
+                        Committeeplace = sc.Committee.Place,
+                        Committeeday = sc.Committee.Day,
+                        Committeefrom = sc.Committee.From,
+                        Committeeto = sc.Committee.To,
 
-                        // CommitteePlace = g.Select(x => x.Committeeplace).FirstOrDefault() ,
-                        CommitteeName = g.Select(x => x.CommitteeName).FirstOrDefault(),
-                    })
-                    .ToListAsync();
 
-                if (studentCommittees.Any())
+                    }).ToListAsync();
+
+
+
+
+                return new ResponseDTO
                 {
-                    return new ResponseDTO
-                    {
-                        StatusCode = 200,
-                        IsDone = true,
-                        Model = studentCommittees
-                    };
-                }
-                else
-                {
-                    return new ResponseDTO
-                    {
-                        StatusCode = 404,
-                        IsDone = false,
-                        Message = "No data found for the student.",
-                        Status = "Not Found"
-                    };
-                }
+                    StatusCode = 200,
+                    IsDone = true,
+                    Model = studentCommittees
+                };
+                
+                
             }
             catch (Exception ex)
             {
