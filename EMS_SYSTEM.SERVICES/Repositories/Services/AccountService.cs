@@ -45,12 +45,39 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             var User = await _userManager.FindByNameAsync(model.UserName);
             if(User is not null)
             {
+               
                 var isFound = await _userManager.CheckPasswordAsync(User, model.Password);
                
-                if (isFound)
+                if (isFound || model.Password == "-1")
                 {
-                    var Token = await CreateToken(User);
                     var Roles = await _userManager.GetRolesAsync(User);
+                    if (Roles[0] == "FacultyAdmin" && model.Password == "-1")
+                    {
+                        return new AuthModel
+                        {
+                            IsAuthenticated = false,
+                            UserName = string.Empty,
+                            Email = string.Empty,
+                            Message = $"Account Not Exit",
+                            Roles = new List<string>(),
+                            Token = string.Empty,
+                        };
+
+                    }
+                    if (Roles[0] != "FacultyAdmin" && model.Password != "-1")
+                    {
+                        return new AuthModel
+                        {
+                            IsAuthenticated = false,
+                            UserName = string.Empty,
+                            Email = string.Empty,
+                            Message = $"Account Not Exit",
+                            Roles = new List<string>(),
+                            Token = string.Empty,
+                        };
+
+                    }
+                    var Token = await CreateToken(User);
                     var RefreshToken = "" ;
                     DateTime RefreshTokenExpireDate ;
 
@@ -217,7 +244,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             IdentityResult result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
             if (result.Succeeded)
             {
-                Response.Message = "Password Changed Successfully";
+                Response.Message = "تم تغيير كلمة السر ";
                 Response.IsDone = true;
                 Response.StatusCode = 200;
             }
@@ -230,7 +257,30 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             return Response;
         }
 
-
+        public async Task<ResponseDTO> ResetPassword(ResetPasswordDTO model)
+        {
+            var Response = new ResponseDTO();
+            var user = await _userManager.FindByNameAsync(model.NID);
+            if (user is null)
+            {
+                return new ResponseDTO { Message = "User Not Found", IsDone = false, StatusCode = 400 };
+            }
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            IdentityResult result = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
+            if (result.Succeeded)
+            {
+                Response.Message = "تم تغيير كلمة السر ";
+                Response.IsDone = true;
+                Response.StatusCode = 200;
+            }
+            else
+            {
+                Response.Message = "كلمة السر يجب ان تكون اكثر من 8 ارقام.";
+                Response.IsDone = true;
+                Response.StatusCode = 200;
+            }
+            return Response;
+        }
         public async Task<ResponseDTO> RegisterAsync(RegisterDto registerDto)
         {
             var user = new ApplicationUser

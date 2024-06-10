@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace EMS_SYSTEM.DOMAIN.DTO.PasswordSettings
 {
-    public class ChangePasswordDTO
+    public class ResetPasswordDTO
     {
         public string NID { get; set; }
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
-        public string? CurrentPassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

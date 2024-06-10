@@ -1,7 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
 using System.Security.Claims;
 using Azure;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
+using EMS_SYSTEM.APPLICATION.Repositories.Services;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.LogIn;
 using EMS_SYSTEM.DOMAIN.DTO.NewFolder;
@@ -22,12 +24,14 @@ namespace EMS_SYSTEM.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly IEmailService _emailService;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public AccountController(IAccountService _accountService , IHttpContextAccessor httpContextAccessor ,UserManager<ApplicationUser> userManager)
+        public AccountController(IAccountService _accountService , IEmailService _emailService , IHttpContextAccessor httpContextAccessor ,UserManager<ApplicationUser> userManager)
         {
-            this._accountService=_accountService;
+            this._accountService = _accountService;
+            this._emailService = _emailService;
             this.httpContextAccessor = httpContextAccessor;
             this.userManager = userManager;
         }
@@ -79,22 +83,6 @@ namespace EMS_SYSTEM.Controllers
         }
 
 
-        [HttpPost("ChangePassword")]
-        [Authorize(Roles = "GlobalAdmin , FacultyAdmin")]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO ChangePassword)
-        {
-            if (ModelState.IsValid)
-            {
-                var Response = await _accountService.ChangePasswordAsync(ChangePassword);
-                if (Response.IsDone == true)
-                {
-                    return StatusCode(Response.StatusCode, Response.Message);
-                }
-                return StatusCode(Response.StatusCode, Response.Message);
-            }        
-            return BadRequest(ModelState);
-
-        }
       
         [HttpDelete("DeleteUser")]
         [Authorize(Roles = "GlobalAdmin , FacultyAdmin")]
@@ -111,6 +99,54 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
 
+        }
+
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO ChangePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _accountService.ChangePasswordAsync(ChangePassword);
+                if (Response.IsDone == true)
+                {
+                    return StatusCode(Response.StatusCode, Response.Message);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+
+        }
+
+        [HttpPost("SendEmail")]
+        public async Task<IActionResult> SendEmail(string NID)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _emailService.HandelSendEmail(NID);
+                if (Response.IsDone == true)
+                {
+                    return Ok(Response.Model);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+
+        }
+
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDTO model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _accountService.ResetPassword(model);
+                if (Response.IsDone == true)
+                {
+                    return Ok(Response);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
         }
     }
 }
