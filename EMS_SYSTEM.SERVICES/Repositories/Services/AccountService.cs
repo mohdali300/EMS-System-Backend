@@ -45,8 +45,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             var User = await _userManager.FindByNameAsync(model.UserName);
             if(User is not null)
             {
-                // var isFound = await _userManager.CheckPasswordAsync(User, model.Password);
-                var isFound = true;
+                var isFound = await _userManager.CheckPasswordAsync(User, model.Password);
+               
                 if (isFound)
                 {
                     var Token = await CreateToken(User);
@@ -212,7 +212,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             }
             if (!await _userManager.CheckPasswordAsync(user, model.CurrentPassword))
             {
-                return new ResponseDTO { Message = "Invalid Password" ,IsDone=false,StatusCode=400};
+                return new ResponseDTO { Message = "خطأ في كلمة السر الحالية" ,IsDone= true, StatusCode=200};
             }
             IdentityResult result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
             if (result.Succeeded)
@@ -223,9 +223,9 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             }
             else
             {
-                Response.Message = "Failed To Change Password";
-                Response.IsDone = false;
-                Response.StatusCode = 400;
+                Response.Message = "كلمة السر يجب ان تكون اكثر من 8 ارقام.";
+                Response.IsDone = true;
+                Response.StatusCode = 200;
             }
             return Response;
         }
