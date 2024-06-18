@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
 {
-    internal interface IGlobalService
+    public interface IGlobalService
     {
+
     }
 }
