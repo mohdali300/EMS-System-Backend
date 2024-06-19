@@ -64,7 +64,7 @@ namespace EMS_SYSTEM.Controllers
         {
             if(ModelState.IsValid)
             {
-                var response=await _unitOfWork.Global.GetFacultiesByDate(date);
+                var response=await _globalService.GetFacultiesByDate(date);
                 if (response.IsDone)
                     return StatusCode(response.StatusCode, response.Model);
                 return StatusCode(response.StatusCode, response.Message);
