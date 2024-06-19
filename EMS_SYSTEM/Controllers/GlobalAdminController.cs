@@ -48,13 +48,13 @@ namespace EMS_SYSTEM.Controllers
         public async Task<IActionResult> GetFacultiesWithCommitteeCount()
         {
             if (ModelState.IsValid)
-            {
-                _responseDTO = await _unitOfWork.Global.GetFacultiesWithCommitteeCount();
-                if (_responseDTO.IsDone)
+            {  
+                var Response = await _globalService.GetFacultiesWithCommitteeCount();
+                if (Response.IsDone)
                 {
-                    return StatusCode(_responseDTO.StatusCode, _responseDTO.Model);
+                    return StatusCode(Response.StatusCode, Response.Model);
                 }
-                return StatusCode(_responseDTO.StatusCode, _responseDTO.Message);
+                return StatusCode(Response.StatusCode, Response.Message);
             }
             return BadRequest(ModelState);
         }
