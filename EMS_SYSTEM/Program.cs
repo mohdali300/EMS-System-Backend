@@ -117,6 +117,7 @@ builder.Services.AddScoped<ObserversAndInvigilatorsService>();
 builder.Services.AddScoped<ICommitteeService,CommitteeService>();
 builder.Services.AddScoped<IFacultyService, FacultyService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IGlobalService, GlobalService>();
 
 // add cores
 builder.Services.AddCors(options =>
