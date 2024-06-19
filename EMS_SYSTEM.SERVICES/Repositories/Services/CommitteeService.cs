@@ -183,6 +183,46 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             
         }
 
+        public async Task<ResponseDTO> GetCommitteeDetails(int id)
+        {
+            var committee = await _context.Committees.Where(c => c.Id == id)
+                .Select(c => new
+                {
+                    Name = c.Name,
+                    SubjectsName = c.SubjectName,
+                    FacultyNode = c.FacultyNode,
+                    FacultyPhase = c.FacultyPhase,
+                    Day = c.Day,
+                    Date = c.Date,
+                    Interval = c.Interval,
+                    From = c.From,
+                    To = c.To,
+                    Status = c.Status,
+                    Place = c.Place,
+                    StudentNumber = c.StudentsCommittees.Count(),
+                    ObserversAndInvigilators = c.StaffCommittees.Where(st => st.Staff != null)
+                                               .Select(st => st.Staff.Name).ToList(),
+                }).FirstOrDefaultAsync();
+
+            if(committee != null)
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 200,
+                    IsDone = true,
+                    Model = committee
+                };
+            }
+
+            return new ResponseDTO
+            {
+                StatusCode = 400,
+                IsDone = false,
+                Message="There is no committee with this Id."
+            };
+        }
+
+
         public async Task<ResponseDTO> DeleteCommittee(int CommiteeID)
         {
             var Commitee = await _context.Committees.FirstOrDefaultAsync(c => c.Id == CommiteeID);

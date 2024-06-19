@@ -13,6 +13,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
     {
         public Task<ResponseDTO> Distributions(int observerId, List<int> noticers, CommitteeDTO model);      
         public Task<ResponseDTO> GetCommitteesSchedule(int id);
+        public Task<ResponseDTO> GetCommitteeDetails(int id);
         public Task<ResponseDTO> FilterFacultyCommittees(int FacultyID, int Level, string CommitteeName , string subjectName);
         public Task<ResponseDTO> DeleteCommittee(int CommiteeID);
         public Task<ResponseDTO> DeleteAllFacultyCommitee(int FacultyID);

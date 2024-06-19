@@ -12,6 +12,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         public IStudentService Students { get; }
+        public IGenericRepository<GlobalService> Global { get; }
         public IGenericRepository<Faculty> Faculty { get; }
         public IGenericRepository<Subject> Subject { get; }
         public IGenericRepository<Staff> Staff {  get; }

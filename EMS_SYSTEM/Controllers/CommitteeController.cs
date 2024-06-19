@@ -50,6 +50,19 @@ namespace EMS_SYSTEM.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpGet("CommitteeDetails")]
+        public async Task<IActionResult> GetCommitteeDetails(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var response=await _committee.GetCommitteeDetails(id);
+                if (response.IsDone)
+                    return StatusCode(response.StatusCode, response.Model);
+                return StatusCode(response.StatusCode, response.Message);
+            }
+            return BadRequest(ModelState);
+        }
+
         [HttpGet("FilteringForCommittees")]
         public async Task<IActionResult> FilterFacultyCommittees(int FacultyID, int Level=0, string CommitteeName=null , string subjectName = null)
         {

@@ -14,6 +14,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork
     {
         private readonly UnvcenteralDataBaseContext _context;
         public IStudentService Students { get; private set; }
+        public IGenericRepository<GlobalService> Global { get; private set; }
 
         public IGenericRepository<Faculty> Faculty { get; private set; }
         public IGenericRepository<Subject> Subject { get; private set; }
@@ -30,6 +31,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork
             Staff = new GenericRepository<Staff>(_context);
             Committees= new GenericRepository<Committee>(_context);
             SubjectCommittees = new GenericRepository<SubjectCommittee>(_context);
+            Global=new GenericRepository<GlobalService>(_context);
         }
         public int Save()
         {
