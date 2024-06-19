@@ -59,6 +59,22 @@ namespace EMS_SYSTEM.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpGet("CommitteesTodayCount")]
+
+        public async Task<IActionResult> GetFacultiesWithCommitteeToday()
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _globalService.GetFacultiesWithCommitteeToday();
+                if (Response.IsDone)
+                {
+                    return StatusCode(Response.StatusCode, Response.Model);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+        }
+
         [HttpGet("FacultyByDate")]
         public async Task<IActionResult> GetFacultiesByDate(DateTime date)
         {

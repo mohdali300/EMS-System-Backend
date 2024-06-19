@@ -15,6 +15,10 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
         public Task<ResponseDTO> GetFacultyByName(string FacultyName);
         public Task<ResponseDTO> GetFacultiesWithCommitteeCount();
 
+        public Task<ResponseDTO> GetFacultiesWithCommitteeToday();
+
         public Task<ResponseDTO> GetFacultiesByDate(DateTime date);
+
+
     }
 }

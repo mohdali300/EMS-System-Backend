@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
@@ -61,7 +62,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
         public async Task<ResponseDTO> GetFacultiesWithCommitteeCount()
         {
-            var result = await _context.Faculties
+            var faculties = await _context.Faculties
                              .Select(f => new FacultyCommitteeCountDto
                              {
                                  FacultyName = f.FacultyName,
@@ -75,7 +76,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
             return new ResponseDTO
             {
-                Model = result,
+                Model = faculties,
                 StatusCode = 200,
                 IsDone = true
             };
@@ -115,6 +116,60 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             };
         }
 
+        public async Task<ResponseDTO> GetFacultiesWithCommitteeToday()
+        {
+            // Return faculites that contain committees only 
+            var faculties = await _context.Committees
+    .Where(c => c.Date.Date == DateTime.Today)
+    .SelectMany(c => c.SubjectCommittees)
+    .Where(sc => sc.Subject != null && sc.Subject.FacultyNode != null && sc.Subject.FacultyNode.Faculty != null)
+    .GroupBy(sc => sc.Subject.FacultyNode.Faculty.FacultyName)
+    .Select(g => new
+    {
+       
+        FacultyName = g.Key,
+        CommitteeCount = g.Count()
+    }).OrderByDescending(g => g.CommitteeCount)
+    .ToListAsync();
+
+            /* Return All Faculties whether it contains committees or not
+             var faculties = await _context.Faculties
+    .GroupJoin(
+        _context.Committees.Where(c => c.Date.Date == DateTime.Today)
+            .SelectMany(c => c.SubjectCommittees)
+            .Where(sc => sc.Subject != null && sc.Subject.FacultyNode != null),
+        f => f.Id,
+        sc => sc.Subject.FacultyNode.FacultyId,
+        (f, subjectCommittees) => new
+        {
+            FacultyID = f.Id,
+            FacultyName = f.FacultyName,
+            CommitteeCount = subjectCommittees.Count()
+        }).OrderByDescending(g => g.CommitteeCount )
+    .ToListAsync();
+        */
+
+
+
+            if (faculties != null && faculties.Count > 0)
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 200,
+                    IsDone = true,
+                    Model = faculties
+                };
+            }
+
+            return new ResponseDTO
+            {
+                StatusCode = 400,
+                IsDone = false,
+                Message = "There is no faculties committees Today."
+            };
         }
+
     }
+    }
+   
 
