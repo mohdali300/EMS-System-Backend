@@ -110,37 +110,7 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
-        //[HttpGet("GetfacultyObservers")]
-        //public async Task<IActionResult> GetObserversInFaculty(int facultyId)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var response = await _committee.GetObserversInFaculty(facultyId);
-        //        if (response.Any())
-        //        {
-        //            var responseDTOs = response.Select(res => new ResponseDTO
-        //            {
-        //                Model = res,
-        //                StatusCode = 200,
-        //                IsDone = true
-        //            }).ToList();
 
-        //            return Ok(responseDTOs);
-        //        }
-        //        else
-        //        {
-        //            var errorResponse = new ResponseDTO
-        //            {
-        //                StatusCode = 404,
-        //                IsDone = false,
-        //                Message = "No observers found for the specified faculty."
-        //            };
-
-        //            return NotFound(errorResponse);
-        //        }
-        //    }
-        //    return BadRequest(ModelState);
-        //}
         [HttpGet("GetfacultyObservers")]
         public async Task<IActionResult> GetObserversInFaculty(int facultyId)
         {
