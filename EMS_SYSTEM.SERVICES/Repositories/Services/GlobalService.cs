@@ -11,17 +11,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Mvc;
+using EMS_SYSTEM.DOMAIN.Models;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
-    public class GlobalService: GenericRepository<Faculty>, IGlobalService
+    public class GlobalService : GenericRepository<Faculty>, IGlobalService
     {
         private readonly IUnitOfWork _unitOfWork;
 
 
-        public GlobalService(UnvcenteralDataBaseContext _context, IUnitOfWork _unitOfWork):base(_context)
+        public GlobalService(UnvcenteralDataBaseContext _context, IUnitOfWork _unitOfWork) : base(_context)
         {
-           this._unitOfWork= _unitOfWork;
+            this._unitOfWork = _unitOfWork;
         }
 
         public async Task<ResponseDTO> GetFacultiesByDate(DateTime date)
@@ -41,7 +43,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             //    .Select(sem => sem.Faculty.FacultyName).Distinct().ToListAsync(); 
             #endregion
 
-            if (faculties != null && faculties.Count>0)
+            if (faculties != null && faculties.Count > 0)
             {
                 return new ResponseDTO
                 {
@@ -55,7 +57,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             {
                 StatusCode = 400,
                 IsDone = false,
-                Message="There is no faculties committees at this date."
+                Message = "There is no faculties committees at this date."
             };
         }
 
@@ -84,18 +86,20 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         public async Task<ResponseDTO> GetAllFaculties()
         {
             var Faculties = await _unitOfWork.Faculty.GetAllAsync();
-                              
+
             if (Faculties.Any())
             {
-                return new ResponseDTO {
+                return new ResponseDTO
+                {
                     StatusCode = 200,
-                    IsDone = true, 
-                    Model = Faculties.Select(s=>s.FacultyName) 
+                    IsDone = true,
+                    Model = Faculties.Select(s => s.FacultyName)
                 };
             }
-            return new ResponseDTO { 
-                StatusCode = 400 , 
-                IsDone=false
+            return new ResponseDTO
+            {
+                StatusCode = 400,
+                IsDone = false
             };
         }
         public async Task<ResponseDTO> GetFacultyByName(string FacultyName)
@@ -103,16 +107,18 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             var Faculty = await _unitOfWork.Faculty.GetByNameAsync(c => c.FacultyName.Contains(FacultyName));
             if (Faculty is not null)
             {
-                return new ResponseDTO {
+                return new ResponseDTO
+                {
                     StatusCode = 200,
-                    IsDone = true, 
-                    Model = Faculty.FacultyName 
+                    IsDone = true,
+                    Model = Faculty.FacultyName
                 };
             }
-            return new ResponseDTO { 
+            return new ResponseDTO
+            {
                 Message = "Faculty Not Found in System",
                 IsDone = false,
-                StatusCode = 400 
+                StatusCode = 400
             };
         }
 
@@ -120,17 +126,17 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         {
             // Return faculites that contain committees only 
             var faculties = await _context.Committees
-    .Where(c => c.Date.Date == DateTime.Today)
-    .SelectMany(c => c.SubjectCommittees)
-    .Where(sc => sc.Subject != null && sc.Subject.FacultyNode != null && sc.Subject.FacultyNode.Faculty != null)
-    .GroupBy(sc => sc.Subject.FacultyNode.Faculty.FacultyName)
-    .Select(g => new
-    {
-       
-        FacultyName = g.Key,
-        CommitteeCount = g.Count()
-    }).OrderByDescending(g => g.CommitteeCount)
-    .ToListAsync();
+            .Where(c => c.Date.Date == DateTime.Today)
+            .SelectMany(c => c.SubjectCommittees)
+            .Where(sc => sc.Subject != null && sc.Subject.FacultyNode != null && sc.Subject.FacultyNode.Faculty != null)
+            .GroupBy(sc => sc.Subject.FacultyNode.Faculty.FacultyName)
+            .Select(g => new
+                         {
+                        
+                             FacultyName = g.Key,
+                             CommitteeCount = g.Count()
+                         }).OrderByDescending(g => g.CommitteeCount)
+                           .ToListAsync();
 
             /* Return All Faculties whether it contains committees or not
              var faculties = await _context.Faculties
@@ -169,7 +175,105 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             };
         }
 
+        /////////////////////
+
+        public async Task<int> GetStudentCountForCommittee(int committeeId)
+        {
+            var committee = await _context.Committees
+                .Include(c => c.StudentsCommittees)
+                .FirstOrDefaultAsync(c => c.Id == committeeId && c.Date == DateTime.Today);
+
+            if (committee == null)
+            {
+                return -1; 
+            }
+            return committee.StudentsCommittees.Count;
+        }
+
+        public async Task<ResponseDTO> GetStudentCountInActiveCommitteesToday()
+        {
+            
+            //all active committees for the current day
+            var activeCommittees = await _context.Committees
+                .Where(c => c.Date == DateTime.Today)
+                .Select(c => c.Id)
+                .ToListAsync();
+
+            if (!activeCommittees.Any())
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 404,
+                    IsDone = false,
+                    Message = "No active committees found for today."
+                };
+            }
+
+            // Count the total number of students in all active committees
+            var totalStudentCount = 0;
+            foreach (var committeeId in activeCommittees)
+            {
+                var studentCount = await GetStudentCountForCommittee(committeeId);
+                if (studentCount != -1)
+                {
+                    totalStudentCount += studentCount;
+                }
+            }
+
+            return new ResponseDTO
+            {
+                StatusCode = 200,
+                IsDone = true,
+                Model = new { TotalStudentCount = totalStudentCount }
+            };
+        }
+
+       
+        public async Task<ResponseDTO> GetFacultyWithMostActiveCommitteesToday()
+        {
+            var today = DateTime.Today;
+
+            var facultyWithMostCommittees = await _context.Committees
+                .Where(c => c.Date == today)
+                .SelectMany(c => c.SubjectCommittees)
+                .Where(sc => sc.Subject != null && sc.Subject.FacultyNode != null && sc.Subject.FacultyNode.Faculty != null)
+                .GroupBy(sc => sc.Subject.FacultyNode.Faculty.FacultyName)
+                .Select(g => new
+                {
+                    FacultyName = g.Key,
+                    CommitteeCount = g.Count()
+                })
+                .OrderByDescending(f => f.CommitteeCount)
+                .FirstOrDefaultAsync();
+
+            if (facultyWithMostCommittees == null)
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 404,
+                    IsDone = false,
+                    Message = "No faculties with active committees found for today."
+                };
+            }
+
+            return new ResponseDTO
+            {
+                StatusCode = 200,
+                IsDone = true,
+                Model = new { FacultyName = facultyWithMostCommittees.FacultyName }
+            };
+        }
+
+       
+
+
+
+
+
+
+
+
     }
-    }
-   
+}
+
 

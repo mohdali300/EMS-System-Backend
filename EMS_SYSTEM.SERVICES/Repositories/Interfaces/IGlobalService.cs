@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EMS_SYSTEM.DOMAIN.DTO;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
 {
@@ -18,6 +19,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Interfaces
         public Task<ResponseDTO> GetFacultiesWithCommitteeToday();
 
         public Task<ResponseDTO> GetFacultiesByDate(DateTime date);
+        public Task<ResponseDTO> GetStudentCountInActiveCommitteesToday();
+        public  Task<ResponseDTO> GetFacultyWithMostActiveCommitteesToday();
 
 
     }

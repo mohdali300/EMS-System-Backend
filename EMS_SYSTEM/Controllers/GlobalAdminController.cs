@@ -87,5 +87,37 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
+
+
+        [HttpGet("StudentCountInActiveCommitteesToday")]
+
+        public async Task<IActionResult> GetStudentCountInActiveCommittees()
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _globalService.GetStudentCountInActiveCommitteesToday();
+                if (Response.IsDone)
+                {
+                    return StatusCode(Response.StatusCode, Response.Model);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+        }
+        [HttpGet("FacultyWithMostActiveCommitteesToday")]
+
+        public async Task<IActionResult> GetFacultyWithMostActiveCommittees()
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _globalService.GetFacultyWithMostActiveCommitteesToday();
+                if (Response.IsDone)
+                {
+                    return StatusCode(Response.StatusCode, Response.Model);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+        }
     }
 }
