@@ -14,5 +14,18 @@ namespace EMS_SYSTEM.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetFacultiesByDate(DateTime date)
+        {
+            if(ModelState.IsValid)
+            {
+                var response=await _unitOfWork.Global.GetFacultiesByDate(date);
+                if (response.IsDone)
+                    return StatusCode(response.StatusCode, response.Model);
+                return StatusCode(response.StatusCode, response.Message);
+            }
+            return BadRequest(ModelState);
+        }
     }
 }
