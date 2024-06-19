@@ -1,4 +1,5 @@
 ﻿using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
+using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Faculty;
 using Microsoft.EntityFrameworkCore;
@@ -12,13 +13,14 @@ using System.Threading.Tasks;
 
 namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 {
-    public class GlobalService:IGlobalService
+    public class GlobalService: GenericRepository<Faculty>, IGlobalService
     {
-        private readonly UnvcenteralDataBaseContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GlobalService(UnvcenteralDataBaseContext context)
+
+        public GlobalService(UnvcenteralDataBaseContext _context, IUnitOfWork _unitOfWork):base(_context)
         {
-            _context = context;
+           this._unitOfWork= _unitOfWork;
         }
 
         public async Task<ResponseDTO> GetFacultiesByDate(DateTime date)
@@ -80,9 +82,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         }
         public async Task<ResponseDTO> GetAllFaculties()
         {
-            var Faculties = await _context.Faculties
-                               .AsNoTracking()
-                               .ToListAsync();
+            var Faculties = await _unitOfWork.Faculty.GetAllAsync();
+                              
             if (Faculties.Any())
             {
                 return new ResponseDTO {
@@ -98,9 +99,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         }
         public async Task<ResponseDTO> GetFacultyByName(string FacultyName)
         {
-            var Faculty = await _context.Faculties
-                .FirstOrDefaultAsync(s => s.FacultyName.Contains(FacultyName));
-                
+            var Faculty = await _unitOfWork.Faculty.GetByNameAsync(c => c.FacultyName.Contains(FacultyName));
             if (Faculty is not null)
             {
                 return new ResponseDTO {
