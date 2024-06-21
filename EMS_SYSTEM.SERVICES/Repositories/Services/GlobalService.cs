@@ -76,13 +76,24 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                              .Where(r=>r.CommitteeCount>0)
                              .OrderByDescending(r => r.CommitteeCount)
                              .ToListAsync();
+            if (faculties.Any() && faculties is not null )
+            {
 
+                return new ResponseDTO
+                {
+                    Model = faculties,
+                    StatusCode = 200,
+                    IsDone = true
+                };
+            }
             return new ResponseDTO
             {
-                Model = faculties,
                 StatusCode = 200,
-                IsDone = true
+                IsDone = false,
+                Message = "There is no faculties committees Today."
             };
+
+
         }
         public async Task<ResponseDTO> GetAllFaculties()
         {
@@ -158,14 +169,23 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
 
 
-         
+            if (faculties.Any() && faculties is not null )
+            {
                 return new ResponseDTO
                 {
                     StatusCode = 200,
                     IsDone = true,
                     Model = faculties
                 };
-            
+            }
+
+            return new ResponseDTO
+            {
+                Message = "NO Committees Today",
+                IsDone = false,
+                StatusCode = 200
+            };
+
 
         }
 
