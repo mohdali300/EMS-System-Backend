@@ -147,6 +147,18 @@ namespace EMS_SYSTEM.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpGet("GetCommiteStudents")]
+        public async Task<IActionResult> CommiteStudent(int comId)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await _committee.GetCommiteStudents(comId);
+                return StatusCode(response.StatusCode, response.Model);
+            }
+
+            return BadRequest(ModelState);
+        }
+
 
     }
 }

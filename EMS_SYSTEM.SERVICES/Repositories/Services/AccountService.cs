@@ -51,7 +51,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 if (isFound || model.Password == "-1")
                 {
                     var Roles = await _userManager.GetRolesAsync(User);
-                    if (Roles[0] == "FacultyAdmin" && model.Password == "-1")
+                    if ((Roles[0] == "FacultyAdmin" || Roles[0]=="GlobalAdmin") && model.Password == "-1")
                     {
                         return new AuthModel
                         {
@@ -64,7 +64,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                         };
 
                     }
-                    if (Roles[0] != "FacultyAdmin" && model.Password != "-1")
+                    if ((Roles[0] != "FacultyAdmin" && Roles[0] != "GlobalAdmin") && model.Password != "-1")
                     {
                         return new AuthModel
                         {
@@ -294,7 +294,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 return new ResponseDTO { Message = "UserName already Exists!", IsDone = false, StatusCode = 500 };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
-            string role = "FacultyAdmin";
+            string role = "GlobalAdmin";
             if (result.Succeeded)
             {
                 if(await _roleManager.RoleExistsAsync(role)) 

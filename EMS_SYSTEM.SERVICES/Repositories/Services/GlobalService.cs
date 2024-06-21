@@ -55,7 +55,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
             return new ResponseDTO
             {
-                StatusCode = 400,
+                StatusCode = 200,
                 IsDone = false,
                 Message = "There is no faculties committees at this date."
             };
@@ -73,6 +73,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                                      .SelectMany(s => s.SubjectCommittees)
                                      .Count()
                              })
+                             .Where(r=>r.CommitteeCount>0)
                              .OrderByDescending(r => r.CommitteeCount)
                              .ToListAsync();
 
@@ -93,7 +94,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 {
                     StatusCode = 200,
                     IsDone = true,
-                    Model = Faculties.Select(s => s.FacultyName)
+                    Model = Faculties.Select(s => new { s.FacultyName , s.Id})
                 };
             }
             return new ResponseDTO
@@ -104,14 +105,14 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
         }
         public async Task<ResponseDTO> GetFacultyByName(string FacultyName)
         {
-            var Faculty = await _unitOfWork.Faculty.GetByNameAsync(c => c.FacultyName.Contains(FacultyName));
+           var Faculty = _context.Faculties.Where(c => c.FacultyName.Contains(FacultyName)).Select(f => new { f.FacultyName,f.Id}).ToList();
             if (Faculty is not null)
             {
                 return new ResponseDTO
                 {
                     StatusCode = 200,
                     IsDone = true,
-                    Model = Faculty.FacultyName
+                    Model = Faculty
                 };
             }
             return new ResponseDTO
@@ -157,22 +158,15 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
 
 
-            if (faculties != null && faculties.Count > 0)
-            {
+         
                 return new ResponseDTO
                 {
                     StatusCode = 200,
                     IsDone = true,
                     Model = faculties
                 };
-            }
+            
 
-            return new ResponseDTO
-            {
-                StatusCode = 400,
-                IsDone = false,
-                Message = "There is no faculties committees Today."
-            };
         }
 
         /////////////////////
@@ -199,16 +193,7 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 .Select(c => c.Id)
                 .ToListAsync();
 
-            if (!activeCommittees.Any())
-            {
-                return new ResponseDTO
-                {
-                    StatusCode = 404,
-                    IsDone = false,
-                    Message = "No active committees found for today."
-                };
-            }
-
+ 
             // Count the total number of students in all active committees
             var totalStudentCount = 0;
             foreach (var committeeId in activeCommittees)

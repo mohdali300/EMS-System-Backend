@@ -185,6 +185,27 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
         public async Task<ResponseDTO> GetCommitteeDetails(int id)
         {
+            var staff = await _context.Committees.Where(c => c.Id == id)
+                .Select(c => new
+                {
+                    Invigilators = c.StaffCommittees.Where(st => st.Staff != null)
+                                               .Select(st => st.Staff).ToList(),
+                    Observers = c.StaffCommittees.Where(st => st.Staff != null)
+                                               .Select(st => st.Staff).ToList()
+                }).FirstOrDefaultAsync();
+            List<string> newInv = new List<string>();
+            List<string> newOp = new List<string>();
+            foreach(var item in staff.Invigilators) {
+                var user = await _userManager.FindByNameAsync(item.NID);
+                var Roles = await _userManager.GetRolesAsync(user);
+                if (Roles[0] == "Invigilators") newInv.Add(item.Name);
+            }
+            foreach (var item in staff.Observers)
+            {
+                var user = await _userManager.FindByNameAsync(item.NID);
+                var Roles = await _userManager.GetRolesAsync(user);
+                if (Roles[0] == "Observers") newOp.Add(item.Name);
+            }
             var committee = await _context.Committees.Where(c => c.Id == id)
                 .Select(c => new
                 {
@@ -200,11 +221,10 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                     Status = c.Status,
                     Place = c.Place,
                     StudentNumber = c.StudentsCommittees.Count(),
-                    ObserversAndInvigilators = c.StaffCommittees.Where(st => st.Staff != null)
-                                               .Select(st => st.Staff.Name).ToList(),
+                    Invigilators = newInv,
+                    Observers = newOp
                 }).FirstOrDefaultAsync();
-
-            if(committee != null)
+            if (committee != null)
             {
                 return new ResponseDTO
                 {
@@ -492,6 +512,23 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             };
         }
 
+
+        public async Task<ResponseDTO> GetCommiteStudents(int comid)
+        {
+            var data = _context.StudentsCommittees.Where(item => item.CommitteeID == comid).ToList();
+            List<string> Commitestudents = new List<string>();
+            foreach(var item in data)
+            {
+                Student user = _context.Students.FirstOrDefault(s => s.Id == item.StudentID);
+                Commitestudents.Add(user.Name);
+            }
+            return new ResponseDTO
+            {
+                Model = Commitestudents,
+                StatusCode = 200,
+                IsDone = true
+            };
+        }
 
     }
 
