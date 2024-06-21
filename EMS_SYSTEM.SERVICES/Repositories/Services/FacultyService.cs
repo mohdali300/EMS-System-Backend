@@ -4,6 +4,7 @@ using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Committee;
 using EMS_SYSTEM.DOMAIN.DTO.Faculty;
 using EMS_SYSTEM.DOMAIN.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
@@ -15,9 +16,11 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
     {
 
         private readonly IUnitOfWork _unitOfWork;
-        public FacultyService(UnvcenteralDataBaseContext Db, IUnitOfWork unitOfWork) : base(Db)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public FacultyService(UnvcenteralDataBaseContext Db, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager) : base(Db)
         {
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
         }
 
         public async Task<ResponseDTO> GetFacultyDataByID(int Id)
@@ -75,12 +78,12 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
             }
         }
 
-        public async Task<ResponseDTO> GetSubjects([FromBody]FacultyHieryicalDTO hieryicalDTO)
+        public async Task<ResponseDTO> GetSubjects([FromBody] FacultyHieryicalDTO hieryicalDTO)
         {
             var Hierarchical = await _context.FacultyHieryicals.Include(h => h.Subjects)
                 .Where
                 (h =>
-                h.BylawId ==hieryicalDTO.BylawId &&
+                h.BylawId == hieryicalDTO.BylawId &&
                 h.PhaseId == hieryicalDTO.PhaseId &&
                 h.SemeterId == hieryicalDTO.FacultySemesterId
                 ).FirstOrDefaultAsync();
@@ -112,8 +115,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
                 Model = Subjects,
                 StatusCode = 200,
                 IsDone = true
-            };       
-            
+            };
+
         }
 
         public async Task<ResponseDTO> GetFacultyCommitteesDetails(int id)
@@ -190,8 +193,8 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
         public async Task<ResponseDTO> GetPlaces()
         {
-            var Places =  _context.Palces.ToList();
-            
+            var Places = _context.Palces.ToList();
+
             return new ResponseDTO
             {
                 IsDone = true,
@@ -201,5 +204,158 @@ namespace EMS_SYSTEM.APPLICATION.Repositories.Services
 
         }
 
+        //////////////
+        ///helper
+        public async Task<int> GetStudentCountForCommittee(int committeeId, int facultyId)
+        {
+            var committee = await _context.Committees
+                .Include(c => c.StudentsCommittees)
+                .ThenInclude(sc => sc.Student)
+                .FirstOrDefaultAsync(c => c.Id == committeeId && c.Date == DateTime.Today);
+
+            if (committee == null)
+            {
+                return -1;
+            }
+            return committee.StudentsCommittees.Count(sc => sc.Student?.Facultyid == facultyId);
+        }
+        public async Task<ResponseDTO> GetStudentCountInActiveCommitteesForFacultyToday(int facultyId)
+        {
+            var activeCommittees = await _context.Committees
+                .Where(c => c.Date == DateTime.Today)
+                .Select(c => c.Id)
+                .ToListAsync();
+
+            if (!activeCommittees.Any())
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 404,
+                    IsDone = false,
+                    Message = "No active committees found for today."
+                };
+            }
+
+
+            var totalStudentCount = 0;
+            foreach (var committeeId in activeCommittees)
+            {
+                var studentCount = await GetStudentCountForCommittee(committeeId, facultyId);
+                if (studentCount != -1)
+                {
+                    totalStudentCount += studentCount;
+                }
+            }
+
+            return new ResponseDTO
+            {
+                StatusCode = 200,
+                IsDone = true,
+                Model = new { TotalStudentCount = totalStudentCount }
+            };
+        }
+        //done
+
+        //all staff in faculty
+        public async Task<ResponseDTO> GetAllStaffInFaculty(int facultyId)
+        {
+            var staffInFaculty = await _context.Staff
+                .Where(s => s.FacultyId == facultyId)
+                .Select(s => new
+                {
+                    s.Id,
+                    s.Name,
+                    s.Degree,
+                    s.NID
+                })
+                .ToListAsync();
+
+            if (staffInFaculty.Count == 0)
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 404,
+                    IsDone = false,
+                    Message = "No staff found for the specified faculty."
+                };
+            }
+
+            var staffDTOs = new List<StaffDTO>();
+            foreach (var staff in staffInFaculty)
+            {
+                var user = await _userManager.Users.SingleOrDefaultAsync(u => u.NID == staff.NID);
+                if (user != null)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    var role = roles.FirstOrDefault(r => r == "Invigilators" || r == "Observers");
+
+                    if (role != null)
+                    {
+                        staffDTOs.Add(new StaffDTO
+                        {
+                            Id = staff.Id,
+                            Name = staff.Name,
+                            Degree = staff.Degree,
+                            Role = role
+                        });
+                    }
+                }
+            }
+
+            return new ResponseDTO
+            {
+                Model = staffDTOs,
+                StatusCode = 200,
+                IsDone = true
+            };
+        }
+        //just assigned staff in faculty
+        public async Task<ResponseDTO> GetStaffInCommitteesForFaculty(int facultyId)
+        {
+            var facultyCommittees = await _context.Committees
+                .Where(c => c.SubjectCommittees.Any(sc => sc.Subject.FacultyNode.FacultyId == facultyId))
+                .Include(c => c.StaffCommittees)
+                .ThenInclude(sc => sc.Staff)
+                .ToListAsync();
+
+            if (!facultyCommittees.Any())
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 404,
+                    IsDone = false,
+                    Message = "No committees found for the specified faculty."
+                };
+            }
+
+            var staffDetails = facultyCommittees
+                .SelectMany(c => c.StaffCommittees)
+                .Where(sc => sc.Staff != null && sc.Staff.FacultyId == facultyId)
+                .Select(sc => new StaffDTO
+                {
+                    Id = sc.Staff.Id,
+                    Name = sc.Staff.Name,
+                    Degree = sc.Staff.Degree
+                })
+                .DistinctBy(s => s.Id)
+                .ToList();
+
+            return new ResponseDTO
+            {
+                StatusCode = 200,
+                IsDone = true,
+                Model = new { staff = staffDetails }
+            };
+        }
+
+
+
+
+
+
     }
+
+
+
+
 }

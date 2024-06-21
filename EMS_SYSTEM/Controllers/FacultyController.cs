@@ -1,5 +1,6 @@
 ﻿    using EMS_SYSTEM.APPLICATION.Repositories.Interfaces;
 using EMS_SYSTEM.APPLICATION.Repositories.Interfaces.IUnitOfWork;
+using EMS_SYSTEM.APPLICATION.Repositories.Services;
 using EMS_SYSTEM.APPLICATION.Repositories.Services.UnitOfWork;
 using EMS_SYSTEM.DOMAIN.DTO;
 using EMS_SYSTEM.DOMAIN.DTO.Faculty;
@@ -98,6 +99,51 @@ namespace EMS_SYSTEM.Controllers
             }
             return BadRequest(ModelState);
         }
+        [HttpGet("GetStudentCountInActiveCommitteesForFacultyToday")]
 
+        public async Task<IActionResult> GetStudentCountInActiveCommitteesForFacultyToday(int facultyId)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _facultyService.GetStudentCountInActiveCommitteesForFacultyToday(facultyId);
+                if (Response.IsDone)
+                {
+                    return StatusCode(Response.StatusCode, Response.Model);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+        }
+        [HttpGet("GetAllStaffInFaculty")]
+
+        public async Task<IActionResult> GetAllStaffInFaculty(int facultyId)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _facultyService.GetAllStaffInFaculty(facultyId);
+                if (Response.IsDone)
+                {
+                    return StatusCode(Response.StatusCode, Response.Model);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet("GetStaffInCommitteesForFaculty")]
+
+        public async Task<IActionResult> GetStaffInCommitteesForFaculty(int facultyId)
+        {
+            if (ModelState.IsValid)
+            {
+                var Response = await _facultyService.GetStaffInCommitteesForFaculty(facultyId);
+                if (Response.IsDone)
+                {
+                    return StatusCode(Response.StatusCode, Response.Model);
+                }
+                return StatusCode(Response.StatusCode, Response.Message);
+            }
+            return BadRequest(ModelState);
+        }
     }
 }
